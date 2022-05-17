@@ -3,7 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - base_player
+  - sample_currentAmmoImage
+  - sample_nextAmmoImage
+  - sample_previousAmmoImage
+  - sample_nextNextAmmoImage
+  - sample_previousPreviousAmmoImage
+  - base_ammoIndicator
   layers:
   - Default
   - TransparentFX

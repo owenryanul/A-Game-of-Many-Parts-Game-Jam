@@ -6,30 +6,37 @@ using UnityEngine.InputSystem.Interactions;
 
 public class Player_Logic : MonoBehaviour
 {
-
     [Header("Movement")]
     public float topSpeed = 1.0f; //in units/second
     public float acceleration = 1.0f; //in units/second/second
     public float deceleration = -1.0f; //units lost per units/second/second
 
     private float currentSpeed;
-    private Vector3 movementDirection;
-    private Vector3 lastMovementDirection;
+    private Vector2 movementDirection;
+    private Vector2 lastMovementDirection;
+
+    public Vector2 externalVelocity;
+    private bool overridePlayerMovementVelocity;
 
     [Header("Aiming")]
     public Vector3 aimDirection;
     public float maxReticleDistanceFromPlayer;
     private bool usingMouse;
 
-    public float force;
+    [Header("Ammo")]
+    public int currentAmmoIndex;
+    public List<Ammo> carriedAmmo;
+    public Ammo defaultAmmo;
+    public bool changingAmmo;
 
     // Start is called before the first frame update
     void Start()
     {
-        movementDirection = Vector3.zero;
+        movementDirection = Vector2.zero;
         currentSpeed = 0.0f;
         aimDirection = Vector3.right;
         usingMouse = false;
+        changingAmmo = false;
     }
 
     // Update is called once per frame
@@ -43,8 +50,10 @@ public class Player_Logic : MonoBehaviour
     private void movementLogic()
     {
         //movementDirection will be set in OnMovementKeysChanged()
+
         updateCurrentSpeed();
-        if (movementDirection != Vector3.zero)
+        
+        if (movementDirection != Vector2.zero)
         {
             this.gameObject.GetComponent<Rigidbody2D>().velocity = movementDirection.normalized * currentSpeed;
 
@@ -57,13 +66,15 @@ public class Player_Logic : MonoBehaviour
         {
             this.gameObject.GetComponent<Rigidbody2D>().velocity = lastMovementDirection.normalized * currentSpeed;
         }
+
+        applyExternalVelocity();
     }
 
     //Determines player speed based on how long they've been moving. They accelerate up to max speed based on acceleration while moving
     // and deccelerate over time while not moving. This is intended to give the player a sense of momentum.
     private void updateCurrentSpeed()
     {
-        if (movementDirection == Vector3.zero)
+        if (movementDirection == Vector2.zero)
         {
             currentSpeed += (deceleration * Time.deltaTime); //reduce speed as they stand still, so they don't lose all speed the second they let go of the movement keys.
             if (currentSpeed < 0)
@@ -81,14 +92,38 @@ public class Player_Logic : MonoBehaviour
         }
     }
 
+    private void applyExternalVelocity()
+    {
+        if(overridePlayerMovementVelocity)
+        {
+            this.gameObject.GetComponent<Rigidbody2D>().velocity = externalVelocity;
+        }
+        else
+        {
+            this.gameObject.GetComponent<Rigidbody2D>().velocity += externalVelocity;
+        }
+    }
+
     public void OnMovementKeysHit(InputAction.CallbackContext context)
     {
         this.movementDirection = context.ReadValue<Vector2>().normalized;
-        if(this.movementDirection != Vector3.zero)
+        if(this.movementDirection != Vector2.zero)
         {
             this.lastMovementDirection = this.movementDirection;
         }
         //Debug.Log("movement direction changed, is now: " + this.movementDirection);
+    }
+
+    public void setExternalVelocity(Vector2 velocityIn, bool doOverridePlayerMovement = false)
+    {
+        overridePlayerMovementVelocity = doOverridePlayerMovement;
+        externalVelocity = velocityIn;
+    }
+
+    public void addExternalVelocity(Vector2 velocityIn, bool doOverridePlayerMovement = false)
+    {
+        overridePlayerMovementVelocity = doOverridePlayerMovement;
+        externalVelocity += velocityIn;
     }
 
     //===========================[End of Movement]======================================
@@ -126,10 +161,7 @@ public class Player_Logic : MonoBehaviour
                 this.transform.Find("Reticle").GetComponent<SpriteRenderer>().enabled = true;
                 this.transform.Find("Reticle").localPosition = aimDirection.normalized * maxReticleDistanceFromPlayer;
             }
-        }
-
-        
-        
+        }        
     }
 
     public void onAimListener(InputAction.CallbackContext context)
@@ -150,6 +182,8 @@ public class Player_Logic : MonoBehaviour
         }
     }
 
+    //Called when the player moves so that the aim position is updated when the player moves even if the player doesn't move the mouse.
+    //Note: This won't be necessary if the camera is locked to the player's position.
     private void updateAimFromMousePosition(Vector2 posIn)
     {
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(posIn);
@@ -175,11 +209,10 @@ public class Player_Logic : MonoBehaviour
             if(pressInteraction.behavior == PressBehavior.PressOnly)
             {
                 Debug.Log("Fist");
-                this.gameObject.GetComponent<Rigidbody2D>().velocity += (Vector2)(aimDirection.normalized * force);
             }
             else if(pressInteraction.behavior == PressBehavior.ReleaseOnly)
             {
-                
+                Debug.Log("Release FIst");
             }
         }
         else
@@ -189,4 +222,103 @@ public class Player_Logic : MonoBehaviour
     }
 
     //===========================[End of Fire]========================================
+
+    //===========================[Ammo]===============================================
+
+    public void OnNextAmmoPressed(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed && !changingAmmo)
+        {
+            currentAmmoIndex++;
+            if(currentAmmoIndex >= carriedAmmo.Count)
+            {
+                currentAmmoIndex = 0;
+            }
+
+            changingAmmo = true;
+            GameObject.FindGameObjectWithTag("base_ammoIndicator").GetComponent<Animator>().SetTrigger("Next");
+        }
+
+        
+    }
+
+    public void OnPreviousAmmoPressed(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed && !changingAmmo)
+        {
+            currentAmmoIndex--;
+            if (currentAmmoIndex < 0)
+            {
+                currentAmmoIndex = carriedAmmo.Count - 1;
+            }
+
+            changingAmmo = true;
+            GameObject.FindGameObjectWithTag("base_ammoIndicator").GetComponent<Animator>().SetTrigger("Previous");
+        }
+
+        
+    }
+
+
+
+
+    //Return the Ammo object that is offset entries away from currentlySelectedAmmoType in CarriedAmmo
+    //Recurivily loops through CarriedAmmo if the provided offset would be outside the bounds of the list.
+    //e.g. getAmmoRelativeToCurrent(0) would return the currently selected ammo.
+    //     getAmmoRelativeToCurrent(1) would return the next ammo in the list.
+    //     getAmmoRelativeToCurrent(-2) would return the ammo 2 entries earlier in the list.
+    public Ammo getAmmoRelativeToCurrent(int offset)
+    {
+        //Handle edges cases where the list is too small
+        if(this.carriedAmmo.Count < 1)
+        {
+            return defaultAmmo;
+        }
+        else if(this.carriedAmmo.Count == 1)
+        {
+            return this.carriedAmmo[0];
+        }
+
+
+        if(offset + currentAmmoIndex >= this.carriedAmmo.Count)
+        {
+            return recursiveCountUpFromZero((offset + currentAmmoIndex) - this.carriedAmmo.Count);
+        }
+
+        if (offset + currentAmmoIndex < 0)
+        {
+            return recursiveCountDownFromTop(offset + currentAmmoIndex);
+        }
+
+        return this.carriedAmmo[offset + currentAmmoIndex];
+    }
+
+    //Recursive method used to loop getAmmoRelativeToCurrent() forwards through the list when a positive offset exceeds carriedAmmo's size.
+    private Ammo recursiveCountUpFromZero(int i)
+    {
+        if (i  >= this.carriedAmmo.Count)
+        {
+            return recursiveCountUpFromZero((i - this.carriedAmmo.Count));
+        }
+        else
+        {
+            return this.carriedAmmo[i];
+        }
+    }
+
+    //Recursive method used to loop getAmmoRelativeToCurrent() backwards through the list when a negative offset is given that would go below zero.
+    private Ammo recursiveCountDownFromTop(int i)
+    {
+        if (i + this.carriedAmmo.Count < 0)
+        {
+            return recursiveCountDownFromTop(this.carriedAmmo.Count + (i));
+        }
+        else
+        {
+            Debug.Log("this.carriedAmmo.Count + i = " + this.carriedAmmo.Count + " + " + i);
+            return this.carriedAmmo[this.carriedAmmo.Count + i];
+        }
+    }
+
+    //===========================[End of Ammo]========================================
 }
