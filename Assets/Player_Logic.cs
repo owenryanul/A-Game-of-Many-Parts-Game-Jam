@@ -29,6 +29,8 @@ public class Player_Logic : MonoBehaviour
     public Ammo defaultAmmo;
     public bool changingAmmo;
 
+    private GameObject currentAmmoBehaviourPrefab;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,6 +39,7 @@ public class Player_Logic : MonoBehaviour
         aimDirection = Vector3.right;
         usingMouse = false;
         changingAmmo = false;
+        changeAmmo();
     }
 
     // Update is called once per frame
@@ -52,7 +55,7 @@ public class Player_Logic : MonoBehaviour
         //movementDirection will be set in OnMovementKeysChanged()
 
         updateCurrentSpeed();
-        
+
         if (movementDirection != Vector2.zero)
         {
             this.gameObject.GetComponent<Rigidbody2D>().velocity = movementDirection.normalized * currentSpeed;
@@ -203,21 +206,17 @@ public class Player_Logic : MonoBehaviour
 
     public void OnFirePressed(InputAction.CallbackContext context)
     {
-        if(context.phase == InputActionPhase.Performed)
+        if(context.phase == InputActionPhase.Performed && !changingAmmo)
         {
             PressInteraction pressInteraction = (PressInteraction)context.interaction;
             if(pressInteraction.behavior == PressBehavior.PressOnly)
             {
-                Debug.Log("Fist");
+                currentAmmoBehaviourPrefab.GetComponent<AmmoBehaviour>().OnPress(this);             
             }
             else if(pressInteraction.behavior == PressBehavior.ReleaseOnly)
             {
-                Debug.Log("Release FIst");
+                currentAmmoBehaviourPrefab.GetComponent<AmmoBehaviour>().OnRelease(this);
             }
-        }
-        else
-        {
-
         }
     }
 
@@ -237,6 +236,7 @@ public class Player_Logic : MonoBehaviour
 
             changingAmmo = true;
             GameObject.FindGameObjectWithTag("base_ammoIndicator").GetComponent<Animator>().SetTrigger("Next");
+            changeAmmo();
         }
 
         
@@ -254,12 +254,21 @@ public class Player_Logic : MonoBehaviour
 
             changingAmmo = true;
             GameObject.FindGameObjectWithTag("base_ammoIndicator").GetComponent<Animator>().SetTrigger("Previous");
+            changeAmmo();
         }
-
-        
     }
 
+    private void changeAmmo()
+    {
+        if (currentAmmoBehaviourPrefab != null)
+        {
+            currentAmmoBehaviourPrefab.GetComponent<AmmoBehaviour>().OnUnequip(this);
+            Destroy(currentAmmoBehaviourPrefab);
+        }
 
+        currentAmmoBehaviourPrefab = Instantiate(this.getAmmoRelativeToCurrent(0).ammoBehaviourPrefab, this.gameObject.transform);
+        currentAmmoBehaviourPrefab.GetComponent<AmmoBehaviour>().OnEquip(this);
+    }
 
 
     //Return the Ammo object that is offset entries away from currentlySelectedAmmoType in CarriedAmmo
@@ -317,6 +326,66 @@ public class Player_Logic : MonoBehaviour
         {
             Debug.Log("this.carriedAmmo.Count + i = " + this.carriedAmmo.Count + " + " + i);
             return this.carriedAmmo[this.carriedAmmo.Count + i];
+        }
+    }
+
+    public void addAmmo(Ammo ammoToAdd)
+    {
+        //if the ammo type is already carried, increase the quanity
+        foreach(Ammo aAmmo in this.carriedAmmo)
+        {
+            if(aAmmo.name == ammoToAdd.name)
+            {
+                aAmmo.quantity += ammoToAdd.quantity;
+                GameObject.FindGameObjectWithTag("base_ammoIndicator").GetComponent<AmmoIndicatorLogic>().setAmmoIndicator();
+                return;
+            }
+        }
+
+        //If the ammo type is not already carried, add the ammo as a new type
+        this.carriedAmmo.Add(ammoToAdd);
+        GameObject.FindGameObjectWithTag("base_ammoIndicator").GetComponent<AmmoIndicatorLogic>().setAmmoIndicator();
+        //If carried ammo was empty before this ammo was picked up, update the logic to equip the new ammo type.
+        if(this.carriedAmmo.Count == 1)
+        {
+            currentAmmoIndex = 0;
+            changeAmmo();
+        }
+    }
+
+    public void modifyAmmoAmount(Ammo ammoToRemove, int amount)
+    {
+        int indexOfAmmo = -1;
+        for(int i = 0; i < carriedAmmo.Count; i++)
+        {
+            if(carriedAmmo[i].name == ammoToRemove.name)
+            {
+                indexOfAmmo = i;
+                break;
+            }
+        }
+
+        if(indexOfAmmo < 0)
+        {
+            Debug.LogError("Error: Could not find Ammo with name " + ammoToRemove.name + " in the list of carried ammo.");
+            return;
+        }
+        else
+        {
+            carriedAmmo[indexOfAmmo].quantity += amount;
+            if(carriedAmmo[indexOfAmmo].quantity < 1)
+            {
+                carriedAmmo.RemoveAt(indexOfAmmo);
+                if (currentAmmoIndex >= indexOfAmmo)
+                {
+                    currentAmmoIndex--;
+                    if (currentAmmoIndex < 0)
+                    {
+                        currentAmmoIndex = 0;
+                    }
+                }
+            }
+            GameObject.FindGameObjectWithTag("base_ammoIndicator").GetComponent<AmmoIndicatorLogic>().setAmmoIndicator();
         }
     }
 

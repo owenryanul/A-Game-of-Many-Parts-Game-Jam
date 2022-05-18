@@ -48,8 +48,14 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Behind  Of Player
+    uniqueID: 2307447433
+    locked: 0
   - name: Player
     uniqueID: 1274807125
+    locked: 0
+  - name: Infront of Player
+    uniqueID: 1949024441
     locked: 0
   - name: BehindUI
     uniqueID: 2986515065

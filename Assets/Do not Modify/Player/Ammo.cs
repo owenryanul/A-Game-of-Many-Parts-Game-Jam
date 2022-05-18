@@ -6,15 +6,20 @@ using UnityEngine;
 public class Ammo
 {
     public string name;
-    public GameObject prefab;
+    public GameObject ammoBehaviourPrefab;
     public Sprite icon;
     public int quantity;
 
-    public Ammo(string nameIn, GameObject prefabIn, Sprite iconIn, int quantityIn)
+    public Ammo(string nameIn, GameObject ammoBehaviourPrefabIn, Sprite iconIn, int quantityIn)
     {
         this.name = nameIn;
-        this.prefab = prefabIn;
+        this.ammoBehaviourPrefab = ammoBehaviourPrefabIn;
         this.icon = iconIn;
         this.quantity = quantityIn;
+
+        if(this.ammoBehaviourPrefab.GetComponent<AmmoBehaviour>() == null)
+        {
+            Debug.LogWarning("Warning: The ammoBehaviourPrefab for the ammo named " + this.name + " does not contain a script that implements the AmmoBehaviour interface. This will cause errors if the ammo is used by the player.");
+        }
     }
 }
