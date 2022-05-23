@@ -55,6 +55,6 @@ public class AmmoIndicatorLogic : MonoBehaviour
         previousAmmoCount.text = "" + player.getAmmoRelativeToCurrent(-1).quantity;
         previousPreviousAmmoImage.sprite = player.getAmmoRelativeToCurrent(-2).icon;
         previousPreviousAmmoCount.text = "" + player.getAmmoRelativeToCurrent(-2).quantity;
-        player.changingAmmo = false;
+        player.isDoneChangingAmmo();
     }
 }

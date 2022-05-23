@@ -31,6 +31,11 @@ public class NoAmmo_AmmoBehaviour : MonoBehaviour, AmmoBehaviour
         //No Effect
     }
 
+    public void OnCancel(Player_Logic playerLogic)
+    {
+        //No Effect
+    }
+
     public void OnUnequip(Player_Logic playerLogic)
     {
         //No Effect

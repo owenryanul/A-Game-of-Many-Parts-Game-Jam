@@ -25,8 +25,14 @@ public class BasicArrow_AmmoBehaviour : MonoBehaviour, AmmoBehaviour
 
     public void OnPress(Player_Logic playerLogic)
     {
-        Instantiate(arrowPrefab, playerLogic.gameObject.transform.position, playerLogic.gameObject.transform.rotation);
+        GameObject arrow = Instantiate(arrowPrefab, playerLogic.gameObject.transform.position, playerLogic.gameObject.transform.rotation);
+        arrow.GetComponent<ArrowProjectileLogic>().fireInDirection(playerLogic.getAimDirection());
         playerLogic.modifyAmmoAmount(playerLogic.getAmmoRelativeToCurrent(0), -1);
+    }
+
+    public void OnCancel(Player_Logic playerLogic)
+    {
+        //No Effect
     }
 
     public void OnRelease(Player_Logic playerLogic)

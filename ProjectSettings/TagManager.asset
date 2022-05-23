@@ -11,6 +11,7 @@ TagManager:
   - sample_nextNextAmmoImage
   - sample_previousPreviousAmmoImage
   - base_ammoIndicator
+  - base_interactable
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - UI
   - Player
   - Level
-  - 
+  - Player Projectiles
   - 
   - 
   - 
@@ -48,7 +49,7 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Behind  Of Player
+  - name: Behind Player
     uniqueID: 2307447433
     locked: 0
   - name: Player

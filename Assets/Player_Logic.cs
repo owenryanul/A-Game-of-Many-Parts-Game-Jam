@@ -27,9 +27,22 @@ public class Player_Logic : MonoBehaviour
     public int currentAmmoIndex;
     public List<Ammo> carriedAmmo;
     public Ammo defaultAmmo;
-    public bool changingAmmo;
+    private bool changingAmmo;
 
+    [Header("Fire")]
     private GameObject currentAmmoBehaviourPrefab;
+    private bool firePressedOnThisAmmo; //Flag that ensures that OnRelease won't trigger if the user changed ammo types in between pressing and releasing the fire button
+
+    [Header("Activate")]
+    public List<OnActivateListener> allOnActivateListeners;
+
+    [Header("Interactable")]
+    private Interactable currentInteractable;
+
+    [Header("Dodge Roll")]
+    private bool isDodging;
+    public float dodgeRollVelocity;
+    private Vector3 dodgeRollDirection;
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +52,8 @@ public class Player_Logic : MonoBehaviour
         aimDirection = Vector3.right;
         usingMouse = false;
         changingAmmo = false;
+        firePressedOnThisAmmo = false;
+        allOnActivateListeners = new List<OnActivateListener>();
         changeAmmo();
     }
 
@@ -49,28 +64,60 @@ public class Player_Logic : MonoBehaviour
         aimingLogic();
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "base_interactable")
+        {
+            this.setCurrentInteractable(collision.gameObject.GetComponent<Interactable>());
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "base_interactable" && collision.gameObject.GetComponent<Interactable>() == this.getCurrentInteractable())
+        {
+           this.setCurrentInteractable(null);
+        }
+    }
+
     //===========================[Movement]======================================
     private void movementLogic()
     {
         //movementDirection will be set in OnMovementKeysChanged()
-
-        updateCurrentSpeed();
-
-        if (movementDirection != Vector2.zero)
+        if (isDodging)
         {
-            this.gameObject.GetComponent<Rigidbody2D>().velocity = movementDirection.normalized * currentSpeed;
-
-            if (usingMouse)
-            {
-                updateAimFromMousePosition(Mouse.current.position.ReadValue());
-            }
+            dodgeMovementLogic();
         }
         else
         {
-            this.gameObject.GetComponent<Rigidbody2D>().velocity = lastMovementDirection.normalized * currentSpeed;
+            updateCurrentSpeed();
+
+            if (movementDirection != Vector2.zero)
+            {
+                this.gameObject.GetComponent<Rigidbody2D>().velocity = movementDirection.normalized * currentSpeed;
+
+                if (usingMouse)
+                {
+                    updateAimFromMousePosition(Mouse.current.position.ReadValue());
+                }
+            }
+            else
+            {
+                this.gameObject.GetComponent<Rigidbody2D>().velocity = lastMovementDirection.normalized * currentSpeed;
+            }
         }
 
         applyExternalVelocity();
+
+        //if the character was moving right, make their sprite face right, if they were moving left make their sprite face left, otherwise leave their facing as is.
+        if(lastMovementDirection.x < 0)
+        {
+            setVisualFacing(true);
+        }
+        else if (lastMovementDirection.x > 0)
+        {
+            setVisualFacing(false);
+        }
     }
 
     //Determines player speed based on how long they've been moving. They accelerate up to max speed based on acceleration while moving
@@ -83,6 +130,7 @@ public class Player_Logic : MonoBehaviour
             if (currentSpeed < 0)
             {
                 currentSpeed = 0;
+                this.gameObject.GetComponent<Animator>().SetBool("Running", false);
             }
         }
         else
@@ -92,6 +140,7 @@ public class Player_Logic : MonoBehaviour
             {
                 currentSpeed = topSpeed;
             }
+            this.gameObject.GetComponent<Animator>().SetBool("Running", true);
         }
     }
 
@@ -127,6 +176,29 @@ public class Player_Logic : MonoBehaviour
     {
         overridePlayerMovementVelocity = doOverridePlayerMovement;
         externalVelocity += velocityIn;
+    }
+
+    private void setVisualFacing(bool isFlipped)
+    {
+        foreach (SpriteRenderer aSprite in this.gameObject.GetComponentsInChildren<SpriteRenderer>())
+        {
+            aSprite.flipX = isFlipped;
+        }
+
+        GameObject bowSprite = this.gameObject.transform.Find("Sprite").Find("Bow").gameObject;
+        Vector3 bowPos = bowSprite.transform.localPosition;
+        if (isFlipped)
+        {
+            bowSprite.transform.localPosition = new Vector3(-Mathf.Abs(bowPos.x), bowPos.y, bowPos.z);
+            bowSprite.transform.localEulerAngles = new Vector3(0, 0, 16.525f);
+            this.gameObject.GetComponent<Animator>().SetBool("Mirrored", true);
+        }
+        else
+        {
+            bowSprite.transform.localPosition = new Vector3(Mathf.Abs(bowPos.x), bowPos.y, bowPos.z);
+            bowSprite.transform.localEulerAngles = new Vector3(0, 0, -16.525f);
+            this.gameObject.GetComponent<Animator>().SetBool("Mirrored", false);
+        }
     }
 
     //===========================[End of Movement]======================================
@@ -206,16 +278,18 @@ public class Player_Logic : MonoBehaviour
 
     public void OnFirePressed(InputAction.CallbackContext context)
     {
-        if(context.phase == InputActionPhase.Performed && !changingAmmo)
+        if(context.phase == InputActionPhase.Performed && !this.changingAmmo && !this.isDodging)
         {
             PressInteraction pressInteraction = (PressInteraction)context.interaction;
             if(pressInteraction.behavior == PressBehavior.PressOnly)
             {
-                currentAmmoBehaviourPrefab.GetComponent<AmmoBehaviour>().OnPress(this);             
+                currentAmmoBehaviourPrefab.GetComponent<AmmoBehaviour>().OnPress(this);
+                this.firePressedOnThisAmmo = true;        
             }
-            else if(pressInteraction.behavior == PressBehavior.ReleaseOnly)
+            else if(pressInteraction.behavior == PressBehavior.ReleaseOnly && this.firePressedOnThisAmmo)
             {
                 currentAmmoBehaviourPrefab.GetComponent<AmmoBehaviour>().OnRelease(this);
+                this.firePressedOnThisAmmo = false;
             }
         }
     }
@@ -262,10 +336,15 @@ public class Player_Logic : MonoBehaviour
     {
         if (currentAmmoBehaviourPrefab != null)
         {
+            if(this.isDodging)
+            {
+                currentAmmoBehaviourPrefab.GetComponent<AmmoBehaviour>().OnCancel(this);
+            }
             currentAmmoBehaviourPrefab.GetComponent<AmmoBehaviour>().OnUnequip(this);
             Destroy(currentAmmoBehaviourPrefab);
         }
 
+        firePressedOnThisAmmo = false;
         currentAmmoBehaviourPrefab = Instantiate(this.getAmmoRelativeToCurrent(0).ammoBehaviourPrefab, this.gameObject.transform);
         currentAmmoBehaviourPrefab.GetComponent<AmmoBehaviour>().OnEquip(this);
     }
@@ -353,7 +432,8 @@ public class Player_Logic : MonoBehaviour
         }
     }
 
-    public void modifyAmmoAmount(Ammo ammoToRemove, int amount)
+    //Returns true if ammoModified successfully, else returns false.
+    public bool modifyAmmoAmount(Ammo ammoToRemove, int amount)
     {
         int indexOfAmmo = -1;
         for(int i = 0; i < carriedAmmo.Count; i++)
@@ -367,8 +447,8 @@ public class Player_Logic : MonoBehaviour
 
         if(indexOfAmmo < 0)
         {
-            Debug.LogError("Error: Could not find Ammo with name " + ammoToRemove.name + " in the list of carried ammo.");
-            return;
+            Debug.LogWarning("Warning: Could not find Ammo with name " + ammoToRemove.name + " in the list of carried ammo.");
+            return false;
         }
         else
         {
@@ -384,10 +464,133 @@ public class Player_Logic : MonoBehaviour
                         currentAmmoIndex = 0;
                     }
                 }
+                changeAmmo();
             }
             GameObject.FindGameObjectWithTag("base_ammoIndicator").GetComponent<AmmoIndicatorLogic>().setAmmoIndicator();
         }
+        return true;
+    }
+
+    //Marks the ammo changing process as complete and normal ammo interaction logic proceed.
+    //Called from AmmoIndicatorLogic.setAmmoIndicator()
+    public void isDoneChangingAmmo()
+    {
+        this.changingAmmo = false;
     }
 
     //===========================[End of Ammo]========================================
+
+    //===========================[Activate]===============================================
+    public void OnActivatePressed(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+        {
+            PressInteraction pressInteraction = (PressInteraction)context.interaction;
+            if (pressInteraction.behavior == PressBehavior.PressOnly)
+            {
+                foreach(OnActivateListener aListener in allOnActivateListeners)
+                {
+                    aListener.OnActivatePressed();
+                }
+            }
+            else if (pressInteraction.behavior == PressBehavior.ReleaseOnly)
+            {
+                foreach (OnActivateListener aListener in allOnActivateListeners)
+                {
+                    aListener.OnActivateReleased();
+                }
+            }
+        }
+    }
+
+    public void addOnActivateListener(OnActivateListener listenerIn)
+    {
+        this.allOnActivateListeners.Add(listenerIn);
+    }
+
+    public void removeOnActivateListener(OnActivateListener listenerIn)
+    {
+        this.allOnActivateListeners.Remove(listenerIn);
+    }
+    //===========================[End of Activate]========================================
+
+    //===========================[Interact]========================================
+
+    public void OnInteractPressed(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed && this.getCurrentInteractable() != null)
+        {
+            Debug.Log("Interact Pressed");
+            this.currentInteractable.onInteracted();
+        }
+    }
+
+    public Interactable getCurrentInteractable()
+    {
+        return this.currentInteractable;
+    }
+
+    public void setCurrentInteractable(Interactable interactableIn)
+    {
+        if(interactableIn != null)
+        {
+            interactableIn.onBecomeCurrentInteractable();
+        }
+
+        if (this.currentInteractable != null)
+        {
+            this.currentInteractable.onNoLongerCurrentInteractable();
+        }
+
+        this.currentInteractable = interactableIn;
+    }
+
+    //===========================[End of Interact]========================================
+
+    //===========================[Dodge]========================================
+
+    public void OnDodgePressed(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+        {
+            this.setIsDodging(true);
+            this.dodgeRollDirection = this.lastMovementDirection;
+            this.gameObject.GetComponent<Animator>().SetTrigger("Roll");
+        }
+    }
+
+    public void OnDodgeAnimationDone()
+    {
+        this.setIsDodging(false);
+    }
+
+    public bool getIsDodging()
+    {
+        return this.isDodging;
+    }
+
+    public void setIsDodging(bool inDodging)
+    {
+        this.isDodging = inDodging;
+        
+        //if the player starts dodging and had pressed fire but hadn't released it yet, then call OnCancel().
+        //This is because dodging intrupts any instance of a player holding the fire button on an ammo type.
+        if(isDodging && this.firePressedOnThisAmmo)
+        {
+            this.currentAmmoBehaviourPrefab.GetComponent<AmmoBehaviour>().OnCancel(this);
+            this.firePressedOnThisAmmo = false;
+        }
+    }
+
+    private void dodgeMovementLogic()
+    {
+        this.gameObject.GetComponent<Rigidbody2D>().velocity = dodgeRollDirection * dodgeRollVelocity;
+
+        if (usingMouse)
+        {
+            updateAimFromMousePosition(Mouse.current.position.ReadValue());
+        }
+    }
+
+    //===========================[End of Dodge]========================================
 }

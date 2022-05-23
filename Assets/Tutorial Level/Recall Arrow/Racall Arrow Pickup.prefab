@@ -267,7 +267,7 @@ MonoBehaviour:
     name: Recall Arrow
     ammoBehaviourPrefab: {fileID: 5973575933554856615, guid: cbab2fba49ae9774b8965964197e798b, type: 3}
     icon: {fileID: 21300000, guid: 1034ff07643269f438525b6071e57cb1, type: 3}
-    quantity: 1
+    quantity: 3
 --- !u!1 &7570731111847478965
 GameObject:
   m_ObjectHideFlags: 0
