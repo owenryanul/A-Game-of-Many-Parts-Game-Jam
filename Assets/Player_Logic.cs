@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
+using TMPro;
 
 public class Player_Logic : MonoBehaviour
 {
@@ -44,6 +45,22 @@ public class Player_Logic : MonoBehaviour
     public float dodgeRollVelocity;
     private Vector3 dodgeRollDirection;
 
+    [Header("Hp")]
+    private int currentHp;
+    private List<OnDeathListener> allOnDeathListeners;
+    private bool dying;
+
+    [Header("Statuses")]
+    private List<Status> allStatuses;
+
+    private void OnEnable()
+    {
+        allOnActivateListeners = new List<OnActivateListener>();
+        allOnDeathListeners = new List<OnDeathListener>();
+        allStatuses = new List<Status>();
+        currentHp = 3;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -53,15 +70,19 @@ public class Player_Logic : MonoBehaviour
         usingMouse = false;
         changingAmmo = false;
         firePressedOnThisAmmo = false;
-        allOnActivateListeners = new List<OnActivateListener>();
+        GameObject.FindGameObjectWithTag("base_hpIndicator").GetComponentInChildren<TextMeshProUGUI>().text = "" + this.currentHp;
+        dying = false;
         changeAmmo();
     }
 
     // Update is called once per frame
     void Update()
     {
-        movementLogic();
-        aimingLogic();
+        if (!dying)
+        {
+            movementLogic();
+            aimingLogic();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -278,18 +299,21 @@ public class Player_Logic : MonoBehaviour
 
     public void OnFirePressed(InputAction.CallbackContext context)
     {
-        if(context.phase == InputActionPhase.Performed && !this.changingAmmo && !this.isDodging)
+        if (!dying)
         {
-            PressInteraction pressInteraction = (PressInteraction)context.interaction;
-            if(pressInteraction.behavior == PressBehavior.PressOnly)
+            if (context.phase == InputActionPhase.Performed && !this.changingAmmo && !this.isDodging)
             {
-                currentAmmoBehaviourPrefab.GetComponent<AmmoBehaviour>().OnPress(this);
-                this.firePressedOnThisAmmo = true;        
-            }
-            else if(pressInteraction.behavior == PressBehavior.ReleaseOnly && this.firePressedOnThisAmmo)
-            {
-                currentAmmoBehaviourPrefab.GetComponent<AmmoBehaviour>().OnRelease(this);
-                this.firePressedOnThisAmmo = false;
+                PressInteraction pressInteraction = (PressInteraction)context.interaction;
+                if (pressInteraction.behavior == PressBehavior.PressOnly)
+                {
+                    currentAmmoBehaviourPrefab.GetComponent<AmmoBehaviour>().OnPress(this);
+                    this.firePressedOnThisAmmo = true;
+                }
+                else if (pressInteraction.behavior == PressBehavior.ReleaseOnly && this.firePressedOnThisAmmo)
+                {
+                    currentAmmoBehaviourPrefab.GetComponent<AmmoBehaviour>().OnRelease(this);
+                    this.firePressedOnThisAmmo = false;
+                }
             }
         }
     }
@@ -300,35 +324,39 @@ public class Player_Logic : MonoBehaviour
 
     public void OnNextAmmoPressed(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Performed && !changingAmmo)
+        if (!dying)
         {
-            currentAmmoIndex++;
-            if(currentAmmoIndex >= carriedAmmo.Count)
+            if (context.phase == InputActionPhase.Performed && !changingAmmo)
             {
-                currentAmmoIndex = 0;
+                currentAmmoIndex++;
+                if (currentAmmoIndex >= carriedAmmo.Count)
+                {
+                    currentAmmoIndex = 0;
+                }
+
+                changingAmmo = true;
+                GameObject.FindGameObjectWithTag("base_ammoIndicator").GetComponent<Animator>().SetTrigger("Next");
+                changeAmmo();
             }
-
-            changingAmmo = true;
-            GameObject.FindGameObjectWithTag("base_ammoIndicator").GetComponent<Animator>().SetTrigger("Next");
-            changeAmmo();
-        }
-
-        
+        }   
     }
 
     public void OnPreviousAmmoPressed(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Performed && !changingAmmo)
+        if (!dying)
         {
-            currentAmmoIndex--;
-            if (currentAmmoIndex < 0)
+            if (context.phase == InputActionPhase.Performed && !changingAmmo)
             {
-                currentAmmoIndex = carriedAmmo.Count - 1;
-            }
+                currentAmmoIndex--;
+                if (currentAmmoIndex < 0)
+                {
+                    currentAmmoIndex = carriedAmmo.Count - 1;
+                }
 
-            changingAmmo = true;
-            GameObject.FindGameObjectWithTag("base_ammoIndicator").GetComponent<Animator>().SetTrigger("Previous");
-            changeAmmo();
+                changingAmmo = true;
+                GameObject.FindGameObjectWithTag("base_ammoIndicator").GetComponent<Animator>().SetTrigger("Previous");
+                changeAmmo();
+            }
         }
     }
 
@@ -483,21 +511,24 @@ public class Player_Logic : MonoBehaviour
     //===========================[Activate]===============================================
     public void OnActivatePressed(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Performed)
+        if (!dying)
         {
-            PressInteraction pressInteraction = (PressInteraction)context.interaction;
-            if (pressInteraction.behavior == PressBehavior.PressOnly)
+            if (context.phase == InputActionPhase.Performed)
             {
-                foreach(OnActivateListener aListener in allOnActivateListeners)
+                PressInteraction pressInteraction = (PressInteraction)context.interaction;
+                if (pressInteraction.behavior == PressBehavior.PressOnly)
                 {
-                    aListener.OnActivatePressed();
+                    foreach (OnActivateListener aListener in allOnActivateListeners)
+                    {
+                        aListener.OnActivatePressed();
+                    }
                 }
-            }
-            else if (pressInteraction.behavior == PressBehavior.ReleaseOnly)
-            {
-                foreach (OnActivateListener aListener in allOnActivateListeners)
+                else if (pressInteraction.behavior == PressBehavior.ReleaseOnly)
                 {
-                    aListener.OnActivateReleased();
+                    foreach (OnActivateListener aListener in allOnActivateListeners)
+                    {
+                        aListener.OnActivateReleased();
+                    }
                 }
             }
         }
@@ -512,16 +543,25 @@ public class Player_Logic : MonoBehaviour
     {
         this.allOnActivateListeners.Remove(listenerIn);
     }
+
+    //TODO: Test this.
+    public bool isaOnActivateListner(OnActivateListener listenerIn)
+    {
+        return allOnActivateListeners.Contains(listenerIn);
+    }
     //===========================[End of Activate]========================================
 
     //===========================[Interact]========================================
 
     public void OnInteractPressed(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Performed && this.getCurrentInteractable() != null)
+        if (!dying)
         {
-            Debug.Log("Interact Pressed");
-            this.currentInteractable.onInteracted();
+            if (context.phase == InputActionPhase.Performed && this.getCurrentInteractable() != null)
+            {
+                Debug.Log("Interact Pressed");
+                this.currentInteractable.onInteracted();
+            }
         }
     }
 
@@ -551,11 +591,14 @@ public class Player_Logic : MonoBehaviour
 
     public void OnDodgePressed(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Performed)
+        if (!dying)
         {
-            this.setIsDodging(true);
-            this.dodgeRollDirection = this.lastMovementDirection;
-            this.gameObject.GetComponent<Animator>().SetTrigger("Roll");
+            if (context.phase == InputActionPhase.Performed)
+            {
+                this.setIsDodging(true);
+                this.dodgeRollDirection = this.lastMovementDirection;
+                this.gameObject.GetComponent<Animator>().SetTrigger("Roll");
+            }
         }
     }
 
@@ -593,4 +636,148 @@ public class Player_Logic : MonoBehaviour
     }
 
     //===========================[End of Dodge]========================================
+
+    //===========================[Hp]========================================
+
+    public void setHp(int HPin, bool triggerHurtAnimation = false)
+    {
+        this.currentHp = HPin;
+        GameObject.FindGameObjectWithTag("base_hpIndicator").GetComponentInChildren<TextMeshProUGUI>().text = "" + this.currentHp;
+        if(this.currentHp <= 0)
+        {
+            this.die();
+        }
+        else if(triggerHurtAnimation)
+        {
+            this.gameObject.GetComponent<Animator>().SetTrigger("Hurt");
+        }
+    }
+
+    public void addHp(int HPtoAdd, bool triggerHurtAnimation = false)
+    {
+        this.currentHp += HPtoAdd;
+        GameObject.FindGameObjectWithTag("base_hpIndicator").GetComponentInChildren<TextMeshProUGUI>().text = "" + this.currentHp;
+        if (this.currentHp <= 0)
+        {
+            this.die();
+        }
+        else if (triggerHurtAnimation)
+        {
+            this.gameObject.GetComponent<Animator>().SetTrigger("Hurt");
+        }
+    }
+
+    public int getHP()
+    {
+        return this.currentHp;
+    }
+
+    public void addOnDeathListener(OnDeathListener listenerIn)
+    {
+        this.allOnDeathListeners.Add(listenerIn);
+    }
+
+    public void removeOnDeathListener(OnDeathListener listenerToRemove)
+    {
+        this.allOnDeathListeners.Remove(listenerToRemove);
+    }
+
+    private void die()
+    {
+        this.dying = true;
+        this.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        this.gameObject.GetComponent<Animator>().SetBool("Die", true);
+    }
+
+    public void respawn()
+    {
+        this.dying = false;
+        this.currentHp = 1;
+        this.gameObject.GetComponent<Animator>().SetBool("Die", false);
+    }
+
+    public void OnDeathAnimationFinished()
+    {
+        foreach(OnDeathListener aListener in allOnDeathListeners)
+        {
+            aListener.OnPlayerDies(this);
+        }
+    }
+
+    //===========================[End of Hp]========================================
+
+    //===========================[Status]========================================
+
+    [System.Serializable]
+    public class Status
+    {
+        public string id;
+        public string data;
+
+        public Status(string idIn, string dataIn)
+        {
+            id = idIn;
+            data = dataIn;
+        }
+    }
+
+    public void addStatus(string newId, string newData)
+    {
+        foreach (Status aStatus in allStatuses)
+        {
+            if (aStatus.id == newId)
+            {
+                Debug.Log("addStatus has replaced pre-existing Status with id " + newId);
+                aStatus.data = newData;
+                return;
+            }
+        }
+        allStatuses.Add(new Status(newId, newData));
+    }
+
+    //Returns Null if the player does not have a status with the matching ID.
+    public string getStatus(string id)
+    {
+        foreach(Status aStatus in allStatuses)
+        {
+            if(aStatus.id == id)
+            {
+                return aStatus.data;
+            }
+        }
+        return null;
+    }
+
+    public bool modifyStatus(string id, string newData)
+    {
+        foreach (Status aStatus in allStatuses)
+        {
+            if (aStatus.id == id)
+            {
+                aStatus.data = newData;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void removeStatus(string idToRemove)
+    {
+        Status statusToRemove = null;
+        foreach (Status aStatus in allStatuses)
+        {
+            if (aStatus.id == idToRemove)
+            {
+                statusToRemove = aStatus;
+                break;
+            }
+        }
+
+        if(statusToRemove != null)
+        {
+            allStatuses.Remove(statusToRemove);
+        }
+    }
+
+    //===========================[End of Status]========================================
 }

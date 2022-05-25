@@ -12,6 +12,7 @@ TagManager:
   - sample_previousPreviousAmmoImage
   - base_ammoIndicator
   - base_interactable
+  - base_hpIndicator
   layers:
   - Default
   - TransparentFX

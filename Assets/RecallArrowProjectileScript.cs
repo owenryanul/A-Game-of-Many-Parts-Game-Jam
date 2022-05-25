@@ -75,6 +75,9 @@ public class RecallArrowProjectileScript : MonoBehaviour, OnActivateListener
 
     private void OnDestroy()
     {
-        GameObject.FindGameObjectWithTag("base_player").GetComponent<Player_Logic>().removeOnActivateListener(this);
+        if (GameObject.FindGameObjectWithTag("base_player") != null)
+        {
+            GameObject.FindGameObjectWithTag("base_player").GetComponent<Player_Logic>().removeOnActivateListener(this);
+        }
     }
 }
