@@ -13,6 +13,8 @@ TagManager:
   - base_ammoIndicator
   - base_interactable
   - base_hpIndicator
+  - base_screenFadeEffects
+  - base_quitText
   layers:
   - Default
   - TransparentFX

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
 using TMPro;
+using System;
 
 public class Player_Logic : MonoBehaviour
 {
@@ -53,6 +54,9 @@ public class Player_Logic : MonoBehaviour
     [Header("Statuses")]
     private List<Status> allStatuses;
 
+    [Header("Paused")]
+    public bool paused = false;
+
     private void OnEnable()
     {
         allOnActivateListeners = new List<OnActivateListener>();
@@ -78,10 +82,15 @@ public class Player_Logic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!dying)
+        if (!dying && !paused) 
         {
             movementLogic();
             aimingLogic();
+        }
+
+        if(paused)
+        {
+            this.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         }
     }
 
@@ -262,19 +271,22 @@ public class Player_Logic : MonoBehaviour
 
     public void onAimListener(InputAction.CallbackContext context)
     {
-        //context.ReadValue<Vector2>().normalized;
-        if (context.control.name == "position")
+        if (!dying && !paused)
         {
-            usingMouse = true;
-            //this.gameObject.GetComponentInChildren<SpriteRenderer>().enabled = true;
-            updateAimFromMousePosition(context.ReadValue<Vector2>());
-        }
-        else if (context.control.name == "rightStick")
-        {
-            usingMouse = false;
-            aimDirection = context.ReadValue<Vector2>();
-            //this.targetPosition = this.gameObject.transform.position + cursorMoveDirection;// * cursorSpeedOnController;
-            //Debug.Log("Updated Controller Position " + cursorMoveDirection + " : " + this.targetPosition);
+            //context.ReadValue<Vector2>().normalized;
+            if (context.control.name == "position")
+            {
+                usingMouse = true;
+                //this.gameObject.GetComponentInChildren<SpriteRenderer>().enabled = true;
+                updateAimFromMousePosition(context.ReadValue<Vector2>());
+            }
+            else if (context.control.name == "rightStick")
+            {
+                usingMouse = false;
+                aimDirection = context.ReadValue<Vector2>();
+                //this.targetPosition = this.gameObject.transform.position + cursorMoveDirection;// * cursorSpeedOnController;
+                //Debug.Log("Updated Controller Position " + cursorMoveDirection + " : " + this.targetPosition);
+            }
         }
     }
 
@@ -282,9 +294,12 @@ public class Player_Logic : MonoBehaviour
     //Note: This won't be necessary if the camera is locked to the player's position.
     private void updateAimFromMousePosition(Vector2 posIn)
     {
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(posIn);
-        mousePosition.z = 0;
-        aimDirection = (mousePosition - this.gameObject.transform.position);
+        if (Camera.main != null)
+        {
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(posIn);
+            mousePosition.z = 0;
+            aimDirection = (mousePosition - this.gameObject.transform.position);
+        }
     }
 
     public Vector3 getAimDirection()
@@ -299,7 +314,7 @@ public class Player_Logic : MonoBehaviour
 
     public void OnFirePressed(InputAction.CallbackContext context)
     {
-        if (!dying)
+        if (!dying && !paused)
         {
             if (context.phase == InputActionPhase.Performed && !this.changingAmmo && !this.isDodging)
             {
@@ -324,7 +339,7 @@ public class Player_Logic : MonoBehaviour
 
     public void OnNextAmmoPressed(InputAction.CallbackContext context)
     {
-        if (!dying)
+        if (!dying && !paused)
         {
             if (context.phase == InputActionPhase.Performed && !changingAmmo)
             {
@@ -343,7 +358,7 @@ public class Player_Logic : MonoBehaviour
 
     public void OnPreviousAmmoPressed(InputAction.CallbackContext context)
     {
-        if (!dying)
+        if (!dying && !paused)
         {
             if (context.phase == InputActionPhase.Performed && !changingAmmo)
             {
@@ -511,7 +526,7 @@ public class Player_Logic : MonoBehaviour
     //===========================[Activate]===============================================
     public void OnActivatePressed(InputAction.CallbackContext context)
     {
-        if (!dying)
+        if (!dying && !paused)
         {
             if (context.phase == InputActionPhase.Performed)
             {
@@ -555,7 +570,7 @@ public class Player_Logic : MonoBehaviour
 
     public void OnInteractPressed(InputAction.CallbackContext context)
     {
-        if (!dying)
+        if (!dying && !paused)
         {
             if (context.phase == InputActionPhase.Performed && this.getCurrentInteractable() != null)
             {
@@ -591,7 +606,7 @@ public class Player_Logic : MonoBehaviour
 
     public void OnDodgePressed(InputAction.CallbackContext context)
     {
-        if (!dying)
+        if (!dying && !paused)
         {
             if (context.phase == InputActionPhase.Performed)
             {
@@ -780,4 +795,6 @@ public class Player_Logic : MonoBehaviour
     }
 
     //===========================[End of Status]========================================
+
+
 }
