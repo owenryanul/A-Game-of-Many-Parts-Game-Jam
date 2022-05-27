@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 678567601369932876}
   m_Layer: 8
   m_Name: Recall Arrow
-  m_TagString: Untagged
+  m_TagString: sample_playerProjectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

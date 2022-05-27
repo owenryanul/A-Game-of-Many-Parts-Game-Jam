@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class LeverLogic : MonoBehaviour, Interactable
 {
+    [Header("Listener")]
+    public List<LeverListener> listeners;
+
+    [Header("Visuals")]
     public Sprite onSprite;
     public Sprite offSprite;
     private bool isOn;
+
+    
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +41,11 @@ public class LeverLogic : MonoBehaviour, Interactable
             isOn = true;
             this.GetComponent<SpriteRenderer>().sprite = onSprite;
             this.GetComponentInChildren<SpriteMask>().sprite = onSprite;
+        }
+
+        foreach (LeverListener aListener in listeners)
+        {
+            aListener.onLeverStateChanged(isOn);
         }
     }
 

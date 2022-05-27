@@ -620,6 +620,11 @@ public class Player_Logic : MonoBehaviour
     public void OnDodgeAnimationDone()
     {
         this.setIsDodging(false);
+        
+        Collider2D playerCollide = this.gameObject.GetComponent<Collider2D>();
+        //Physics.SyncTransforms();
+        playerCollide.enabled = false;
+        playerCollide.enabled = true;
     }
 
     public bool getIsDodging()
