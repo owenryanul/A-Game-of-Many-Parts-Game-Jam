@@ -1,0 +1,59 @@
+
+Game Rules:
+
+1. Every scene must include an instance of the following:
+	-Player Prefab
+	-Ammo Indicator Prefab
+	-Hp Indicator Prefab
+	-Quiting Text Prefab
+	-ScreenFadeEffects Prefab
+	-Level Exit Prefab
+	
+2. At least one of your scenes must include a Level Exit that returns to the Lobby.
+
+3. No directly modifying anything in the Do Not Modify Folder.
+
+4. At least one of your scenes must include some splash text that shows:
+	a. The name of your part
+	b. A describtive line of the format "The Part[rest of the line]". E.g. "The part where you fight a goose."
+	c. Your name to show it's your part.
+	
+5. Your work must include a text file listing all the credits for you part.
+
+
+Style Guide Rules to make merging everything easier:
+
+1. Tell everyone what you'll be using as an identifier for your part of the game. E.g. "MyID". 
+
+2. All assets, scenes, etc that you add must be stored in a folder in Assets named with your identifier e.g. "MyID_Part"
+
+3. All scripts, tags and scenes must be named in the format MyID_filename.
+
+4. No new layers, sorting layers or input files. (Except by group consent)
+
+5. No modifying project or build settings beyond adding Scenes. (Except by group consent)
+	
+6. No ducks in a purple top hat named Steve.	
+	
+FAQ:
+
+Q: Can I just lock all of the essential prefabs in a closet off camera and go do my own thing?
+A: Yes. As long as they're all present and not throwing errors its fine.
+
+Q: Do I have to match the art style of the player character.
+A: No.
+
+Q: I have religious objections to X style of programming style, do I have to use it?
+A: No. If it works you can write your entire program on a single line, you utter monster.
+
+Q: Are asset packs okay to use?
+A: As long as they're free to use, stored in your Part folder and 
+   you include proper credits for them in your credits text file.
+   
+Q: Do I have to use all the hooks on the player character or can I try my own work arounds?
+A: Yes. The hooks are there to make it easier to work with the Player character but if your work arounds
+work and don't break anything nobody will stop you.
+   
+Q: Are Ducks in a magenta top hat called Steve okay?
+A: Yes.
+

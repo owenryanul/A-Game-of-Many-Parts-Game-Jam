@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 public interface OnDeathListener
 {
-    public void OnPlayerDies(Player_Logic playerLogic);
+    public void OnPlayerDies(PlayerLogic playerLogic);
 }

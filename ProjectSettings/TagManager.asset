@@ -5,18 +5,18 @@ TagManager:
   serializedVersion: 2
   tags:
   - base_player
-  - sample_currentAmmoImage
-  - sample_nextAmmoImage
-  - sample_previousAmmoImage
-  - sample_nextNextAmmoImage
-  - sample_previousPreviousAmmoImage
   - base_ammoIndicator
   - base_interactable
   - base_hpIndicator
   - base_screenFadeEffects
   - base_quitText
-  - tutorial_dialogBox
   - sample_playerProjectile
+  - base_currentAmmoImage
+  - base_nextAmmoImage
+  - base_previousAmmoImage
+  - base_nextNextAmmoImage
+  - base_previousPreviousAmmoImage
+  - sample_dialogBox
   layers:
   - Default
   - TransparentFX
@@ -26,13 +26,13 @@ TagManager:
   - UI
   - Player
   - Level
+  - Actors
   - Player Projectiles
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Other Projectiles
+  - Collide with Player Only
+  - Collide with Projectiles Only
+  - Collide with Actors Only
+  - No Collide
   - 
   - 
   - 
@@ -51,8 +51,17 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Behind Background
+    uniqueID: 3543543549
+    locked: 0
+  - name: Background
+    uniqueID: 500923625
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Behind Behind Player
+    uniqueID: 1940007563
     locked: 0
   - name: Behind Player
     uniqueID: 2307447433
@@ -63,9 +72,15 @@ TagManager:
   - name: Infront of Player
     uniqueID: 1949024441
     locked: 0
-  - name: BehindUI
+  - name: Infront Infront of Player
+    uniqueID: 3089290679
+    locked: 0
+  - name: Behind UI
     uniqueID: 2986515065
     locked: 0
   - name: UI
     uniqueID: 1780004919
+    locked: 0
+  - name: Infront UI
+    uniqueID: 1208152667
     locked: 0
