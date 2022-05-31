@@ -43,6 +43,10 @@ A: Yes. As long as they're all present and not throwing errors its fine.
 Q: Do I have to match the art style of the player character.
 A: No.
 
+Q: How am I supposed to make a game without using layers and sorting layers.
+A: A set of preexisting layers and sorting layers are already included for you to use. 
+   If any glaring omissions crop up, then all partipiates can agree to add a layer or sorting layer to fill it.
+
 Q: I have religious objections to X style of programming style, do I have to use it?
 A: No. If it works you can write your entire program on a single line, you utter monster.
 

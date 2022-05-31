@@ -130,6 +130,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2035545961}
     m_Modifications:
+    - target: {fileID: 1025685489, guid: 938e373c8be2ce94fa6e393d49cc66f0, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -42.499996
+      objectReference: {fileID: 0}
     - target: {fileID: 4674653917956060957, guid: 938e373c8be2ce94fa6e393d49cc66f0, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -279,6 +283,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3608112135119562038, guid: 72229f21bfa1025449b0b2cb300e383c, type: 3}
+      propertyPath: playerCamera
+      value: 
+      objectReference: {fileID: 237131857}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72229f21bfa1025449b0b2cb300e383c, type: 3}
 --- !u!1001 &112360660

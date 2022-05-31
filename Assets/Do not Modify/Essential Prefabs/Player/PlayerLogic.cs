@@ -57,6 +57,10 @@ public class PlayerLogic : MonoBehaviour
     [Header("Paused")]
     public bool paused = false;
 
+    [Header("Misc")]
+    public Camera playerCamera;
+    public bool playerCameraFollowsPlayer = false;
+
     private void OnEnable()
     {
         allOnActivateListeners = new List<OnActivateListener>();
@@ -85,6 +89,10 @@ public class PlayerLogic : MonoBehaviour
         if (!dying && !paused) 
         {
             movementLogic();
+            if(playerCameraFollowsPlayer)
+            {
+                playerCamera.transform.position = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, playerCamera.transform.position.z);
+            }
             aimingLogic();
         }
 
@@ -92,6 +100,7 @@ public class PlayerLogic : MonoBehaviour
         {
             this.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         }
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -125,11 +134,6 @@ public class PlayerLogic : MonoBehaviour
             if (movementDirection != Vector2.zero)
             {
                 this.gameObject.GetComponent<Rigidbody2D>().velocity = movementDirection.normalized * currentSpeed;
-
-                if (usingMouse)
-                {
-                    updateAimFromMousePosition(Mouse.current.position.ReadValue());
-                }
             }
             else
             {
@@ -242,6 +246,11 @@ public class PlayerLogic : MonoBehaviour
 
     private void aimingLogic()
     {
+        if (usingMouse)
+        {
+            updateAimFromMousePosition(Mouse.current.position.ReadValue());
+        }
+
         if (aimDirection.magnitude < 0.1f)
         {
             this.transform.Find("Reticle").GetComponent<SpriteRenderer>().enabled = false;
@@ -283,7 +292,7 @@ public class PlayerLogic : MonoBehaviour
             {
                 usingMouse = true;
                 //this.gameObject.GetComponentInChildren<SpriteRenderer>().enabled = true;
-                updateAimFromMousePosition(context.ReadValue<Vector2>());
+                //updateAimFromMousePosition(context.ReadValue<Vector2>());               
             }
             else if (context.control.name == "rightStick")
             {
@@ -295,13 +304,14 @@ public class PlayerLogic : MonoBehaviour
         }
     }
 
-    //Called when the player moves so that the aim position is updated when the player moves even if the player doesn't move the mouse.
-    //Note: This won't be necessary if the camera is locked to the player's position.
+    //Called when the player moves so that the aim position.
+    //Also called from movementLogic if isUsingFixedCamera is true.
+    //Updates the position the player is aiming at based on their position and posIn
     private void updateAimFromMousePosition(Vector2 posIn)
-    {
-        if (Camera.main != null)
+    {      
+        if (playerCamera != null)
         {
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(posIn);
+            Vector3 mousePosition = playerCamera.ScreenToWorldPoint(posIn);
             mousePosition.z = 0;
             aimDirection = (mousePosition - this.gameObject.transform.position);
         }
@@ -653,11 +663,6 @@ public class PlayerLogic : MonoBehaviour
     private void dodgeMovementLogic()
     {
         this.gameObject.GetComponent<Rigidbody2D>().velocity = dodgeRollDirection * dodgeRollVelocity;
-
-        if (usingMouse)
-        {
-            updateAimFromMousePosition(Mouse.current.position.ReadValue());
-        }
     }
 
     //===========================[End of Dodge]========================================
@@ -805,6 +810,11 @@ public class PlayerLogic : MonoBehaviour
     }
 
     //===========================[End of Status]========================================
+
+    //===========================[Misc]========================================
+
+
+    //===========================[End of Misc]========================================
 
 
 }
