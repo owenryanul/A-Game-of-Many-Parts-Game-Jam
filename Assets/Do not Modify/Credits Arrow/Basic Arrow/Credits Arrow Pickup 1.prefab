@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 8109986728828260918}
   - component: {fileID: 8109986728828260919}
   m_Layer: 11
-  m_Name: Arrow Pickup 1
+  m_Name: Credits Arrow Pickup 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

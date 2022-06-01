@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
+    path: 
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
     path: Assets/Sample_Tutorial Level/Sample_TutorialLevel.unity
@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Do not Modify/Lobby Scene/base_Lobby.unity
     guid: 59c3a9846d6737248aa0502d120b1ca9
+  - enabled: 1
+    path: Assets/Template_Part/Template_TemplateScene.unity
+    guid: d5d7ce16c0a4c0740897eefd5f52e4e3
   m_configObjects: {}
