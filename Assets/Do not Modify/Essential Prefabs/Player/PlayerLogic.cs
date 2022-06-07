@@ -57,6 +57,11 @@ public class PlayerLogic : MonoBehaviour
     [Header("Paused")]
     public bool paused = false;
 
+    [Header("Audio")]
+    public AudioClip painSound;
+    public AudioClip rollSound;
+    public AudioClip deathSound;
+
     [Header("Misc")]
     public Camera playerCamera;
     public bool playerCameraFollowsPlayer = false;
@@ -623,11 +628,12 @@ public class PlayerLogic : MonoBehaviour
     {
         if (!dying && !paused)
         {
-            if (context.phase == InputActionPhase.Performed)
+            if (context.phase == InputActionPhase.Performed && !this.isDodging)
             {
                 this.setIsDodging(true);
                 this.dodgeRollDirection = this.lastMovementDirection;
                 this.gameObject.GetComponent<Animator>().SetTrigger("Roll");
+                this.gameObject.GetComponent<AudioSource>().PlayOneShot(rollSound);
             }
         }
     }
@@ -694,6 +700,7 @@ public class PlayerLogic : MonoBehaviour
         else if (triggerHurtAnimation)
         {
             this.gameObject.GetComponent<Animator>().SetTrigger("Hurt");
+            this.gameObject.GetComponent<AudioSource>().PlayOneShot(painSound);
         }
     }
 
@@ -714,9 +721,13 @@ public class PlayerLogic : MonoBehaviour
 
     private void die()
     {
-        this.dying = true;
-        this.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        this.gameObject.GetComponent<Animator>().SetBool("Die", true);
+        if (!this.dying)
+        {
+            this.dying = true;
+            this.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            this.gameObject.GetComponent<Animator>().SetBool("Die", true);
+            this.gameObject.GetComponent<AudioSource>().PlayOneShot(deathSound);
+        }
     }
 
     public void respawn()

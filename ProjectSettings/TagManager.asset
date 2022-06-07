@@ -17,6 +17,9 @@ TagManager:
   - base_nextNextAmmoImage
   - base_previousPreviousAmmoImage
   - sample_dialogBox
+  - sample_enemy
+  - sample_blastable
+  - sample_explosion
   layers:
   - Default
   - TransparentFX
