@@ -1,24 +1,28 @@
+Game Jam Rules:
 
-Game Rules:
-
-1. Every scene must include an instance of the following:
-	-Player Prefab
-	-Ammo Indicator Prefab
-	-Hp Indicator Prefab
-	-Quiting Text Prefab
-	-ScreenFadeEffects Prefab
+1. Every scene must include an instance of the following essential prefabs:
+	-Player Character
+	-Ammo Indicator
+	-Hp Indicator
+	-ScreenFadeEffects
+	-Quit and Retry Text
 	-Level Exit Prefab
 	
-2. At least one of your scenes must include a Level Exit that returns to the Lobby.
+2. At least one of your scenes must include a Level Exit that returns to the Lobby/Level Select Scene.
 
-3. No directly modifying anything in the Do Not Modify Folder.
+3. Any uses of DontDestroyOnLoad must be cleaned up before the player returns to the lobby
+(either via level exit or quit function).
 
-4. At least one of your scenes must include some splash text that shows:
+4. Use Unity Version 2021.3.2f1.
+
+5. No directly modifying anything in the Do Not Modify Folder.
+
+6. At least one of your scenes must include some splash text that shows:
 	a. The name of your part
 	b. A describtive line of the format "The Part[rest of the line]". E.g. "The part where you fight a goose."
 	c. Your name to show it's your part.
 	
-5. Your work must include a text file listing all the credits for you part.
+7. Your work must include a text file listing all the credits for you part.
 
 
 Style Guide Rules to make merging everything easier:
@@ -40,14 +44,23 @@ FAQ:
 Q: Can I just lock all of the essential prefabs in a closet off camera and go do my own thing?
 A: Yes. As long as they're all present and not throwing errors its fine.
 
+Q: Can I edit public fields for an Essential Prefab in the inspector?
+A: Yes, as long as the changes are only to your instances of them in the scenes and not to the prefabs themselves.
+
+Q: Can I attach new componets to my instances of the Essential Prefabs?
+A: No.
+
 Q: Do I have to match the art style of the player character.
 A: No.
+
+Q: Can I use assets from the example level.
+A: Yes of course. Though it might be best to create a copy of the assets in your own folder and use those instead.
 
 Q: How am I supposed to make a game without using layers and sorting layers.
 A: A set of preexisting layers and sorting layers are already included for you to use. 
    If any glaring omissions crop up, then all partipiates can agree to add a layer or sorting layer to fill it.
 
-Q: I have religious objections to X style of programming style, do I have to use it?
+Q: I have religious objections to X style of programming braces, do I have to use it?
 A: No. If it works you can write your entire program on a single line, you utter monster.
 
 Q: Are asset packs okay to use?
@@ -60,4 +73,3 @@ work and don't break anything nobody will stop you.
    
 Q: Are Ducks in a magenta top hat called Steve okay?
 A: Yes.
-
