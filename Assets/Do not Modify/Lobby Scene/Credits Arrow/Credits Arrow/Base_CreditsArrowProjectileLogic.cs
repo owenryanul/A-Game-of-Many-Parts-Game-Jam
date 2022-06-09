@@ -33,7 +33,7 @@ public class Base_CreditsArrowProjectileLogic : MonoBehaviour
 
     public void fireInDirection(Vector3 targetDirectionIn, string creditsTextIn)
     {
-        targetDirection = targetDirectionIn;
+        targetDirection = targetDirectionIn.normalized;
         credits = creditsTextIn;
 
         float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;

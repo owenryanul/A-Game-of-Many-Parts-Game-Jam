@@ -8,6 +8,10 @@ using System;
 
 public class PlayerLogic : MonoBehaviour
 {
+    [Header("Camera")]
+    public Camera playerCamera;
+    public bool playerCameraFollowsPlayer = false;
+
     [Header("Movement")]
     public float topSpeed = 1.0f; //in units/second
     public float acceleration = 1.0f; //in units/second/second
@@ -17,12 +21,12 @@ public class PlayerLogic : MonoBehaviour
     private Vector2 movementDirection;
     private Vector2 lastMovementDirection;
 
-    public Vector2 externalVelocity;
+    private Vector2 externalVelocity;
     private bool overridePlayerMovementVelocity;
 
     [Header("Aiming")]
-    public Vector3 aimDirection;
     public float maxReticleDistanceFromPlayer;
+    private Vector3 aimDirection;
     private bool usingMouse;
 
     [Header("Ammo")]
@@ -38,12 +42,12 @@ public class PlayerLogic : MonoBehaviour
     [Header("Activate")]
     public List<OnActivateListener> allOnActivateListeners;
 
-    [Header("Interactable")]
+    [Header("Interact")]
     private Interactable currentInteractable;
 
     [Header("Dodge Roll")]
-    private bool isDodging;
     public float dodgeRollVelocity;
+    private bool isDodging;
     private Vector3 dodgeRollDirection;
 
     [Header("Hp")]
@@ -61,10 +65,6 @@ public class PlayerLogic : MonoBehaviour
     public AudioClip painSound;
     public AudioClip rollSound;
     public AudioClip deathSound;
-
-    [Header("Misc")]
-    public Camera playerCamera;
-    public bool playerCameraFollowsPlayer = false;
 
     private void OnEnable()
     {
@@ -205,18 +205,6 @@ public class PlayerLogic : MonoBehaviour
         //Debug.Log("movement direction changed, is now: " + this.movementDirection);
     }
 
-    public void setExternalVelocity(Vector2 velocityIn, bool doOverridePlayerMovement = false)
-    {
-        overridePlayerMovementVelocity = doOverridePlayerMovement;
-        externalVelocity = velocityIn;
-    }
-
-    public void addExternalVelocity(Vector2 velocityIn, bool doOverridePlayerMovement = false)
-    {
-        overridePlayerMovementVelocity = doOverridePlayerMovement;
-        externalVelocity += velocityIn;
-    }
-
     private void setVisualFacing(bool isFlipped)
     {
         foreach (SpriteRenderer aSprite in this.gameObject.GetComponentsInChildren<SpriteRenderer>())
@@ -243,6 +231,36 @@ public class PlayerLogic : MonoBehaviour
     public Vector2 getPlayerMovementDirection()
     {
         return this.movementDirection;
+    }
+
+    //Sets the External Velocity vector that will be applied to the player every update after player movement is calculated.
+    //If overridePlayerMovementVelocity is set to true, then external velocity will replcae player movement instead of being applied after it.
+    public void setExternalVelocity(Vector2 velocityIn)
+    {
+        externalVelocity = velocityIn;
+    }
+
+    //Adds velocityIn to the current value of the External Velocity vector that will be applied to the player every update after player movement is calculated.
+    //If overridePlayerMovementVelocity is set to true, then external velocity will replcae player movement instead of being applied after it.
+    public void addExternalVelocity(Vector2 velocityIn)
+    {
+        externalVelocity += velocityIn;
+    }
+
+    //Returns the current value of ExternalVelocity.
+    public Vector2 getExternalVelocity()
+    {
+        return this.externalVelocity;
+    }
+
+    public bool getIsExternalVelocityOverridingPlayerMovement()
+    {
+        return this.overridePlayerMovementVelocity;
+    }
+
+    public void setIsExternalVelocityOverridingPlayerMovement(bool doOverridePlayerMovementVelocity)
+    {
+        this.overridePlayerMovementVelocity = doOverridePlayerMovementVelocity;
     }
 
     //===========================[End of Movement]======================================
@@ -322,9 +340,10 @@ public class PlayerLogic : MonoBehaviour
         }
     }
 
+    //Returns the direction the player is currently aiming in.
     public Vector3 getAimDirection()
     {
-        return this.aimDirection.normalized;
+        return this.aimDirection;
     }
 
     //===========================[End of Aiming]======================================

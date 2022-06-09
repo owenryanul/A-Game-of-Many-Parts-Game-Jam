@@ -55,7 +55,7 @@ public class Sample_RecallArrowProjectileScript : MonoBehaviour, OnActivateListe
 
     public void fireInDirection(Vector3 targetDirectionIn)
     {
-        targetDirection = targetDirectionIn;
+        targetDirection = targetDirectionIn.normalized;
 
         float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
         this.gameObject.GetComponent<Rigidbody2D>().rotation = angle + facingOffset;
