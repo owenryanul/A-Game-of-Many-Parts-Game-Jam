@@ -21,7 +21,7 @@ public class ExampleStatusEffectMonitorLogic : MonoBehaviour, OnDeathListener
     void Update()
     {
         waterParticleEmitter.transform.position = player.transform.position;
-        string exampleStatus = player.GetComponent<PlayerLogic>().getStatus("Wet");
+        string exampleStatus = player.GetComponent<PlayerLogic>().getStatusData("Wet");
         if (exampleStatus != null)
         {
             float durationLeft = float.Parse(exampleStatus);

@@ -13,7 +13,7 @@ Game Jam Rules:
 3. Any uses of DontDestroyOnLoad must be cleaned up before the player returns to the lobby
 (either via level exit or quit function).
 
-4. Use Unity Version 2021.3.2f1.
+4. Use Unity Version 2021.3.4f1.
 
 5. No directly modifying anything in the Do Not Modify Folder.
 

@@ -37585,9 +37585,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 279519457}
     m_Modifications:
+    - target: {fileID: 2611151914741582005, guid: f031229c508dc6b41b9f76d7decb78ef, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.000015258789
+      objectReference: {fileID: 0}
     - target: {fileID: 6525853948740875689, guid: f031229c508dc6b41b9f76d7decb78ef, type: 3}
       propertyPath: m_Name
       value: Ammo Indicator
+      objectReference: {fileID: 0}
+    - target: {fileID: 6732363104855090836, guid: f031229c508dc6b41b9f76d7decb78ef, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8183900045387039391, guid: f031229c508dc6b41b9f76d7decb78ef, type: 3}
       propertyPath: m_Pivot.x

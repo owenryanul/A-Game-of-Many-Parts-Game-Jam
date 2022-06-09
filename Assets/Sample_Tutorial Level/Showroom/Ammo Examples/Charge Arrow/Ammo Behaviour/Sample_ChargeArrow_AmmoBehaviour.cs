@@ -39,14 +39,14 @@ public class Sample_ChargeArrow_AmmoBehaviour : MonoBehaviour, AmmoBehaviour
         //No Effect
     }
 
-    public void OnPress(PlayerLogic playerLogic)
+    public void OnFirePressd(PlayerLogic playerLogic)
     {
         currentBuiltUpSpeed = 0;
         charging = true;
         chargeParticleEmitter = Instantiate(chargeParticleEmitterPrefab, playerLogic.gameObject.transform.position, playerLogic.gameObject.transform.rotation);
     }
 
-    public void OnRelease(PlayerLogic playerLogic)
+    public void OnFireReleased(PlayerLogic playerLogic)
     {
         Debug.Log("Charge Arrow Released");
         GameObject arrow = Instantiate(chargeArrowPrefab, playerLogic.gameObject.transform.position, playerLogic.gameObject.transform.rotation);
@@ -57,7 +57,7 @@ public class Sample_ChargeArrow_AmmoBehaviour : MonoBehaviour, AmmoBehaviour
         playerLogic.modifyAmmoAmount(playerLogic.getAmmoRelativeToCurrent(0), -1);
     }
 
-    public void OnCancel(PlayerLogic playerLogic)
+    public void OnFireCancelled(PlayerLogic playerLogic)
     {
         Debug.Log("Charge Arrow Canceled");
         if (charging)

@@ -27,7 +27,7 @@ public class Sample_ElectrifiedLeverLogic : MonoBehaviour, Interactable
     public void onInteracted()
     {
         GameObject player = GameObject.FindGameObjectWithTag("base_player");
-        if (player.GetComponent<PlayerLogic>().getStatus("Wet") != null)
+        if (player.GetComponent<PlayerLogic>().getStatusData("Wet") != null)
         {
             Instantiate(electricShockParticlePrefab, player.transform.position, player.transform.rotation);
             player.GetComponent<PlayerLogic>().addHp(-10, true);

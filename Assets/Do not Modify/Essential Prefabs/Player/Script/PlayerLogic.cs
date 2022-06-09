@@ -30,9 +30,9 @@ public class PlayerLogic : MonoBehaviour
     private bool usingMouse;
 
     [Header("Ammo")]
-    public int currentAmmoIndex;
     public List<Ammo> carriedAmmo;
     public Ammo defaultAmmo;
+    private int currentAmmoIndex;
     private bool changingAmmo;
 
     [Header("Fire")]
@@ -360,12 +360,12 @@ public class PlayerLogic : MonoBehaviour
                 PressInteraction pressInteraction = (PressInteraction)context.interaction;
                 if (pressInteraction.behavior == PressBehavior.PressOnly)
                 {
-                    currentAmmoBehaviourPrefab.GetComponent<AmmoBehaviour>().OnPress(this);
+                    currentAmmoBehaviourPrefab.GetComponent<AmmoBehaviour>().OnFirePressd(this);
                     this.firePressedOnThisAmmo = true;
                 }
                 else if (pressInteraction.behavior == PressBehavior.ReleaseOnly && this.firePressedOnThisAmmo)
                 {
-                    currentAmmoBehaviourPrefab.GetComponent<AmmoBehaviour>().OnRelease(this);
+                    currentAmmoBehaviourPrefab.GetComponent<AmmoBehaviour>().OnFireReleased(this);
                     this.firePressedOnThisAmmo = false;
                 }
             }
@@ -378,6 +378,7 @@ public class PlayerLogic : MonoBehaviour
 
     public void OnNextAmmoPressed(InputAction.CallbackContext context)
     {
+        Debug.Log("fish");
         if (!dying && !paused)
         {
             if (context.phase == InputActionPhase.Performed && !changingAmmo)
@@ -397,6 +398,7 @@ public class PlayerLogic : MonoBehaviour
 
     public void OnPreviousAmmoPressed(InputAction.CallbackContext context)
     {
+        Debug.Log("mish");
         if (!dying && !paused)
         {
             if (context.phase == InputActionPhase.Performed && !changingAmmo)
@@ -418,9 +420,9 @@ public class PlayerLogic : MonoBehaviour
     {
         if (currentAmmoBehaviourPrefab != null)
         {
-            if(this.isDodging)
+            if(this.firePressedOnThisAmmo) //if the player has pressed but not released fire, then call OnFireCancelled()
             {
-                currentAmmoBehaviourPrefab.GetComponent<AmmoBehaviour>().OnCancel(this);
+                currentAmmoBehaviourPrefab.GetComponent<AmmoBehaviour>().OnFireCancelled(this);
             }
             currentAmmoBehaviourPrefab.GetComponent<AmmoBehaviour>().OnUnequip(this);
             Destroy(currentAmmoBehaviourPrefab);
@@ -490,6 +492,18 @@ public class PlayerLogic : MonoBehaviour
         }
     }
 
+    public Ammo getAmmoFromName(string name)
+    {
+        foreach(Ammo aAmmo in carriedAmmo)
+        {
+            if(aAmmo.name == name)
+            {
+                return aAmmo;
+            }
+        }
+        return null;
+    }
+
     public void addAmmo(Ammo ammoToAdd)
     {
         //if the ammo type is already carried, increase the quanity
@@ -515,12 +529,12 @@ public class PlayerLogic : MonoBehaviour
     }
 
     //Returns true if ammoModified successfully, else returns false.
-    public bool modifyAmmoAmount(Ammo ammoToRemove, int amount)
+    public bool modifyAmmoAmount(Ammo ammoToModify, int amount)
     {
         int indexOfAmmo = -1;
         for(int i = 0; i < carriedAmmo.Count; i++)
         {
-            if(carriedAmmo[i].name == ammoToRemove.name)
+            if(carriedAmmo[i].name == ammoToModify.name)
             {
                 indexOfAmmo = i;
                 break;
@@ -529,7 +543,7 @@ public class PlayerLogic : MonoBehaviour
 
         if(indexOfAmmo < 0)
         {
-            Debug.LogWarning("Warning: Could not find Ammo with name " + ammoToRemove.name + " in the list of carried ammo.");
+            Debug.LogWarning("Warning: Could not find Ammo with name " + ammoToModify.name + " in the list of carried ammo.");
             return false;
         }
         else
@@ -599,7 +613,7 @@ public class PlayerLogic : MonoBehaviour
     }
 
     //TODO: Test this.
-    public bool isaOnActivateListner(OnActivateListener listenerIn)
+    public bool isAnOnActivateListner(OnActivateListener listenerIn)
     {
         return allOnActivateListeners.Contains(listenerIn);
     }
@@ -680,7 +694,7 @@ public class PlayerLogic : MonoBehaviour
         //This is because dodging intrupts any instance of a player holding the fire button on an ammo type.
         if(isDodging && this.firePressedOnThisAmmo)
         {
-            this.currentAmmoBehaviourPrefab.GetComponent<AmmoBehaviour>().OnCancel(this);
+            this.currentAmmoBehaviourPrefab.GetComponent<AmmoBehaviour>().OnFireCancelled(this);
             this.firePressedOnThisAmmo = false;
         }
     }
@@ -796,7 +810,7 @@ public class PlayerLogic : MonoBehaviour
     }
 
     //Returns Null if the player does not have a status with the matching ID.
-    public string getStatus(string id)
+    public string getStatusData(string id)
     {
         foreach(Status aStatus in allStatuses)
         {

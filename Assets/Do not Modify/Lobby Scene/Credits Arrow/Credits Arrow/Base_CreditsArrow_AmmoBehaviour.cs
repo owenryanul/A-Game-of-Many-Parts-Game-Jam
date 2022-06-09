@@ -31,23 +31,24 @@ public class Base_CreditsArrow_AmmoBehaviour : MonoBehaviour, AmmoBehaviour
         {
             case "0": currentCredits = creditTexts[0];  break;
             case "1": currentCredits = creditTexts[1]; break;
+            case "2": currentCredits = creditTexts[2]; break;
         }
         
     }
 
-    public void OnPress(PlayerLogic playerLogic)
+    public void OnFirePressd(PlayerLogic playerLogic)
     {
         GameObject arrow = Instantiate(arrowPrefab, playerLogic.gameObject.transform.position, playerLogic.gameObject.transform.rotation);
         arrow.GetComponent<Base_CreditsArrowProjectileLogic>().fireInDirection(playerLogic.getAimDirection(), currentCredits);
         playerLogic.modifyAmmoAmount(playerLogic.getAmmoRelativeToCurrent(0), -1);
     }
 
-    public void OnCancel(PlayerLogic playerLogic)
+    public void OnFireCancelled(PlayerLogic playerLogic)
     {
         //No Effect
     }
 
-    public void OnRelease(PlayerLogic playerLogic)
+    public void OnFireReleased(PlayerLogic playerLogic)
     {
         //No Effect
     }

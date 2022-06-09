@@ -29,7 +29,7 @@ public class Sample_Potion_AmmoBehaviour : MonoBehaviour, AmmoBehaviour
         heldPotionItem.transform.localPosition = potionOffset;
     }
 
-    public void OnPress(PlayerLogic playerLogic)
+    public void OnFirePressd(PlayerLogic playerLogic)
     {
         playerLogic.addHp(1);
         GameObject heal = Instantiate(healParticleEffect, playerLogic.gameObject.transform);
@@ -37,7 +37,7 @@ public class Sample_Potion_AmmoBehaviour : MonoBehaviour, AmmoBehaviour
         playerLogic.modifyAmmoAmount(playerLogic.getAmmoRelativeToCurrent(0), -1);
     }
 
-    public void OnRelease(PlayerLogic playerLogic)
+    public void OnFireReleased(PlayerLogic playerLogic)
     {
         //no effect
     }
@@ -47,7 +47,7 @@ public class Sample_Potion_AmmoBehaviour : MonoBehaviour, AmmoBehaviour
         Destroy(heldPotionItem);
     }
 
-    public void OnCancel(PlayerLogic playerLogic)
+    public void OnFireCancelled(PlayerLogic playerLogic)
     {
         //no effect
     }

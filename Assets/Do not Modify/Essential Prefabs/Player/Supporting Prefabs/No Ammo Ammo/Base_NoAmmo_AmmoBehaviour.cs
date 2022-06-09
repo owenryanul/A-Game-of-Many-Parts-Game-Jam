@@ -21,17 +21,17 @@ public class Base_NoAmmo_AmmoBehaviour : MonoBehaviour, AmmoBehaviour
         //No Effect
     }
 
-    public void OnPress(PlayerLogic playerLogic)
+    public void OnFirePressd(PlayerLogic playerLogic)
     {
         //No Effect
     }
 
-    public void OnRelease(PlayerLogic playerLogic)
+    public void OnFireReleased(PlayerLogic playerLogic)
     {
         //No Effect
     }
 
-    public void OnCancel(PlayerLogic playerLogic)
+    public void OnFireCancelled(PlayerLogic playerLogic)
     {
         //No Effect
     }

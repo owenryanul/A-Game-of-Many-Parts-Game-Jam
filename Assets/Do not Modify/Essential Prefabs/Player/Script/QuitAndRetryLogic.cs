@@ -143,7 +143,14 @@ public class QuitAndRetryLogic : MonoBehaviour, FadeEffectsListener
         if(quiting)
         {
             Debug.Log("Quit");
-            SceneManager.LoadScene("base_Lobby", LoadSceneMode.Single);
+            if (SceneManager.GetActiveScene().name == "base_Lobby")
+            {
+                Application.Quit();
+            }
+            else
+            {
+                SceneManager.LoadScene("base_Lobby", LoadSceneMode.Single);
+            }
         }
         else if(retrying)
         {

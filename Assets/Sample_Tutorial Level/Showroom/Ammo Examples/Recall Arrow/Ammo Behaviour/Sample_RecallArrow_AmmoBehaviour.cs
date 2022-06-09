@@ -23,19 +23,19 @@ public class Sample_RecallArrow_AmmoBehaviour : MonoBehaviour, AmmoBehaviour
         //No Effect
     }
 
-    public void OnPress(PlayerLogic playerLogic)
+    public void OnFirePressd(PlayerLogic playerLogic)
     {
         GameObject arrow = Instantiate(recallArrowPrefab, playerLogic.gameObject.transform.position, playerLogic.gameObject.transform.rotation);
         arrow.GetComponent<Sample_RecallArrowProjectileScript>().fireInDirection(playerLogic.getAimDirection());
         playerLogic.modifyAmmoAmount(playerLogic.getAmmoRelativeToCurrent(0), -1);
     }
 
-    public void OnRelease(PlayerLogic playerLogic)
+    public void OnFireReleased(PlayerLogic playerLogic)
     {
         //No Effect
     }
 
-    public void OnCancel(PlayerLogic playerLogic)
+    public void OnFireCancelled(PlayerLogic playerLogic)
     {
         //No Effect
     }
