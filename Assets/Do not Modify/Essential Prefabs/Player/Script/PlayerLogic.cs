@@ -202,7 +202,6 @@ public class PlayerLogic : MonoBehaviour
         {
             this.lastMovementDirection = this.movementDirection;
         }
-        //Debug.Log("movement direction changed, is now: " + this.movementDirection);
     }
 
     private void setVisualFacing(bool isFlipped)
@@ -310,19 +309,15 @@ public class PlayerLogic : MonoBehaviour
     {
         if (!dying && !paused)
         {
-            //context.ReadValue<Vector2>().normalized;
             if (context.control.name == "position")
             {
-                usingMouse = true;
-                //this.gameObject.GetComponentInChildren<SpriteRenderer>().enabled = true;
-                //updateAimFromMousePosition(context.ReadValue<Vector2>());               
+                usingMouse = true;             
+                //If usingMouse, then the aimDirection will be set in aimingLogic()
             }
             else if (context.control.name == "rightStick")
             {
                 usingMouse = false;
                 aimDirection = context.ReadValue<Vector2>();
-                //this.targetPosition = this.gameObject.transform.position + cursorMoveDirection;// * cursorSpeedOnController;
-                //Debug.Log("Updated Controller Position " + cursorMoveDirection + " : " + this.targetPosition);
             }
         }
     }
@@ -378,7 +373,6 @@ public class PlayerLogic : MonoBehaviour
 
     public void OnNextAmmoPressed(InputAction.CallbackContext context)
     {
-        Debug.Log("fish");
         if (!dying && !paused)
         {
             if (context.phase == InputActionPhase.Performed && !changingAmmo)
@@ -398,7 +392,6 @@ public class PlayerLogic : MonoBehaviour
 
     public void OnPreviousAmmoPressed(InputAction.CallbackContext context)
     {
-        Debug.Log("mish");
         if (!dying && !paused)
         {
             if (context.phase == InputActionPhase.Performed && !changingAmmo)
@@ -487,7 +480,6 @@ public class PlayerLogic : MonoBehaviour
         }
         else
         {
-            Debug.Log("this.carriedAmmo.Count + i = " + this.carriedAmmo.Count + " + " + i);
             return this.carriedAmmo[this.carriedAmmo.Count + i];
         }
     }
@@ -613,7 +605,7 @@ public class PlayerLogic : MonoBehaviour
     }
 
     //TODO: Test this.
-    public bool isAnOnActivateListner(OnActivateListener listenerIn)
+    public bool isAnOnActivateListener(OnActivateListener listenerIn)
     {
         return allOnActivateListeners.Contains(listenerIn);
     }
@@ -627,7 +619,6 @@ public class PlayerLogic : MonoBehaviour
         {
             if (context.phase == InputActionPhase.Performed && this.getCurrentInteractable() != null)
             {
-                Debug.Log("Interact Pressed");
                 this.currentInteractable.onInteracted();
             }
         }
@@ -801,7 +792,7 @@ public class PlayerLogic : MonoBehaviour
         {
             if (aStatus.id == newId)
             {
-                Debug.Log("addStatus has replaced pre-existing Status with id " + newId);
+                Debug.LogWarning("addStatus has replaced pre-existing Status with id " + newId);
                 aStatus.data = newData;
                 return;
             }

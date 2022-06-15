@@ -77,7 +77,6 @@ public class QuitAndRetryLogic : MonoBehaviour, FadeEffectsListener
     {
         if (quitButtonHeld)
         {
-            //Debug.Log("Quit button held");
             timeTilQuit -= Time.deltaTime;
             Color aColor = Color.white;
             aColor.a = 1.0f - (0.8f * (timeTilQuit / delayOnQuitButton));
@@ -124,7 +123,6 @@ public class QuitAndRetryLogic : MonoBehaviour, FadeEffectsListener
     {
         if (retryButtonHeld)
         {
-            //Debug.Log("Retry button held");
             timeTilRetry -= Time.deltaTime;
             Color aColor = Color.white;
             aColor.a = 1.0f - (0.8f * (timeTilRetry / delayOnQuitButton));
@@ -142,7 +140,6 @@ public class QuitAndRetryLogic : MonoBehaviour, FadeEffectsListener
     {
         if(quiting)
         {
-            Debug.Log("Quit");
             if (SceneManager.GetActiveScene().name == "base_Lobby")
             {
                 Application.Quit();
@@ -154,7 +151,6 @@ public class QuitAndRetryLogic : MonoBehaviour, FadeEffectsListener
         }
         else if(retrying)
         {
-            Debug.Log("Active scene = " + SceneManager.GetActiveScene().name);
             SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
         }
     }

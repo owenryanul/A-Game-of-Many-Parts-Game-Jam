@@ -48,7 +48,6 @@ public class Sample_ChargeArrow_AmmoBehaviour : MonoBehaviour, AmmoBehaviour
 
     public void OnFireReleased(PlayerLogic playerLogic)
     {
-        Debug.Log("Charge Arrow Released");
         GameObject arrow = Instantiate(chargeArrowPrefab, playerLogic.gameObject.transform.position, playerLogic.gameObject.transform.rotation);
         arrow.GetComponent<Sample_ArrowProjectileLogic>().speed = currentBuiltUpSpeed;
         arrow.GetComponent<Sample_ArrowProjectileLogic>().fireInDirection(playerLogic.getAimDirection());
@@ -59,7 +58,6 @@ public class Sample_ChargeArrow_AmmoBehaviour : MonoBehaviour, AmmoBehaviour
 
     public void OnFireCancelled(PlayerLogic playerLogic)
     {
-        Debug.Log("Charge Arrow Canceled");
         if (charging)
         {
             currentBuiltUpSpeed = 0;

@@ -23,6 +23,7 @@ public class ScreenFadeEventsRelay : MonoBehaviour
         
     }
 
+    //Call OnFadeOutDone for all Listeners when the FadeOut Animation is complete.
     public void OnFadeOutDone()
     {
         foreach(FadeEffectsListener aListener in listeners)
@@ -31,6 +32,7 @@ public class ScreenFadeEventsRelay : MonoBehaviour
         }
     }
 
+    //Call OnFadeInDone for all Listeners when the FadeIn Animation is complete.
     public void OnFadeInDone()
     {
         foreach (FadeEffectsListener aListener in listeners)
@@ -38,6 +40,7 @@ public class ScreenFadeEventsRelay : MonoBehaviour
             aListener.OnFadeInDone();
         }
     }
+
 
     public void addListener(FadeEffectsListener listenerToAdd)
     {

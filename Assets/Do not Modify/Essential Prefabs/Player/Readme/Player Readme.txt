@@ -1,7 +1,5 @@
 A breakdown of the various hooks featured in PlayerLogic.cs
 
-controller deadzones
-
 Camera:
 
 	Player Camera: 
@@ -17,6 +15,7 @@ Movement:
 
 	getMovementDirection():
 		Returns the current vector that the player's input is trying to move the player character in.
+
 
 	topSpeed:
 		The maximum speed the player character is able to run at, in units per second.
@@ -36,6 +35,7 @@ Movement:
 	overridePlayerMovementVelocity:
 		Determines whether or not External Velocity will replace player movement or be added to it. True for replace, false for added to. Defaults to false.
 
+
 	A Note on player movement:
 		Internally, player movement is done by setting the velocity of their rigidbody rather than applying forces, bear this in mind if you wish to alter the properties of the 
 		player character's rigidbody.
@@ -51,6 +51,7 @@ Aiming:
 		Note 2: If you plan to use the exact location the player is aiming at, remember that on controller they will only be able to aim a certain distance 
 		away from the player character compared to with a mouse.
 
+
 	maxReticleDistanceFromPlayer:
 		The maximium distance from the player that the aiming reticule can extend out from the player when trying to reach the exact point the player is aiming. If the player
 		aiming beyond this range, the reticle will stop at this range.
@@ -59,7 +60,6 @@ Aiming:
 
 
 Ammo:
-
 
 	The Ammo System:
 		The player has a collection of different ammo types that developers can populate. The player can switch between and fire them. It works by giving the player a list of
@@ -142,6 +142,7 @@ Activate:
 		-OnActivateReleased
 	-Activateable get/set/is
 
+
 	OnActivateListener Interface:
 		Interface used by scripts that want to listen to player events related to the activate button. 
 		Has the following Listeners:
@@ -150,13 +151,13 @@ Activate:
 			-OnActivateReleased():
 				Called when the player releases the activate button.
 
+
 	addOnActivateListener(OnActivateListener listenerIn):
 		Adds the passed script to the list of OnActivateListeners that receive OnActivate events.
 
 	removeOnActivateListener(OnActivateListener listenerIn):
 		Removes the passed script from the list of OnActivateListeners that receive OnActivate events.
 
-(((((((((((((((((((Test this)))))))))))))))))))
 	isAnOnActivateListener(OnActivateListener listenerIn):
 		Returns true if the list of OnActivate Listeners contains listenerIn.
 
@@ -175,6 +176,7 @@ Interact:
 			-onNoLongerCurrentInteractable():
 				Called when this script stops being the current interactable.
 	
+
 	getCurrentInteractable():
 		Returns the script currently set to receive any Interactable events. 
 
@@ -186,12 +188,9 @@ Interact:
 
 Dodge Roll:
 
-	
-	-Dodge Roll Velocity
-	-is dodge rolling
-
 	dodgeRollVelocity:
 		The velocity at which the player will move when dodge rolling.
+
 
 	getIsDodging():
 		Returns isDodging. Which is true when the player is in the middle of a dodge roll, and false otherwise. Use this to implement behaviour or special excepts when the player
@@ -200,6 +199,8 @@ Dodge Roll:
 	setIsDodging(bool inDodging):
 		Manually sets isDodging to inDodging. 
 		Note: The player cannot start a dodge roll while isDodging is true, and finishing the dodgeRoll animation will set the isDodging to false.
+
+
 
 
 Hp:
@@ -218,9 +219,11 @@ Hp:
 	respawn():
 		Sets the player's hp to 1 and marks them as not dead. Call when you want to revive the player character after they die.
 
+
 	OnDeathListener Interface:
 		Interface extended by scripts that want to be notified when the player dies. Has the following Listeners:
 			-OnPlayerDies(): Called when the player character's death animation finishes.
+
 
 	addOnDeathListener(OnDeathListener listenerIn):
 		add the passed script to the list of OnDeathListeners that will receive OnDeath events.
@@ -228,26 +231,19 @@ Hp:
 	removeOnDeathListener(OnDeathListener listenerIn):
 		removed the passed script from the list of OnDeathListeners that will receive OnDeath events.
 
-	-add/set/get hp
-	-death
-	-on death listeners
-	-respawn
-
 
 
 
 Status:
-	-Status System
-	-Add status
-	-get status
-	-remove status
 
 	Status System:
 		The Status system for the player does nothing on it's own as it's just a way of storing id'ed strings attached to the player character. It is intended to all developers
 		to apply persistant tags to the player if they wish.
 
+
 	Status Class:
 		The class used for the status system, consisting of a pair of strings. An id string used to identify the data, and the data string used to store the data.
+
 
 	addStatus(string newID, string newData):
 		Adds a new Status to the player's list of statuses with id = newId and data = newData.
@@ -267,19 +263,25 @@ Status:
 
 
 Paused:
+
 	Paused:
 		If true disables player inputs and most logic. If false, has no effect. Use to disable player inputs if needed.
 
+
+
+
 Audio:
+
 	Pain Sound:
 		Audio clip used as the player's pain sound. Played when play their damage animation.
 
 	Roll Sound:
 		Audio clip used as the player's dodge roll sound. Played when they begin their dodge roll animation.
-		
 
 	Death Sound:
 		Audio clip used as the player's death sound. Played when the player's death animation triggers.
+
+
 
 
 Quit and Retry:
