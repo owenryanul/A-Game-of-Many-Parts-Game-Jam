@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1086933102}
   - component: {fileID: 1086933105}
   - component: {fileID: 1086933104}
-  - component: {fileID: 1086933103}
+  - component: {fileID: 1574403752}
   m_Layer: 0
   m_Name: Aggro Range
   m_TagString: Untagged
@@ -71,7 +71,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1.5
---- !u!114 &1086933103
+--- !u!114 &1574403752
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -80,7 +80,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1086933101}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a98edc91dc6e0f4fb18a18c49129740, type: 3}
+  m_Script: {fileID: 11500000, guid: 0f1b874d4e629c742bf277a62560d776, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5433020719082217356
@@ -182,7 +182,9 @@ MonoBehaviour:
   speed: 1
   deathParticleEmitter: {fileID: 4391282051642193071, guid: d6764b6a479219a4e9722e229e90afe0, type: 3}
   runTowardsPlayer: 1
-  enemiesInEncounter: []
+  enemiesInEncounter:
+  - {fileID: 2650704683616318818, guid: bb32a80065330c249b604bf7d47f8a8b, type: 3}
+  - {fileID: 2650704683616318818, guid: bb32a80065330c249b604bf7d47f8a8b, type: 3}
 --- !u!1 &5433020720667994895
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ public class Oryan_BasicOverworldEnemy : MonoBehaviour
     public bool runTowardsPlayer = false;
 
     private GameObject player;
+    private Oryan_BattleControllerLogic battleController;
 
     private bool dying;
 
@@ -19,14 +20,15 @@ public class Oryan_BasicOverworldEnemy : MonoBehaviour
     // Start is called before the first frame updateGetComponent<SpriteRenderer>()
     void Start()
     {
-        this.player = GameObject.FindWithTag("base_player");
+        this.player = GameObject.FindGameObjectWithTag("base_player");
+        this.battleController = GameObject.FindGameObjectWithTag("oryan_battleController").GetComponent<Oryan_BattleControllerLogic>();
         dying = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!dying)
+        if (!dying && !battleController.isInBattle)
         {
             if (isAggroed && player != null)
             {
@@ -69,29 +71,32 @@ public class Oryan_BasicOverworldEnemy : MonoBehaviour
                 this.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             }
         }
+        else
+        {
+            this.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        }
 
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "base_player" && !player.GetComponent<PlayerLogic>().getIsDodging())
+        if (!dying && !battleController.isInBattle)
         {
-            //Die to player
-            GameObject.FindGameObjectWithTag("oryan_battleController").GetComponent<Oryan_BattleControllerLogic>().startBattle(this.enemiesInEncounter);
-            die();
-        }
-        else if (collision.gameObject.tag == "sample_playerProjectile" || collision.gameObject.tag == "sample_explosion")
-        {
-            die();
+            if (collision.gameObject.tag == "base_player" && !player.GetComponent<PlayerLogic>().getIsDodging())
+            {
+                //Die to player
+                GameObject.FindGameObjectWithTag("oryan_battleController").GetComponent<Oryan_BattleControllerLogic>().startBattle(this.gameObject, this.enemiesInEncounter);
+            }
+            else if (collision.gameObject.tag == "sample_playerProjectile" || collision.gameObject.tag == "sample_explosion")
+            {
+
+            }
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "sample_playerProjectile" || collision.gameObject.tag == "sample_explosion")
-        {
-            die();
-        }
+
     }
 
     private void die()

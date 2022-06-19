@@ -38,4 +38,9 @@ public class Oryan_TurnTaker : MonoBehaviour
             GameObject.FindGameObjectWithTag("oryan_battleController").GetComponent<Oryan_BattleControllerLogic>().nextTurn();
         }
     }
+
+    public virtual void markForDeletion()
+    {
+        
+    }
 }
