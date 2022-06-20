@@ -5,6 +5,14 @@ using UnityEngine;
 public class Oryan_AmmoPickup : MonoBehaviour
 {
     public Ammo ammo;
+    public QuiverType type;
+
+    public enum QuiverType
+    {
+        attack,
+        defence,
+        overworld
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +30,19 @@ public class Oryan_AmmoPickup : MonoBehaviour
     {
         if (collision.tag == "base_player")
         {
-            collision.gameObject.GetComponent<PlayerLogic>().addAmmo(ammo);
+            if (type == QuiverType.overworld)
+            {
+                collision.gameObject.GetComponent<PlayerLogic>().addAmmo(ammo);
+            }
+            else if(type == QuiverType.attack)
+            {
+                GameObject.FindGameObjectWithTag("oryan_battleController").GetComponent<Oryan_BattleControllerLogic>().attackQuiver.Add(ammo);
+            }
+            else if(type == QuiverType.defence)
+            {
+                GameObject.FindGameObjectWithTag("oryan_battleController").GetComponent<Oryan_BattleControllerLogic>().defenceQuiver.Add(ammo);
+            }
+            
             Destroy(this.gameObject);
         }
     }

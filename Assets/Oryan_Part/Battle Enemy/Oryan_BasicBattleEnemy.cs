@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Oryan_BasicBattleEnemy : Oryan_TurnTaker, Oryan_ProjectileParent
 {
@@ -11,12 +12,16 @@ public class Oryan_BasicBattleEnemy : Oryan_TurnTaker, Oryan_ProjectileParent
     public int maxHp;
     private int currentHp;
 
+    public List<Oryan_Element> vulnerablies;
+    public List<Oryan_Element> immunities;
+
     private bool destroyNextUpdate;
 
     // Start is called before the first frame update
     void Start()
     {
-        maxHp = currentHp;
+        currentHp = maxHp;
+        this.gameObject.transform.Find("Sprite").Find("Enemy Canvas").Find("HP Text").GetComponent<TextMeshProUGUI>().text = "" + this.currentHp;
         destroyNextUpdate = false;
     }
 
@@ -60,8 +65,54 @@ public class Oryan_BasicBattleEnemy : Oryan_TurnTaker, Oryan_ProjectileParent
 
     public void dealDamage(int damageIn)
     {
-        currentHp -= damageIn;
-        if(currentHp > maxHp)
+        dealDamage(damageIn, new List<Oryan_Element>());
+    }
+
+    public void dealDamage(int damageIn, List<Oryan_Element> damageTypes)
+    {
+        int totalDamage = damageIn;
+        bool immunityTriggered = false;
+        bool weaknessTriggered = false;
+        
+        foreach(Oryan_Element aElement in damageTypes)
+        {
+            if(this.vulnerablies.Contains(aElement))
+            {
+                totalDamage = totalDamage * 2;
+                weaknessTriggered = true;
+                break;
+            }
+            else if(this.immunities.Contains(aElement))
+            {
+                totalDamage = 0;
+                immunityTriggered = true;
+            }
+        }
+
+
+
+
+        currentHp -= totalDamage;
+        if (totalDamage >= 0)
+        {
+            Debug.Log("name = " + this.gameObject.transform.Find("Sprite").Find("Enemy Canvas").Find("HP Text"));
+            this.gameObject.transform.Find("Sprite").Find("Enemy Canvas").Find("HP Text").GetComponent<TextMeshProUGUI>().text = "" + this.currentHp;
+            if (immunityTriggered)
+            {
+                this.gameObject.transform.Find("Sprite").Find("Enemy Canvas").GetComponent<Animator>().SetTrigger("Immune Damaged");
+            }
+            else if (weaknessTriggered)
+            {
+                this.gameObject.transform.Find("Sprite").Find("Enemy Canvas").GetComponent<Animator>().SetTrigger("Weak Damaged");
+            }
+            else
+            {
+                this.gameObject.transform.Find("Sprite").Find("Enemy Canvas").GetComponent<Animator>().SetTrigger("Normal Damaged");
+            }
+        }
+
+
+        if (currentHp > maxHp)
         {
             currentHp = maxHp;
         }

@@ -9,6 +9,7 @@ public class Oryan_BattleArrowProjectileLogic : MonoBehaviour
     public float minVelocityBeforePickupable;
     public float lifetime;
     public int damage;
+    public List<Oryan_Element> elementDamageTypes;
 
     private Vector3 targetDirection;
     private Oryan_ProjectileParent projectileParent;
@@ -38,7 +39,7 @@ public class Oryan_BattleArrowProjectileLogic : MonoBehaviour
     {
         if(collision.tag == "oryan_battleEnemy")
         {
-            collision.gameObject.GetComponent<Oryan_BasicBattleEnemy>().dealDamage(this.damage);
+            collision.gameObject.GetComponent<Oryan_BasicBattleEnemy>().dealDamage(this.damage, this.elementDamageTypes);
             die();
         }
         

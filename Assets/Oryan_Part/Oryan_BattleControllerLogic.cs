@@ -73,6 +73,7 @@ public class Oryan_BattleControllerLogic : TurnTaker, FadeEffectsListener, OnDea
     {
         isInBattle = true;
         startingBattle = true;
+        playerHasLostBattle = false;
         currentTurnIndex = 0;
         overworldBattleInstigator = overworldInstigatorIn;
         
@@ -241,7 +242,6 @@ public class Oryan_BattleControllerLogic : TurnTaker, FadeEffectsListener, OnDea
 
     private void fillCarriedAmmoWith(List<Ammo> ammos)
     {
-        Debug.Log("Filled Ammo with " + ammos[0].name);
         for (int i = 0; i < ammos.Count; i++)
         {
             Debug.Log("Adding Ammo: " + ammos[i].name);
