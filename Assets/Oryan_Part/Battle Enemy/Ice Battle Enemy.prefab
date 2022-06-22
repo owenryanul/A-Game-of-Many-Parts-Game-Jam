@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 304097543022881982}
   - component: {fileID: 304097543022881983}
   - component: {fileID: 1537838182277711862}
+  - component: {fileID: 3986330494832490504}
   m_Layer: 0
   m_Name: Ice Battle Enemy
   m_TagString: oryan_battleEnemy
@@ -96,10 +97,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectile: {fileID: 1636638444395907525, guid: 444afbfc1841bfd47b890372bb2a77de, type: 3}
   parryProjectile: {fileID: 1184416865540573245, guid: af5d05f393c82b045b2ec395565e3d17, type: 3}
-  doShoot: 1
   maxHp: 3
   vulnerablies: 00000000
   immunities: 01000000
+--- !u!95 &3986330494832490504
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 304097543022881981}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 76ea71332604cec48b89519f4e59d5ed, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &304097543578032190
 GameObject:
   m_ObjectHideFlags: 0
