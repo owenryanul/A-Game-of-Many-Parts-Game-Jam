@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Oryan_BasicOverworldEnemy : MonoBehaviour
 {
-    public bool isAggroed;
+    private bool isAggroed;
     public float speed = 1;
     public GameObject deathParticleEmitter;
     public bool runTowardsPlayer = false;
@@ -97,6 +97,17 @@ public class Oryan_BasicOverworldEnemy : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
+    }
+
+    public bool getIsAggroed()
+    {
+        return this.isAggroed;
+    }
+
+    public void setAggroed(bool aggroIn)
+    {
+        this.isAggroed = aggroIn;
+        this.gameObject.transform.Find("Alert Icon").GetComponent<SpriteRenderer>().enabled = aggroIn;
     }
 
     private void die()

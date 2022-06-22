@@ -31,6 +31,13 @@ public class Oryan_BattleControllerLogic : TurnTaker, FadeEffectsListener, OnDea
     public List<Ammo> defenceQuiver;
     public List<Ammo> overworldQuiver;
 
+    [Header("Shield")]
+    public Ammo shieldRechargeAmmo;
+    public int maxShieldCharge;
+    public float timePerShieldRecharge;
+    private bool shieldIsRecharging;
+    private float timeSinceLastRecharge;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,6 +55,9 @@ public class Oryan_BattleControllerLogic : TurnTaker, FadeEffectsListener, OnDea
         transitioningToNextTurn = false;
 
         GameObject.FindGameObjectWithTag("base_screenFadeEffects").GetComponent<ScreenFadeEventsRelay>().addListener(this);
+
+        shieldIsRecharging = false;
+        timeSinceLastRecharge = 0;
     }
 
     // Update is called once per frame
@@ -65,6 +75,19 @@ public class Oryan_BattleControllerLogic : TurnTaker, FadeEffectsListener, OnDea
             {
                 transitioningToNextTurn = false;
                 startNextTurn();
+            }
+        }
+
+        if(isInBattle && shieldIsRecharging && player.GetComponent<PlayerLogic>().getAmmoFromName(shieldRechargeAmmo.name) != null)
+        {
+            if (player.GetComponent<PlayerLogic>().getAmmoFromName(shieldRechargeAmmo.name).quantity < maxShieldCharge)
+            {
+                timeSinceLastRecharge += Time.deltaTime;
+                if (timeSinceLastRecharge >= timePerShieldRecharge)
+                {
+                    player.GetComponent<PlayerLogic>().addAmmo(shieldRechargeAmmo);
+                    timeSinceLastRecharge = 0;
+                }
             }
         }
     }
@@ -303,6 +326,11 @@ public class Oryan_BattleControllerLogic : TurnTaker, FadeEffectsListener, OnDea
         {
             return turnTakers[currentTurnIndex + 1].gameObject;
         }
+    }
+
+    public void setRechargingShield(bool rechargeIn)
+    {
+        this.shieldIsRecharging = rechargeIn;
     }
 
 }

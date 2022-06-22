@@ -7,6 +7,8 @@ public class Oryan_ArrowProjectileLogic : MonoBehaviour
     public float speed;
     public float facingOffset; //inDegrees
     public float minVelocityBeforePickupable;
+    public bool isRetrieveable;
+    public GameObject pickupablePrefab;
                                
     private Vector3 targetDirection;
 
@@ -21,6 +23,10 @@ public class Oryan_ArrowProjectileLogic : MonoBehaviour
     {
         if(this.gameObject.GetComponent<Rigidbody2D>().velocity.magnitude <= minVelocityBeforePickupable)
         {
+            if(isRetrieveable)
+            {
+                Instantiate(pickupablePrefab, this.gameObject.transform.position, this.gameObject.transform.rotation);
+            }
             Destroy(this.gameObject);
         }
     }

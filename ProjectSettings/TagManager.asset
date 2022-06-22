@@ -28,6 +28,7 @@ TagManager:
   - oryan_enemyProjectile
   - oryan_parryArrow
   - oryan_turnText
+  - oryan_playerShield
   layers:
   - Default
   - TransparentFX

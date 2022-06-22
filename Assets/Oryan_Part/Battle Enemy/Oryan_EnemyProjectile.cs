@@ -10,6 +10,7 @@ public class Oryan_EnemyProjectile : MonoBehaviour
     public int damage;
     public bool dodgeable;
     public bool parryable;
+    public bool blockable;
 
     private float currentLifetime;
     private Oryan_ProjectileParent parentEnemy;
@@ -38,6 +39,12 @@ public class Oryan_EnemyProjectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if(collision.tag == "oryan_playerShield")
+        {
+            parentEnemy.childProjectileDestroyed();
+            Destroy(this.gameObject);
+        }
+
         if(collision.tag == "base_player" && (!this.dodgeable || (this.dodgeable && !collision.gameObject.GetComponent<PlayerLogic>().getIsDodging())))
         {
             if (!dodgeable && collision.gameObject.GetComponent<PlayerLogic>().getIsDodging())

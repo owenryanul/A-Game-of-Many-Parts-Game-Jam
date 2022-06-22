@@ -249,3 +249,4 @@ MonoBehaviour:
   damage: 1
   dodgeable: 0
   parryable: 1
+  blockable: 1
