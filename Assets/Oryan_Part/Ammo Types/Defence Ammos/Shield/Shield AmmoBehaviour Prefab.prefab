@@ -46,4 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shieldPropPrefab: {fileID: 6759051171028345722, guid: e38fe47a380ca434fba53b70b9a8bef0, type: 3}
   propOffset: {x: 0, y: 0, z: 0}
-  timeBetweenAmmoLoss: 0.1
+  timeBetweenAmmoLoss: 0.5

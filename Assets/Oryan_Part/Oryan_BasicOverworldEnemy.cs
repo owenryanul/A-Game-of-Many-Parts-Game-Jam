@@ -15,7 +15,7 @@ public class Oryan_BasicOverworldEnemy : MonoBehaviour
     private bool dying;
 
     [Header("Encounter")]
-    public List<GameObject> enemiesInEncounter;
+    public GameObject[] enemiesInEncounter;
 
     // Start is called before the first frame updateGetComponent<SpriteRenderer>()
     void Start()

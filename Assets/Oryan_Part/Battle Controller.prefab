@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6108188910229793205}
   - component: {fileID: 6108188910229793204}
   - component: {fileID: 6108188910229793203}
+  - component: {fileID: 893486164}
   m_Layer: 0
   m_Name: Battle Controller
   m_TagString: oryan_battleController
@@ -101,3 +102,47 @@ MonoBehaviour:
   - {x: -22.95, y: 10.7, z: 0}
   - {x: -21.96, y: 12.24, z: 0}
   - {x: -21.96, y: 9.03, z: 0}
+  - {x: -21.96, y: 9.03, z: 0}
+  - {x: -21.96, y: 9.03, z: 0}
+  - {x: -21.96, y: 9.03, z: 0}
+  battleCameraPosition: {x: -23.05, y: 10.76, z: -10}
+  isInBattle: 0
+  activeCheckpointPosition: {x: 0, y: 0, z: 0}
+  overworldBattleInstigator: {fileID: 0}
+  turnTransitionTime: 1
+  maxHp: 3
+  attackQuiver:
+  - name: Basic Attack Arrow
+    ammoBehaviourPrefab: {fileID: 5536665088047253331, guid: 30ac43490245fe843887b275d2a818a4, type: 3}
+    icon: {fileID: 21300000, guid: 1034ff07643269f438525b6071e57cb1, type: 3}
+    quantity: 99
+  defenceQuiver:
+  - name: Parry Arrow
+    ammoBehaviourPrefab: {fileID: 5227153773123240546, guid: 7df62585ab56c5447be2eed08015d281, type: 3}
+    icon: {fileID: 21300000, guid: 673b1abbf325ddf4981ded392cd43f8a, type: 3}
+    quantity: 99
+  - name: Magic Shield
+    ammoBehaviourPrefab: {fileID: 4330511326092582874, guid: 017f0abf49cc14f48b5fcf869484e4bc, type: 3}
+    icon: {fileID: 21300000, guid: de39ae22909dc0b4991405d9dff01654, type: 3}
+    quantity: 50
+  overworldQuiver: []
+  shieldRechargeAmmo:
+    name: Magic Shield
+    ammoBehaviourPrefab: {fileID: 4330511326092582874, guid: 017f0abf49cc14f48b5fcf869484e4bc, type: 3}
+    icon: {fileID: 21300000, guid: de39ae22909dc0b4991405d9dff01654, type: 3}
+    quantity: 1
+  maxShieldCharge: 50
+  timePerShieldRecharge: 0.2
+--- !u!114 &893486164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6108188910229793202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d4fd675516975f468b89de05d67cd60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightSourcesLightingThePlayer: 0

@@ -101,7 +101,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 1
+  m_LinearDrag: 0.1
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -246,3 +246,5 @@ MonoBehaviour:
   speed: 10
   facingOffset: -90
   minVelocityBeforePickupable: 0.1
+  isRetrieveable: 0
+  pickupablePrefab: {fileID: 0}

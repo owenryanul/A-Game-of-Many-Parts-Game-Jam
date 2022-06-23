@@ -35,11 +35,16 @@ public class Oryan_BattleArrowProjectileLogic : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.tag == "oryan_battleEnemy")
         {
             collision.gameObject.GetComponent<Oryan_BasicBattleEnemy>().dealDamage(this.damage, this.elementDamageTypes);
+            die();
+        }
+
+        if(collision.tag == "oryan_battleEdge")
+        {
             die();
         }
         

@@ -179,13 +179,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 050e4cb8591551045a1ffb956511df96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isAggroed: 0
   speed: 1
   deathParticleEmitter: {fileID: 4391282051642193071, guid: d6764b6a479219a4e9722e229e90afe0, type: 3}
   runTowardsPlayer: 1
   enemiesInEncounter:
+  - {fileID: 0}
   - {fileID: 2650704683616318818, guid: bb32a80065330c249b604bf7d47f8a8b, type: 3}
-  - {fileID: 2650704683616318818, guid: bb32a80065330c249b604bf7d47f8a8b, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &5433020720667994895
 GameObject:
   m_ObjectHideFlags: 0
@@ -238,7 +241,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a6ecc35e1a9098449ab79677c3347bd9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

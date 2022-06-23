@@ -6,7 +6,7 @@ using TMPro;
 
 public class Oryan_BattleControllerLogic : TurnTaker, FadeEffectsListener, OnDeathListener
 {
-    public List<Vector3> enemySpots;
+    public List<GameObject> enemySpots;
     public Vector3 battleCameraPosition;
     public bool isInBattle;
     private bool endingBattle;
@@ -23,6 +23,9 @@ public class Oryan_BattleControllerLogic : TurnTaker, FadeEffectsListener, OnDea
     public float turnTransitionTime;
     private float turnTransitionTimeRemaining;
     private bool transitioningToNextTurn;
+
+    public float battleEndDelay;
+    private float battleEndDelayRemaining;
 
     public int maxHp = 3;
 
@@ -65,7 +68,11 @@ public class Oryan_BattleControllerLogic : TurnTaker, FadeEffectsListener, OnDea
     {
         if(isInBattle && turnTakers.Count < 2)
         {
-            this.endBattle();
+            battleEndDelayRemaining -= Time.deltaTime;
+            if (battleEndDelayRemaining <= 0)
+            {
+                this.endBattle();
+            }
         }
 
         if(transitioningToNextTurn)
@@ -92,25 +99,26 @@ public class Oryan_BattleControllerLogic : TurnTaker, FadeEffectsListener, OnDea
         }
     }
 
-    public void startBattle(GameObject overworldInstigatorIn, List<GameObject> enemies)
+    public void startBattle(GameObject overworldInstigatorIn, GameObject[] enemies)
     {
         isInBattle = true;
         startingBattle = true;
         playerHasLostBattle = false;
         currentTurnIndex = 0;
         overworldBattleInstigator = overworldInstigatorIn;
+        battleEndDelayRemaining = battleEndDelay;
         
         //Spawn Enemies
-        for (int i = 0; i < enemies.Count; i++)
+        for (int i = 0; i < enemies.Length; i++)
         {
             if (i >= enemySpots.Count)
             {
                 Debug.LogWarning("Too many enemies in this encounter, insufficent enemy spots.");
                 break;
             }
-            else
+            else if(enemies[i] != null)
             {
-                GameObject enemy = Instantiate(enemies[i], enemySpots[i], enemies[i].transform.rotation);
+                GameObject enemy = Instantiate(enemies[i], enemySpots[i].transform.position, enemies[i].transform.rotation);
                 turnTakers.Add(enemy.GetComponent<TurnTaker>());
             }
         }
@@ -126,6 +134,7 @@ public class Oryan_BattleControllerLogic : TurnTaker, FadeEffectsListener, OnDea
         //player.GetComponent<Rigidbody2D>().MovePosition(GameObject.FindGameObjectWithTag("oryan_playerCage").transform.position);
         player.GetComponent<PlayerLogic>().playerCameraFollowsPlayer = false;
         player.GetComponent<PlayerLogic>().playerCamera.transform.position = battleCameraPosition;
+        player.GetComponent<PlayerLogic>().playerCamera.gameObject.GetComponentInChildren<Light>().enabled = false;
 
         //Empty Quiver and replace with defence quiver
         overworldQuiver = copyAmmoListByValue(player.GetComponent<PlayerLogic>().carriedAmmo);
@@ -180,6 +189,7 @@ public class Oryan_BattleControllerLogic : TurnTaker, FadeEffectsListener, OnDea
                 player.transform.position = playerOverworldPosition;
             }
             player.GetComponent<PlayerLogic>().playerCameraFollowsPlayer = true;
+            player.GetComponent<PlayerLogic>().playerCamera.gameObject.GetComponentInChildren<Light>().enabled = true;
 
             emptyPlayerAmmo();
             fillCarriedAmmoWith(overworldQuiver);
