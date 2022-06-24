@@ -290,8 +290,8 @@ MonoBehaviour:
   maxHp: 1
   vulnerablies: 
   immunities: 
-  sprayProjectile: {fileID: 1636638444395907525, guid: 444afbfc1841bfd47b890372bb2a77de, type: 3}
-  sprayOffset: {x: 0, y: 0, z: 0}
+  sprayProjectile: {fileID: 582539864038741259, guid: 2b06ce5c6f590e74db3b6cd1aaef761d, type: 3}
+  sprayOffset: {x: -0.0852782, y: -0.007, z: 0}
 --- !u!1 &5592406653855926589
 GameObject:
   m_ObjectHideFlags: 0

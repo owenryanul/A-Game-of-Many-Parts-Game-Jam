@@ -1584,7 +1584,7 @@ GameObject:
   - component: {fileID: 279672800}
   - component: {fileID: 279672799}
   m_Layer: 11
-  m_Name: Square
+  m_Name: Dialog Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1802,7 +1802,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 132241565918144822, guid: 8371334b2a028604ba05944fd3fb5e82, type: 3}
       propertyPath: m_RootOrder
-      value: 14
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 132241565918144822, guid: 8371334b2a028604ba05944fd3fb5e82, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2967,7 +2967,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 30
+  m_RootOrder: 31
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &624189558 stripped
 Transform:
@@ -3064,11 +3064,11 @@ PrefabInstance:
     - target: {fileID: 1857829914137198621, guid: f1ac309156394d14a930d797b04900f1, type: 3}
       propertyPath: enemiesInEncounter.Array.data[1]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 5351563863430794689, guid: 4b63d0d1bbfa2c94287cc194b0d30c50, type: 3}
     - target: {fileID: 1857829914137198621, guid: f1ac309156394d14a930d797b04900f1, type: 3}
       propertyPath: enemiesInEncounter.Array.data[2]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 5351563863430794689, guid: 4b63d0d1bbfa2c94287cc194b0d30c50, type: 3}
     - target: {fileID: 1857829914137198621, guid: f1ac309156394d14a930d797b04900f1, type: 3}
       propertyPath: enemiesInEncounter.Array.data[3]
       value: 
@@ -3397,7 +3397,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4406438272411327548, guid: 4f5f2d2eeb053be4892534980445c107, type: 3}
       propertyPath: m_RootOrder
-      value: 31
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 4406438272411327548, guid: 4f5f2d2eeb053be4892534980445c107, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8733,7 +8733,7 @@ Transform:
   m_Children:
   - {fileID: 785628926}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &1531958879 stripped
 RectTransform:

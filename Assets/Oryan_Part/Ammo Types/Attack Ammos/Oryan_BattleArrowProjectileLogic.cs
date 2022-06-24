@@ -43,7 +43,7 @@ public class Oryan_BattleArrowProjectileLogic : MonoBehaviour
             die();
         }
 
-        if(collision.tag == "oryan_battleEdge")
+        if(collision.tag == "oryan_battleEdge" || collision.tag == "oryan_parryShield")
         {
             die();
         }

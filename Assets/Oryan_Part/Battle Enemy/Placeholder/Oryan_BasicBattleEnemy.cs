@@ -20,6 +20,8 @@ public class Oryan_BasicBattleEnemy : Oryan_TurnTaker, Oryan_ProjectileParent
 
     private bool destroyNextUpdate;
 
+    protected bool hasHurtPlayerThisAttack;
+
     // Start is called before the first frame update
     protected virtual void Start()
     {
@@ -65,6 +67,7 @@ public class Oryan_BasicBattleEnemy : Oryan_TurnTaker, Oryan_ProjectileParent
 
     public virtual void makeAttack()
     {
+        this.hasHurtPlayerThisAttack = false;
         this.isPlayingAttackAnimation = true;
         this.gameObject.GetComponent<Animator>().SetTrigger("Attack");
 
@@ -165,6 +168,21 @@ public class Oryan_BasicBattleEnemy : Oryan_TurnTaker, Oryan_ProjectileParent
     public void childProjectileDestroyed()
     {
         activeChildProjectiles--;
+    }
+
+    public void childProjectileDamagedPlayer()
+    {
+        this.hasHurtPlayerThisAttack = true;
+    }
+
+    public void onGrandchildProjectileCreated()
+    {
+        activeChildProjectiles++;
+    }
+
+    public bool hasChildProjectilesDamagedPlayerThisAttack()
+    {
+        return this.hasHurtPlayerThisAttack;
     }
 
     public override void markForDeletion()

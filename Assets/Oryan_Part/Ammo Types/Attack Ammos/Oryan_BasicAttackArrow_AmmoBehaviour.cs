@@ -52,4 +52,20 @@ public class Oryan_BasicAttackArrow_AmmoBehaviour : MonoBehaviour, AmmoBehaviour
     {
         GameObject.FindGameObjectWithTag("oryan_battleController").GetComponent<Oryan_BattleControllerLogic>().endPlayerTurn();
     }
+
+    public void childProjectileDamagedPlayer()
+    {
+        //no effect
+    }
+
+    public void onGrandchildProjectileCreated()
+    {
+        //no effect
+    }
+
+    public bool hasChildProjectilesDamagedPlayerThisAttack()
+    {
+        //no effect
+        return false;
+    }
 }

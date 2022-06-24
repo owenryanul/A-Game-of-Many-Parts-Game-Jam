@@ -31,6 +31,7 @@ TagManager:
   - oryan_playerShield
   - oryan_batteEdge
   - oryan_dialogBox
+  - oryan_parryShield
   layers:
   - Default
   - TransparentFX

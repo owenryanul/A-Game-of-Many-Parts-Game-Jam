@@ -24,7 +24,7 @@ public class Oryan_CultistBattleEnemyLogic : Oryan_BasicBattleEnemy
         if(isSpraying)
         {
             Vector3 directionTowardsPlayer = GameObject.FindGameObjectWithTag("base_player").transform.position - this.gameObject.transform.position;
-            GameObject bolt = Instantiate(sprayProjectile, this.gameObject.transform.position + sprayOffset, projectile.transform.rotation);
+            GameObject bolt = Instantiate(sprayProjectile, this.gameObject.transform.position + sprayOffset, sprayProjectile.transform.rotation);
             bolt.GetComponent<Oryan_EnemyProjectile>().setProjectileParent(this);
             bolt.GetComponent<Oryan_EnemyProjectile>().fireInDirection(directionTowardsPlayer);
             activeChildProjectiles++;
@@ -34,6 +34,7 @@ public class Oryan_CultistBattleEnemyLogic : Oryan_BasicBattleEnemy
     public override void makeAttack()
     {
         base.isPlayingAttackAnimation = true;
+        base.hasHurtPlayerThisAttack = false;
 
         int rand = Random.Range(0, 2);
 

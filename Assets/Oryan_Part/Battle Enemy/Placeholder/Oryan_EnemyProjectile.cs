@@ -8,6 +8,7 @@ public class Oryan_EnemyProjectile : MonoBehaviour
     public float facingOffset; //inDegrees
     public float totalLifetime;
     public int damage;
+    public bool damageOncePerTurn;
     public bool dodgeable;
     public bool parryable;
     public bool blockable;
@@ -45,19 +46,33 @@ public class Oryan_EnemyProjectile : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        if(collision.tag == "base_player" && (!this.dodgeable || (this.dodgeable && !collision.gameObject.GetComponent<PlayerLogic>().getIsDodging())))
+       
+        if(collision.tag == "base_player")
         {
-            if (!dodgeable && collision.gameObject.GetComponent<PlayerLogic>().getIsDodging())
+            //Not dodged or undodgeable
+            if(!this.dodgeable || (this.dodgeable && !collision.gameObject.GetComponent<PlayerLogic>().getIsDodging()))
             {
-                collision.gameObject.GetComponent<PlayerLogic>().addHp(-damage, false);
-                //===================play replacement hurt sound here.
+                //Has not given i-frames
+                if (!damageOncePerTurn || (damageOncePerTurn && !parentEnemy.hasChildProjectilesDamagedPlayerThisAttack()))
+                {
+                    if (!dodgeable && collision.gameObject.GetComponent<PlayerLogic>().getIsDodging())
+                    {
+                        //damage dodging player
+                        collision.gameObject.GetComponent<PlayerLogic>().addHp(-damage, false);
+                        //===================play replacement hurt sound here.
+                    }
+                    else
+                    {
+                        //damage player
+                        collision.gameObject.GetComponent<PlayerLogic>().addHp(-damage, true);
+                    }
+                }
+
+
+                parentEnemy.childProjectileDamagedPlayer();
+                parentEnemy.childProjectileDestroyed();
+                Destroy(this.gameObject);
             }
-            else
-            {
-                collision.gameObject.GetComponent<PlayerLogic>().addHp(-damage, true);
-            }
-            parentEnemy.childProjectileDestroyed();
-            Destroy(this.gameObject);
         }
         else if(collision.tag == "oryan_parryArrow" && this.parryable)
         {

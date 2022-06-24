@@ -58,4 +58,20 @@ public class Oryan_HealingPotion_AmmoBehaviour : MonoBehaviour, AmmoBehaviour, O
     {
         GameObject.FindGameObjectWithTag("oryan_battleController").GetComponent<Oryan_BattleControllerLogic>().endPlayerTurn();
     }
+
+    public void childProjectileDamagedPlayer()
+    {
+        //no effect
+    }
+
+    public void onGrandchildProjectileCreated()
+    {
+        //no effect
+    }
+
+    public bool hasChildProjectilesDamagedPlayerThisAttack()
+    {
+        //no effect
+        return false;
+    }
 }

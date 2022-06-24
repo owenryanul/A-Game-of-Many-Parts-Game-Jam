@@ -154,7 +154,7 @@ AnimationClip:
   - curve:
     - time: 0
       value: {fileID: 21300000, guid: 174628fdde8a90f4f9c7bd7746ee71cd, type: 3}
-    - time: 0.9166667
+    - time: 1.4166666
       value: {fileID: 21300000, guid: 174628fdde8a90f4f9c7bd7746ee71cd, type: 3}
     attribute: m_Sprite
     path: Sprite
@@ -210,7 +210,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.93333334
+    m_StopTime: 1.4333333
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -506,21 +506,21 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.75
+  - time: 1
     functionName: throwKnife
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.8333333
+  - time: 1.3333334
     functionName: throwOtherBadKnife
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.9166667
+  - time: 1.4166666
     functionName: OnAttackAnimationDone
     data: 
     objectReferenceParameter: {fileID: 0}
