@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Oryan_ParryTargetRelay : MonoBehaviour
 {
+    public GameObject parent;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,8 +23,7 @@ public class Oryan_ParryTargetRelay : MonoBehaviour
         Debug.Log("Trigger enter " + collision.name);
         if(collision.tag == "oryan_parryArrow")
         {
-            this.gameObject.transform.parent.GetComponent<Oryan_BasicBattleEnemy>().onAttachedParryTargetHit(this.gameObject);
-
+            parent.GetComponent<Oryan_BasicBattleEnemy>().onAttachedParryTargetHit(this.gameObject);
         }
     }
 }

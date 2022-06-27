@@ -25,6 +25,7 @@ public class Oryan_BattleControllerLogic : TurnTaker, FadeEffectsListener, OnDea
     private bool transitioningToNextTurn;
 
     public float battleEndDelay;
+    public float extendedBattleEndDelay;
     private float battleEndDelayRemaining;
 
     public int maxHp = 3;
@@ -99,7 +100,7 @@ public class Oryan_BattleControllerLogic : TurnTaker, FadeEffectsListener, OnDea
         }
     }
 
-    public void startBattle(GameObject overworldInstigatorIn, GameObject[] enemies)
+    public void startBattle(GameObject overworldInstigatorIn, GameObject[] enemies, bool extendFightEnding = false)
     {
         isInBattle = true;
         startingBattle = true;
@@ -107,6 +108,10 @@ public class Oryan_BattleControllerLogic : TurnTaker, FadeEffectsListener, OnDea
         currentTurnIndex = 0;
         overworldBattleInstigator = overworldInstigatorIn;
         battleEndDelayRemaining = battleEndDelay;
+        if(extendFightEnding)
+        {
+            battleEndDelayRemaining = extendedBattleEndDelay;
+        }
         
         //Spawn Enemies
         for (int i = 0; i < enemies.Length; i++)
@@ -169,6 +174,12 @@ public class Oryan_BattleControllerLogic : TurnTaker, FadeEffectsListener, OnDea
         }
 
         GameObject.FindGameObjectWithTag("oryan_turnText").GetComponent<TextMeshProUGUI>().text = "";
+    }
+
+    public void addEnemyToBattle(GameObject enemyPrefab, int pos)
+    {
+        GameObject enemy = Instantiate(enemyPrefab, enemySpots[pos].transform.position, enemyPrefab.transform.rotation);
+        turnTakers.Add(enemy.GetComponent<TurnTaker>());
     }
 
 

@@ -8,6 +8,7 @@ public class Oryan_BasicOverworldEnemy : MonoBehaviour
     public float speed = 1;
     public GameObject deathParticleEmitter;
     public bool runTowardsPlayer = false;
+    public bool extendedFightEnding = false;
 
     private GameObject player;
     private Oryan_BattleControllerLogic battleController;
@@ -85,7 +86,7 @@ public class Oryan_BasicOverworldEnemy : MonoBehaviour
             if (collision.gameObject.tag == "base_player" && !player.GetComponent<PlayerLogic>().getIsDodging())
             {
                 //Die to player
-                GameObject.FindGameObjectWithTag("oryan_battleController").GetComponent<Oryan_BattleControllerLogic>().startBattle(this.gameObject, this.enemiesInEncounter);
+                GameObject.FindGameObjectWithTag("oryan_battleController").GetComponent<Oryan_BattleControllerLogic>().startBattle(this.gameObject, this.enemiesInEncounter, extendedFightEnding);
             }
             else if (collision.gameObject.tag == "sample_playerProjectile" || collision.gameObject.tag == "sample_explosion")
             {
