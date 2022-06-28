@@ -8,6 +8,8 @@ public class Oryan_BasicBattleEnemy : Oryan_TurnTaker, Oryan_ProjectileParent
     public GameObject projectile;
     public GameObject parryProjectile;
 
+    private int battlePosition;
+
     public int maxHp;
     private int currentHp;
 
@@ -152,8 +154,9 @@ public class Oryan_BasicBattleEnemy : Oryan_TurnTaker, Oryan_ProjectileParent
         }
     }
 
-    private void kill(bool skipAnimation = false)
+    protected void kill(bool skipAnimation = false)
     {
+        onKill();
         base.removeThemFromTurnTakers();
         if (skipAnimation)
         {
@@ -163,6 +166,11 @@ public class Oryan_BasicBattleEnemy : Oryan_TurnTaker, Oryan_ProjectileParent
         {
             this.gameObject.GetComponent<Animator>().SetTrigger("Die");
         }
+    }
+
+    public virtual void onKill()
+    {
+        //no effect
     }
 
     public void childProjectileDestroyed()
@@ -209,5 +217,15 @@ public class Oryan_BasicBattleEnemy : Oryan_TurnTaker, Oryan_ProjectileParent
     public virtual void onAttachedParryTargetHit(GameObject source)
     {
         throw new System.NotImplementedException("Triggered BattleEnemy Logic does not have a handler for AttachedParryTargetHit");
+    }
+
+    public int getBattlePosition()
+    {
+        return this.battlePosition;
+    }
+
+    public void setBattlePosition(int posIn)
+    {
+        this.battlePosition = posIn;
     }
 }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7782811217275199496}
   - component: {fileID: 991768636867623690}
   - component: {fileID: 8028904873917388532}
-  - component: {fileID: 4010573570467692797}
+  - component: {fileID: 3959764396076921718}
   m_Layer: 11
   m_Name: Light Detector
   m_TagString: Untagged
@@ -71,7 +71,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 2
---- !u!114 &4010573570467692797
+--- !u!114 &3959764396076921718
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -80,7 +80,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1149719734469155121}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 622900771fa6c8448932fe7f242b00b9, type: 3}
+  m_Script: {fileID: 11500000, guid: a0443bcbe7812994c8e56040d6ee2849, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2140589244318672342

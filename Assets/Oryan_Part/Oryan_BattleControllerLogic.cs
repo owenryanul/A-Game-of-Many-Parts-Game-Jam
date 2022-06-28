@@ -123,8 +123,7 @@ public class Oryan_BattleControllerLogic : TurnTaker, FadeEffectsListener, OnDea
             }
             else if(enemies[i] != null)
             {
-                GameObject enemy = Instantiate(enemies[i], enemySpots[i].transform.position, enemies[i].transform.rotation);
-                turnTakers.Add(enemy.GetComponent<TurnTaker>());
+                addEnemyToBattle(enemies[i], i);
             }
         }
 
@@ -176,10 +175,12 @@ public class Oryan_BattleControllerLogic : TurnTaker, FadeEffectsListener, OnDea
         GameObject.FindGameObjectWithTag("oryan_turnText").GetComponent<TextMeshProUGUI>().text = "";
     }
 
-    public void addEnemyToBattle(GameObject enemyPrefab, int pos)
+    public GameObject addEnemyToBattle(GameObject enemyPrefab, int pos)
     {
         GameObject enemy = Instantiate(enemyPrefab, enemySpots[pos].transform.position, enemyPrefab.transform.rotation);
+        enemy.GetComponent<Oryan_BasicBattleEnemy>().setBattlePosition(pos);
         turnTakers.Add(enemy.GetComponent<TurnTaker>());
+        return enemy;
     }
 
 

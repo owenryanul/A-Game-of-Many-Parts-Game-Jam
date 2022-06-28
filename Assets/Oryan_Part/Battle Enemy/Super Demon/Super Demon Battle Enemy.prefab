@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1391803809}
   - component: {fileID: 1391803810}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Demon Eyes Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -271,7 +271,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5097703465911691775}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Master Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -304,7 +304,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3511115752241150827}
   - component: {fileID: 3511115752241150826}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Demon Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -394,7 +394,7 @@ GameObject:
   - component: {fileID: 3511115753881833461}
   - component: {fileID: 1335211779740522986}
   - component: {fileID: 5515269548989950545}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Super Demon Battle Enemy
   m_TagString: oryan_battleEnemy
   m_Icon: {fileID: 0}
@@ -604,13 +604,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1506840308666560345, guid: 3c80046eb2226a944aa2703dfc9eaf04, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2105349071115583214, guid: 3c80046eb2226a944aa2703dfc9eaf04, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4421145595246048242, guid: 3c80046eb2226a944aa2703dfc9eaf04, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 6642507666906964658, guid: 3c80046eb2226a944aa2703dfc9eaf04, type: 3}
       propertyPath: m_Name
       value: Enemy Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 6642507666906964658, guid: 3c80046eb2226a944aa2703dfc9eaf04, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 6758441816573627095, guid: 3c80046eb2226a944aa2703dfc9eaf04, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7683211580001189878, guid: 3c80046eb2226a944aa2703dfc9eaf04, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c80046eb2226a944aa2703dfc9eaf04, type: 3}

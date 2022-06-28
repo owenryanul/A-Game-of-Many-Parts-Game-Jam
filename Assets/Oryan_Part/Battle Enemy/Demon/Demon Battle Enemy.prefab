@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6150905149511409884}
   - component: {fileID: 9093225665793198808}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cultist Stunt Double
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7944766489847243161}
   - component: {fileID: 2522498451217366429}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Chort
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1198201569783525408}
   - component: {fileID: 3979302255212582760}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cultist
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -262,7 +262,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5351563861850274141}
   - component: {fileID: 5351563861850274140}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -352,7 +352,7 @@ GameObject:
   - component: {fileID: 8940468979821419347}
   - component: {fileID: 565238657657070470}
   - component: {fileID: 3742875197793825782}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Demon Battle Enemy
   m_TagString: oryan_battleEnemy
   m_Icon: {fileID: 0}
@@ -528,7 +528,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4999690143008521861}
   - component: {fileID: 6195141590452706188}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -693,13 +693,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1506840308666560345, guid: 3c80046eb2226a944aa2703dfc9eaf04, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2105349071115583214, guid: 3c80046eb2226a944aa2703dfc9eaf04, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4421145595246048242, guid: 3c80046eb2226a944aa2703dfc9eaf04, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 6642507666906964658, guid: 3c80046eb2226a944aa2703dfc9eaf04, type: 3}
       propertyPath: m_Name
       value: Enemy Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 6642507666906964658, guid: 3c80046eb2226a944aa2703dfc9eaf04, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 6758441816573627095, guid: 3c80046eb2226a944aa2703dfc9eaf04, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7683211580001189878, guid: 3c80046eb2226a944aa2703dfc9eaf04, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7978878695620067899, guid: 3c80046eb2226a944aa2703dfc9eaf04, type: 3}
       propertyPath: m_Enabled

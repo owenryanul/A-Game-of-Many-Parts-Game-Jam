@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6108188910229793202
+--- !u!1 &8927147822662706093
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,10 +8,10 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6108188910229793205}
-  - component: {fileID: 6108188910229793204}
-  - component: {fileID: 6108188910229793203}
-  - component: {fileID: 893486164}
+  - component: {fileID: 8927147822662706090}
+  - component: {fileID: 8927147822662706091}
+  - component: {fileID: 8927147822662706092}
+  - component: {fileID: 8927147822690050143}
   m_Layer: 0
   m_Name: Battle Controller
   m_TagString: oryan_battleController
@@ -19,28 +19,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6108188910229793205
+--- !u!4 &8927147822662706090
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6108188910229793202}
+  m_GameObject: {fileID: 8927147822662706093}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -23.28, y: 12.59, z: 0}
+  m_LocalPosition: {x: -23.14, y: 15.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &6108188910229793204
+--- !u!212 &8927147822662706091
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6108188910229793202}
+  m_GameObject: {fileID: 8927147822662706093}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -86,30 +86,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6108188910229793203
+--- !u!114 &8927147822662706092
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6108188910229793202}
+  m_GameObject: {fileID: 8927147822662706093}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eabdea0255abe5f40a43946f107e4003, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enemySpots:
-  - {x: -22.95, y: 10.7, z: 0}
-  - {x: -21.96, y: 12.24, z: 0}
-  - {x: -21.96, y: 9.03, z: 0}
-  - {x: -21.96, y: 9.03, z: 0}
-  - {x: -21.96, y: 9.03, z: 0}
-  - {x: -21.96, y: 9.03, z: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   battleCameraPosition: {x: -23.05, y: 10.76, z: -10}
   isInBattle: 0
   activeCheckpointPosition: {x: 0, y: 0, z: 0}
   overworldBattleInstigator: {fileID: 0}
-  turnTransitionTime: 1
+  turnTransitionTime: 0.5
+  battleEndDelay: 2
+  extendedBattleEndDelay: 8
   maxHp: 3
   attackQuiver:
   - name: Basic Attack Arrow
@@ -124,25 +126,25 @@ MonoBehaviour:
   - name: Magic Shield
     ammoBehaviourPrefab: {fileID: 4330511326092582874, guid: 017f0abf49cc14f48b5fcf869484e4bc, type: 3}
     icon: {fileID: 21300000, guid: de39ae22909dc0b4991405d9dff01654, type: 3}
-    quantity: 50
+    quantity: 10
   overworldQuiver: []
   shieldRechargeAmmo:
     name: Magic Shield
     ammoBehaviourPrefab: {fileID: 4330511326092582874, guid: 017f0abf49cc14f48b5fcf869484e4bc, type: 3}
     icon: {fileID: 21300000, guid: de39ae22909dc0b4991405d9dff01654, type: 3}
     quantity: 1
-  maxShieldCharge: 50
-  timePerShieldRecharge: 0.2
---- !u!114 &893486164
+  maxShieldCharge: 10
+  timePerShieldRecharge: 0.75
+--- !u!114 &8927147822690050143
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6108188910229793202}
+  m_GameObject: {fileID: 8927147822662706093}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d4fd675516975f468b89de05d67cd60, type: 3}
+  m_Script: {fileID: 11500000, guid: a4afe7c0a9362fc4a97b3b7530b951fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   lightSourcesLightingThePlayer: 0
