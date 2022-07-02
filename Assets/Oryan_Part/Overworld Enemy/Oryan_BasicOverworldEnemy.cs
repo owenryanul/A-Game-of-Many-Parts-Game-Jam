@@ -109,6 +109,7 @@ public class Oryan_BasicOverworldEnemy : MonoBehaviour
     {
         this.isAggroed = aggroIn;
         this.gameObject.transform.Find("Alert Icon").GetComponent<SpriteRenderer>().enabled = aggroIn;
+        this.gameObject.GetComponent<Animator>().SetBool("Walking", aggroIn);
     }
 
     private void die()

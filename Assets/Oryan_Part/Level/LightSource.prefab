@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 991768636867623690}
   - component: {fileID: 8028904873917388532}
   - component: {fileID: 3959764396076921718}
-  m_Layer: 11
+  - component: {fileID: 6818463815333136737}
+  m_Layer: 0
   m_Name: Light Detector
-  m_TagString: Untagged
+  m_TagString: oryan_light
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -81,6 +82,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0443bcbe7812994c8e56040d6ee2849, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6818463815333136737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1149719734469155121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d4420153749f0c46873fc025a0ab343, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2140589244318672342
@@ -240,7 +253,7 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7277426777755489959}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0

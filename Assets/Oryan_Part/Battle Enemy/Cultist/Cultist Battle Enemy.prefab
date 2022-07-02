@@ -292,6 +292,7 @@ MonoBehaviour:
   immunities: 
   sprayProjectile: {fileID: 582539864038741259, guid: 2b06ce5c6f590e74db3b6cd1aaef761d, type: 3}
   sprayOffset: {x: -0.0852782, y: -0.007, z: 0}
+  knivesOnly: 0
 --- !u!1 &5592406653855926589
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,7 +477,7 @@ GameObject:
   - component: {fileID: 2635442578107624517}
   - component: {fileID: 3205780145328682458}
   - component: {fileID: 608102556127197152}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -355,7 +355,8 @@ GameObject:
   - component: {fileID: 6922745141680452426}
   - component: {fileID: 4618965171473598737}
   - component: {fileID: 1707770070631985291}
-  - component: {fileID: 5541054288470819400}
+  - component: {fileID: 842772938180546138}
+  - component: {fileID: 2799955290745057474}
   m_Layer: 11
   m_Name: Light Detector
   m_TagString: Untagged
@@ -415,7 +416,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1
---- !u!114 &5541054288470819400
+--- !u!114 &842772938180546138
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -424,6 +425,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 7161423740137958121}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 622900771fa6c8448932fe7f242b00b9, type: 3}
+  m_Script: {fileID: 11500000, guid: 0d4420153749f0c46873fc025a0ab343, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2799955290745057474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7161423740137958121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0443bcbe7812994c8e56040d6ee2849, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

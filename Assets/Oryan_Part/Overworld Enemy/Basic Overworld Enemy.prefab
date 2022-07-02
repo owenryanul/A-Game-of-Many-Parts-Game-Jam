@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 5433020719082217359}
   - component: {fileID: 5433020719082217358}
   - component: {fileID: 1857829914137198621}
+  - component: {fileID: 7241647462742215267}
   m_Layer: 8
   m_Name: Basic Overworld Enemy
   m_TagString: oryan_overworldEnemy
@@ -182,6 +183,7 @@ MonoBehaviour:
   speed: 1
   deathParticleEmitter: {fileID: 4391282051642193071, guid: d6764b6a479219a4e9722e229e90afe0, type: 3}
   runTowardsPlayer: 1
+  extendedFightEnding: 0
   enemiesInEncounter:
   - {fileID: 0}
   - {fileID: 2650704683616318818, guid: bb32a80065330c249b604bf7d47f8a8b, type: 3}
@@ -189,6 +191,26 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+--- !u!95 &7241647462742215267
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5433020719082217356}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 77e2e9eb997967b4cbf726b3516715b6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5433020720667994895
 GameObject:
   m_ObjectHideFlags: 0

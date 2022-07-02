@@ -17,6 +17,7 @@ public class Oryan_SuperDemonBattleEnemyLogic : Oryan_BasicBattleEnemy
     private bool isCharging;
     private bool isStaggered;
     private bool isResettingAfterCharge;
+    public bool onlyUseChargeAttack = false;
 
 
     [Header("Spray")]
@@ -119,6 +120,10 @@ public class Oryan_SuperDemonBattleEnemyLogic : Oryan_BasicBattleEnemy
         base.hasHurtPlayerThisAttack = false;
 
         int rand = Random.Range(1, 5);
+        if(onlyUseChargeAttack)
+        {
+            rand = 1;
+        }
         this.gameObject.GetComponent<Animator>().SetInteger("AttackType", rand);
         this.gameObject.GetComponent<Animator>().SetTrigger("Attack");
 

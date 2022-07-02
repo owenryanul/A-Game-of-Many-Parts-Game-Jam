@@ -10,6 +10,8 @@ public class Oryan_CultistBattleEnemyLogic : Oryan_BasicBattleEnemy
     public GameObject sprayProjectile;
     public Vector3 sprayOffset;
 
+    public bool knivesOnly;
+
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -38,7 +40,7 @@ public class Oryan_CultistBattleEnemyLogic : Oryan_BasicBattleEnemy
 
         int rand = Random.Range(0, 2);
 
-        if(rand == 0)
+        if(rand == 0 || knivesOnly)
         {
             int rand2 = Random.Range(1, 4);
             knives = rand2;
