@@ -603,6 +603,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cde728c8b88da4448c5aebe9a5e4adb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  screenName: Cultist
   projectile: {fileID: 7282800121529092582, guid: 74be3ad8d35dc8d46828b1ed30bfed5e, type: 3}
   parryProjectile: {fileID: 1636638444395907525, guid: 444afbfc1841bfd47b890372bb2a77de, type: 3}
   maxHp: 1
@@ -611,6 +612,8 @@ MonoBehaviour:
   sprayProjectile: {fileID: 582539864038741259, guid: 2b06ce5c6f590e74db3b6cd1aaef761d, type: 3}
   sprayOffset: {x: -0.0852782, y: -0.007, z: 0}
   knivesOnly: 1
+  fallshotLifeTime1: 1.8
+  fallshotLifeTime2: 1
 --- !u!1001 &447329854042037249
 PrefabInstance:
   m_ObjectHideFlags: 0

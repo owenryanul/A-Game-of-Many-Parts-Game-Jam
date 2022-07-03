@@ -96,9 +96,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05ce324a3b517be4fa190528326c0e8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  screenName: Avarice Demon
   projectile: {fileID: 0}
   parryProjectile: {fileID: 0}
-  maxHp: 3
+  maxHp: 10
   vulnerablies: 
   immunities: 
   chargeStartOffsetFromPlayer: {x: 10, y: 0, z: 0}

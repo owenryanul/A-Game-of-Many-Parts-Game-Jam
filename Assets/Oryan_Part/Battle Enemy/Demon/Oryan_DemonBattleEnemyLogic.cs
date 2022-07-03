@@ -27,7 +27,7 @@ public class Oryan_DemonBattleEnemyLogic : Oryan_BasicBattleEnemy
         base.Update();
         if (isSpraying)
         {
-            Vector3 directionTowardsPlayer = GameObject.FindGameObjectWithTag("base_player").transform.position - this.gameObject.transform.position;
+            Vector3 directionTowardsPlayer = GameObject.FindGameObjectWithTag("base_player").transform.position - (this.gameObject.transform.position + sprayOffset);
             GameObject bolt = Instantiate(sprayProjectile, this.gameObject.transform.position + sprayOffset, sprayProjectile.transform.rotation);
             bolt.GetComponent<Oryan_EnemyProjectile>().setProjectileParent(this);
             bolt.GetComponent<Oryan_EnemyProjectile>().fireInDirection(directionTowardsPlayer);

@@ -96,6 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e86bec1616298ff4d9e4b95d545f136c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  screenName: Avarice Egg
   projectile: {fileID: 0}
   parryProjectile: {fileID: 0}
   maxHp: 1

@@ -12,6 +12,9 @@ public class Oryan_CultistBattleEnemyLogic : Oryan_BasicBattleEnemy
 
     public bool knivesOnly;
 
+    public float fallshotLifeTime1;
+    public float fallshotLifeTime2;
+
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -25,7 +28,7 @@ public class Oryan_CultistBattleEnemyLogic : Oryan_BasicBattleEnemy
         base.Update();
         if(isSpraying)
         {
-            Vector3 directionTowardsPlayer = GameObject.FindGameObjectWithTag("base_player").transform.position - this.gameObject.transform.position;
+            Vector3 directionTowardsPlayer = GameObject.FindGameObjectWithTag("base_player").transform.position - (this.gameObject.transform.position + sprayOffset);
             GameObject bolt = Instantiate(sprayProjectile, this.gameObject.transform.position + sprayOffset, sprayProjectile.transform.rotation);
             bolt.GetComponent<Oryan_EnemyProjectile>().setProjectileParent(this);
             bolt.GetComponent<Oryan_EnemyProjectile>().fireInDirection(directionTowardsPlayer);
@@ -71,7 +74,7 @@ public class Oryan_CultistBattleEnemyLogic : Oryan_BasicBattleEnemy
         bolt.GetComponent<Oryan_EnemyKnifeProjectile>().setProjectileParent(this);
         bolt.GetComponent<Oryan_EnemyKnifeProjectile>().fireInDirection(directionTowardsPlayer);
         bolt.GetComponent<Oryan_EnemyKnifeProjectile>().fallShort = true;
-        bolt.GetComponent<Oryan_EnemyKnifeProjectile>().fallShortDuration = bolt.GetComponent<Oryan_EnemyKnifeProjectile>().totalLifetime / 2;
+        bolt.GetComponent<Oryan_EnemyKnifeProjectile>().fallShortDuration = fallshotLifeTime1;//bolt.GetComponent<Oryan_EnemyKnifeProjectile>().totalLifetime / 2;
         activeChildProjectiles++;
     }
 
@@ -82,7 +85,7 @@ public class Oryan_CultistBattleEnemyLogic : Oryan_BasicBattleEnemy
         bolt.GetComponent<Oryan_EnemyKnifeProjectile>().setProjectileParent(this);
         bolt.GetComponent<Oryan_EnemyKnifeProjectile>().fireInDirection(directionTowardsPlayer);
         bolt.GetComponent<Oryan_EnemyKnifeProjectile>().fallShort = true;
-        bolt.GetComponent<Oryan_EnemyKnifeProjectile>().fallShortDuration = bolt.GetComponent<Oryan_EnemyKnifeProjectile>().totalLifetime / 3;
+        bolt.GetComponent<Oryan_EnemyKnifeProjectile>().fallShortDuration = fallshotLifeTime2; //bolt.GetComponent<Oryan_EnemyKnifeProjectile>().totalLifetime / 3;
         activeChildProjectiles++;
     }
     

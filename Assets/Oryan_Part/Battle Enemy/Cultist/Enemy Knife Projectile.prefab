@@ -245,8 +245,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   facingOffset: -90
-  totalLifetime: 2.2
+  totalLifetime: 2.6
   damage: 1
+  damageOncePerTurn: 0
   dodgeable: 1
   parryable: 0
   blockable: 1

@@ -437,9 +437,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27598963aba4d434eb7186ce863bc94c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  screenName: Avarice Golem
   projectile: {fileID: 0}
   parryProjectile: {fileID: 0}
-  maxHp: 2
+  maxHp: 3
   vulnerablies: 
   immunities: 
   sprayProjectile: {fileID: 582539864038741259, guid: 2b06ce5c6f590e74db3b6cd1aaef761d, type: 3}

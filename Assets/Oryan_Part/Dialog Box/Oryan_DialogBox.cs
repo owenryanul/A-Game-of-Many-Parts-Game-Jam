@@ -54,6 +54,7 @@ public class Oryan_DialogBox : MonoBehaviour, Interactable
         {
             dialogBoxVisible = true;
             this.gameObject.transform.Find("Background").GetComponent<Image>().enabled = true;
+            this.gameObject.transform.Find("Key").GetComponent<Image>().enabled = true;
             this.gameObject.GetComponentInChildren<TextMeshProUGUI>().enabled = true;
 
             Dialog currentDialog = this.queuedLines[0];
@@ -75,6 +76,7 @@ public class Oryan_DialogBox : MonoBehaviour, Interactable
             dialogBoxVisible = false;
             this.gameObject.transform.Find("Background").GetComponent<Image>().enabled = false;
             this.gameObject.transform.Find("Portrait").GetComponent<Image>().enabled = false;
+            this.gameObject.transform.Find("Key").GetComponent<Image>().enabled = false;
             this.gameObject.GetComponentInChildren<TextMeshProUGUI>().enabled = false;
         }
     }

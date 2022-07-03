@@ -247,5 +247,5 @@ MonoBehaviour:
   facingOffset: -90
   minVelocityBeforePickupable: 0.1
   lifetime: 2
-  damage: 1
+  damage: 2
   elementDamageTypes: 01000000

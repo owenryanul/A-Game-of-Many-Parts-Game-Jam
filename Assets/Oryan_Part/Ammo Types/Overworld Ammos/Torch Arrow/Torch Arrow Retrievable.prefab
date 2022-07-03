@@ -225,7 +225,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 2.8
 --- !u!114 &2860641168357074715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -275,7 +275,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7584301041763376232}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1.791}
+  m_LocalPosition: {x: 0, y: 0, z: -3.94}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -295,7 +295,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 1, g: 0.75607044, b: 0.46706688, a: 1}
   m_Intensity: 2
-  m_Range: 10
+  m_Range: 25
   m_SpotAngle: 120
   m_InnerSpotAngle: 1
   m_CookieSize: 10
