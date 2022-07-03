@@ -44,6 +44,12 @@ public class Oryan_BasicBattleEnemy : Oryan_TurnTaker, Oryan_ProjectileParent
             kill(true);
         }
 
+        if(activeChildProjectiles < 0)
+        {
+            activeChildProjectiles = 0;
+        }
+
+
         if(activeChildProjectiles == 0 && !isPlayingReadyAnimation && !isPlayingAttackAnimation)
         {
             if (base.isTheirTurn)

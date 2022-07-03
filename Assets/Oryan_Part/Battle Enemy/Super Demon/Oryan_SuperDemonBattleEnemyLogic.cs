@@ -28,6 +28,7 @@ public class Oryan_SuperDemonBattleEnemyLogic : Oryan_BasicBattleEnemy
     private float currentSprayAngle;
     private bool sprayAngleReveresed;
     private bool isSpraying;
+    private float timeSinceLastSprayProjectile;
 
     [Header("Eggs")]
     public GameObject eggProjectile;
@@ -41,6 +42,7 @@ public class Oryan_SuperDemonBattleEnemyLogic : Oryan_BasicBattleEnemy
     {
         base.Start();
         isSpraying = false;
+        timeSinceLastSprayProjectile = 0;
         isMakingChargeAttack = false;
         isCharging = false;
         isStaggered = false;
@@ -82,11 +84,10 @@ public class Oryan_SuperDemonBattleEnemyLogic : Oryan_BasicBattleEnemy
                     currentSprayAngle = sprayMaxAngle;
                 }
             }
-            
-            
+
             Vector3 directionTowardsPlayer = GameObject.FindGameObjectWithTag("base_player").transform.position - (this.gameObject.transform.position + sprayOffset);
             Vector3 directionTowardsPlayerAfterRotation = Quaternion.AngleAxis(currentSprayAngle, this.transform.forward) * directionTowardsPlayer;
-                
+
             GameObject bolt = Instantiate(sprayProjectile, this.gameObject.transform.position + sprayOffset, sprayProjectile.transform.rotation);
             bolt.GetComponent<Oryan_EnemyProjectile>().setProjectileParent(this);
             bolt.GetComponent<Oryan_EnemyProjectile>().fireInDirection(directionTowardsPlayerAfterRotation);

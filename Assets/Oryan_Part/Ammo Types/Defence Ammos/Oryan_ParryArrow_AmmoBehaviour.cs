@@ -27,7 +27,7 @@ public class Oryan_ParryArrow_AmmoBehaviour : MonoBehaviour, AmmoBehaviour
     {
         GameObject arrow = Instantiate(arrowPrefab, playerLogic.gameObject.transform.position, playerLogic.gameObject.transform.rotation);
         arrow.GetComponent<Oryan_ArrowProjectileLogic>().fireInDirection(playerLogic.getAimDirection());
-        playerLogic.modifyAmmoAmount(playerLogic.getAmmoRelativeToCurrent(0), -1);
+        //playerLogic.modifyAmmoAmount(playerLogic.getAmmoRelativeToCurrent(0), -1);
     }
 
     public void OnFireCancelled(PlayerLogic playerLogic)

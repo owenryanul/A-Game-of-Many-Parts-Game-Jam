@@ -34,6 +34,7 @@ TagManager:
   - oryan_parryShield
   - oryan_light
   - oryan_lightCuller
+  - oryan_battleEdge
   layers:
   - Default
   - TransparentFX
