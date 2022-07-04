@@ -1,9 +1,9 @@
-using SynchronizerData;
+using Flip_SynchronizerData;
 using UnityEngine;
 
 public class Flip_BeatScaler : MonoBehaviour
 {
-    public BeatObserver BeatObserver;
+    public Flip_BeatObserver BeatObserver;
     public BeatType BeatType;
     public Transform TargetToScale;
     public Vector3 NeutralScale;
