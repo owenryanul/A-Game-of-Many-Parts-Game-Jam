@@ -9,7 +9,7 @@ using Melanchall.DryWetMidi.Multimedia;
 using Melanchall.DryWetMidi.Standards;
 using UnityEngine;
 
-public class DemoScript : MonoBehaviour
+public class Flip_MidiDemoScript : MonoBehaviour
 {
     private const string OutputDeviceName = "Microsoft GS Wavetable Synth";
 
@@ -85,7 +85,7 @@ public class DemoScript : MonoBehaviour
         _playback.Loop = true;
         _playback.NotesPlaybackStarted += OnNotesPlaybackStarted;
         _playback.NotesPlaybackFinished += OnNotesPlaybackFinished;
-       
+
         Debug.Log($"Output device [{OutputDeviceName}] initialized.");
     }
 
