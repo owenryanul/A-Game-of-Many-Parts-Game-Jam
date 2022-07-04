@@ -85,7 +85,7 @@ public class Oryan_BasicOverworldEnemy : MonoBehaviour
         {
             if (collision.gameObject.tag == "base_player" && !player.GetComponent<PlayerLogic>().getIsDodging())
             {
-                //Die to player
+                //Start Battle
                 GameObject.FindGameObjectWithTag("oryan_battleController").GetComponent<Oryan_BattleControllerLogic>().startBattle(this.gameObject, this.enemiesInEncounter, extendedFightEnding);
             }
             else if (collision.gameObject.tag == "sample_playerProjectile" || collision.gameObject.tag == "sample_explosion")

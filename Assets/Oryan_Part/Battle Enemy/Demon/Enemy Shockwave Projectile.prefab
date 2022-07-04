@@ -251,6 +251,7 @@ MonoBehaviour:
   dodgeable: 1
   parryable: 0
   blockable: 1
+  playerPainSound: {fileID: 8300000, guid: b5adeca22620e2645aaf08332b23f996, type: 3}
   splitProjectile: {fileID: 1473570704074086938}
   forbidChildSpliting: 1
   splitRight: 1

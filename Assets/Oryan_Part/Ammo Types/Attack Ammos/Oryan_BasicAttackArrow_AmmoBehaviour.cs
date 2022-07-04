@@ -5,6 +5,7 @@ using UnityEngine;
 public class Oryan_BasicAttackArrow_AmmoBehaviour : MonoBehaviour, AmmoBehaviour, Oryan_ProjectileParent
 {
     public GameObject arrowPrefab;
+    public bool infinateAmmo;
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +29,10 @@ public class Oryan_BasicAttackArrow_AmmoBehaviour : MonoBehaviour, AmmoBehaviour
         GameObject arrow = Instantiate(arrowPrefab, playerLogic.gameObject.transform.position, playerLogic.gameObject.transform.rotation);
         arrow.GetComponent<Oryan_BattleArrowProjectileLogic>().fireInDirection(playerLogic.getAimDirection());
         arrow.GetComponent<Oryan_BattleArrowProjectileLogic>().setProjectileParent(this);
-        //playerLogic.modifyAmmoAmount(playerLogic.getAmmoRelativeToCurrent(0), -1);
+        if(!infinateAmmo)
+        {
+            playerLogic.modifyAmmoAmount(playerLogic.getAmmoRelativeToCurrent(0), -1);
+        }
 
         GameObject.FindGameObjectWithTag("oryan_battleController").GetComponent<Oryan_BattleControllerLogic>().lockPlayerQuiverWhileTheirTurnResolves();
     }

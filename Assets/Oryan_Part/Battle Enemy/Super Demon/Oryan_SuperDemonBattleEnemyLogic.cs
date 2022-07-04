@@ -104,6 +104,7 @@ public class Oryan_SuperDemonBattleEnemyLogic : Oryan_BasicBattleEnemy
             if (collision.gameObject.GetComponent<PlayerLogic>().getIsDodging())
             {
                 //damage dodging player
+                this.gameObject.GetComponent<AudioSource>().Play();
                 collision.gameObject.GetComponent<PlayerLogic>().addHp(-chargeDamage, false);
                 //===================play replacement hurt sound here.
             }

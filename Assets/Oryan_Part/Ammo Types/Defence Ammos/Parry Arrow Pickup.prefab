@@ -98,7 +98,7 @@ MonoBehaviour:
   ammo:
     name: Parry Arrow
     ammoBehaviourPrefab: {fileID: 5227153773123240546, guid: 7df62585ab56c5447be2eed08015d281, type: 3}
-    icon: {fileID: 21300000, guid: 673b1abbf325ddf4981ded392cd43f8a, type: 3}
+    icon: {fileID: 21300000, guid: 40a57cde60172a347b1bc4a7336d9fd2, type: 3}
     quantity: 99
   type: 1
 --- !u!1 &4287950970279101688

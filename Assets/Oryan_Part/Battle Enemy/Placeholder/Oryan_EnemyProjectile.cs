@@ -18,6 +18,8 @@ public class Oryan_EnemyProjectile : MonoBehaviour
 
     protected Vector3 targetDirection;
 
+    public AudioClip playerPainSound;
+
     // Start is called before the first frame update
     protected virtual void Start()
     {
@@ -59,6 +61,7 @@ public class Oryan_EnemyProjectile : MonoBehaviour
                     {
                         //damage dodging player
                         collision.gameObject.GetComponent<PlayerLogic>().addHp(-damage, false);
+                        this.gameObject.GetComponent<AudioSource>().PlayOneShot(playerPainSound, 1);
                         //===================play replacement hurt sound here.
                     }
                     else

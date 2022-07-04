@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrowPrefab: {fileID: 676811892697888914, guid: c64344b38b7cfe94f969d573be87c3ed, type: 3}
+  infinateAmmo: 1
