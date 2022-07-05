@@ -2384,7 +2384,7 @@ MonoBehaviour:
   ScaleSpeed: 10
   ColourScaleSpeed: 0
   ColourMultiplier: 0
-  ScaleHeight: 350
+  ScaleHeight: 250
   Smoothing: 1
   UseBeat: 0
   BeatObject: {fileID: 0}
@@ -2489,8 +2489,8 @@ MonoBehaviour:
   ArrowExplosionPosition: {x: 0, y: -5.4}
   ExplosionVelocityRangeMin: {x: -300, y: 500}
   ExplosionVelocityRangeMax: {x: 150, y: 700}
-  SpawnTorqueRangeMin: 1
-  SpawnTorqueRangeMax: 2
+  SpawnTorqueRangeMin: 100
+  SpawnTorqueRangeMax: 200
   ExplosionIndexes: 0a00000020000000220000002d00000042000000440000005b0000006600000068000000
 --- !u!1 &1760975955
 GameObject:
