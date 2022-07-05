@@ -11,4 +11,11 @@ public class Sneaky_AttackBeeAggro : MonoBehaviour
             this.gameObject.transform.parent.GetComponent<Sneaky_AttackBee>().isAggroed = true;
         }
     }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "base_player")
+        {
+            this.gameObject.transform.parent.GetComponent<Sneaky_AttackBee>().isAggroed = false;
+        }
+    }
 }

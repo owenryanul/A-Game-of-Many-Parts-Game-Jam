@@ -80,9 +80,11 @@ public class Sneaky_Queen : MonoBehaviour
                 track_time = true;
                 //start_time = Time.time;
                 running_time = Time.time - start_time;
-                if (running_time >= 1)
+                if (running_time >= 2)
                 {
                     Debug.Log("You're in for it!");
+                    Instantiate(objectToSpawn, this.gameObject.transform.position, this.gameObject.transform.rotation);
+                    Instantiate(objectToSpawn, this.gameObject.transform.position, this.gameObject.transform.rotation);
                     Instantiate(objectToSpawn, this.gameObject.transform.position, this.gameObject.transform.rotation);
                     isAggroed= false;
                     ResetTimer();

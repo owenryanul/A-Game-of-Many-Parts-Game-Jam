@@ -29,23 +29,23 @@ public class Sneaky_AttackBee : MonoBehaviour
         {
             if (isAggroed && player != null)
             {
-                Vector3 target = player.transform.position;
+               Vector3 target = player.transform.position;
                 target.z = 0;
 
                 Vector2 direction = target - transform.position;
                 direction.Normalize();
                 runTowardsPlayer = true;
 
-                
+                if (nextFireTime < Time.time)
+                {
+                    Instantiate(bullet, bulletParent.transform.position,Quaternion.identity);
+                    nextFireTime = Time.time + fireRate;
+                }
 
                 //move in the direction you're facing
                 if (runTowardsPlayer)
                 {
-                    if (nextFireTime < Time.time)
-                    {
-                        Instantiate(bullet, bulletParent.transform.position,Quaternion.identity);
-                        nextFireTime = Time.time + fireRate;
-                    }
+                    
                     this.gameObject.GetComponent<Rigidbody2D>().velocity = (direction * speed);
 
                     if (direction.x > 0)
