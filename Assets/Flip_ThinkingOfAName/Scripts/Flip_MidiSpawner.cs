@@ -2,11 +2,14 @@ using System.Collections.Generic;
 using Melanchall.DryWetMidi.Interaction;
 using Melanchall.DryWetMidi.MusicTheory;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Flip_MidiSpawner : MonoBehaviour
 {
     public Flip_MidiParser MidiParser;
     public NoteName NoteRestriction;
+
+    public UnityEvent SpawnEvent;
 
     private List<double> _timeStamps = new List<double>();
     private int _spawnIndex;
@@ -35,7 +38,7 @@ public class Flip_MidiSpawner : MonoBehaviour
             return;
         }
 
-        print(NoteRestriction + " " + _timeStamps[_spawnIndex]);
+        SpawnEvent.Invoke();
 
         _spawnIndex++;
     }
