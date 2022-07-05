@@ -47,11 +47,7 @@ MonoBehaviour:
   arrowPrefab: {fileID: 3566968587878416852, guid: 7c47314cfe84e05449f175a848bc92c8, type: 3}
   creditTexts:
   - Player Character, Lobby and Tutorial programming by Owen Ryan
-  - 'Player Character, Tutorial and Lobby Art from 0x72''s Dungeon Tileset II
-
-
-
-'
+  - Player Character, Tutorial and Lobby Art from 0x72's Dungeon Tileset II
   - Tutorial Music by Colm Ryan
   - 'The Undercroft
 
