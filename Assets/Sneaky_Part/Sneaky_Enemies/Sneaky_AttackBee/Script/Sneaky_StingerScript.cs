@@ -17,7 +17,17 @@ public class Sneaky_StingerScript : MonoBehaviour
         Vector2 moveDir = (target.transform.position - transform.position).normalized * speed;
         bulletRB.velocity = new Vector2(moveDir.x, moveDir.y);
         Destroy(this.gameObject, 2);
+        
     }
-
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "base_player" && !target.GetComponent<PlayerLogic>().getIsDodging())
+        {
+            
+            target.GetComponent<PlayerLogic>().addHp(-1, true);
+            Destroy(this.gameObject);
+        }
+        
+    }
    
 }

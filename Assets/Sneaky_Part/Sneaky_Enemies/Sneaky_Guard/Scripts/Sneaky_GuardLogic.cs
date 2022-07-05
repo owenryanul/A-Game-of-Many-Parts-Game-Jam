@@ -110,7 +110,7 @@ public class Sneaky_GuardLogic : MonoBehaviour
                 track_time = true;
                 //start_time = Time.time;
                 running_time = Time.time - start_time;
-                if (running_time >= 3)
+                if (running_time >= 2)
                 {
                     Debug.Log("You're in for it!");
                     Instantiate(objectToSpawn, this.gameObject.transform.position, this.gameObject.transform.rotation);
