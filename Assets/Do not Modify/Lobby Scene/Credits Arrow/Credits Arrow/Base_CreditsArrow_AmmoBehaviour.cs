@@ -27,13 +27,14 @@ public class Base_CreditsArrow_AmmoBehaviour : MonoBehaviour, AmmoBehaviour
     {
         //"CreditsArrow_"
         string trimmed = playerLogic.getAmmoRelativeToCurrent(0).name.Remove(0, 13);
-        switch (trimmed)
+        int num = System.Int32.Parse(trimmed);
+        currentCredits = creditTexts[num];
+        /*switch (trimmed)
         {
             case "0": currentCredits = creditTexts[0];  break;
             case "1": currentCredits = creditTexts[1]; break;
             case "2": currentCredits = creditTexts[2]; break;
-        }
-        
+        }*/
     }
 
     public void OnFirePressd(PlayerLogic playerLogic)
