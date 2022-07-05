@@ -47,9 +47,24 @@ MonoBehaviour:
   arrowPrefab: {fileID: 3566968587878416852, guid: 7c47314cfe84e05449f175a848bc92c8, type: 3}
   creditTexts:
   - Player Character, Lobby and Tutorial programming by Owen Ryan
-  - 'Player Character, Tutorial and Lobby Art from 0x72''s Dungeon Tileset II
+  - Player Character, Tutorial and Lobby Art from 0x72's Dungeon Tileset II
+  - Tutorial Music by Colm Ryan
+  - 'The Undercroft
 
+    Programing and Design by Owen Ryan
 
+    Music by Colm Ryan
+
+    Art
+    Assets from 0x72''s Dungeon Tileset II
 
 '
-  - Tutorial Music by Colm Ryan
+  - 'The Sneaky Level
+
+    Level by Deaf Honesty
+
+    For majority of the 2D assets-DungeonTileSet
+    2 by 0x72
+
+    Some other assets such as the BEE- Generic RPG Pack by Estudio
+    Vaca Roxa'

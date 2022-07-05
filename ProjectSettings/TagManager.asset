@@ -20,6 +20,21 @@ TagManager:
   - sample_enemy
   - sample_blastable
   - sample_explosion
+  - oryan_overworldEnemy
+  - oryan_playerCage
+  - oryan_battleEnemy
+  - oryan_battleController
+  - oryan_playerAttackProjectile
+  - oryan_enemyProjectile
+  - oryan_parryArrow
+  - oryan_turnText
+  - oryan_playerShield
+  - oryan_batteEdge
+  - oryan_dialogBox
+  - oryan_parryShield
+  - oryan_light
+  - oryan_lightCuller
+  - oryan_battleEdge
   layers:
   - Default
   - TransparentFX

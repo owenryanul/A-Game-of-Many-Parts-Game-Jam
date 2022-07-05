@@ -17,5 +17,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Template_Part/Template_TemplateScene.unity
     guid: d5d7ce16c0a4c0740897eefd5f52e4e3
+  - enabled: 1
+    path: Assets/Oryan_Part/Oryan_Scene.unity
+    guid: 244c1746d08f9354c8f2a26376f63f0e
+  - enabled: 1
+    path: Assets/Sneaky_Part/SneakyScene.unity
+    guid: 1bb7b203d03dd8b41ad2b5fb52e0f34d
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 29c46df61fcbc5e47b8fa65a5b5d3ba1, type: 2}
