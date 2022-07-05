@@ -1,7 +1,13 @@
+using Flip_SynchronizerData;
 using UnityEngine;
 
 public class Flip_BeatArrowProjectileLogic : MonoBehaviour, OnActivateListener
 {
+    public Flip_BeatObserver ArrowBeatExplosionObserver;
+    public BeatType BeatType;
+    private bool _waitingForNextBeat = true;
+
+
     public float speed;
     public float facingOffset; //inDegrees
     public GameObject explosionPrefab;
@@ -9,20 +15,29 @@ public class Flip_BeatArrowProjectileLogic : MonoBehaviour, OnActivateListener
     private Vector3 targetDirection;
     private bool markedForRemoval;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         markedForRemoval = false;
         GameObject.FindGameObjectWithTag("base_player").GetComponent<PlayerLogic>().addOnActivateListener(this);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
+        if ((ArrowBeatExplosionObserver.beatMask & BeatType) != BeatType)
+        {
+            _waitingForNextBeat = false;
+        }
+
+        if (_waitingForNextBeat == false && (ArrowBeatExplosionObserver.beatMask & BeatType) == BeatType)
+        {
+            markedForRemoval = true;
+            Instantiate(explosionPrefab, gameObject.transform.position, gameObject.transform.rotation);
+        }
+
         if(markedForRemoval)
         {
             GameObject.FindGameObjectWithTag("base_player").GetComponent<PlayerLogic>().removeOnActivateListener(this);
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
 
@@ -31,19 +46,12 @@ public class Flip_BeatArrowProjectileLogic : MonoBehaviour, OnActivateListener
         targetDirection = targetDirectionIn.normalized;
 
         float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
-        this.gameObject.GetComponent<Rigidbody2D>().rotation = angle + facingOffset;
+        gameObject.GetComponent<Rigidbody2D>().rotation = angle + facingOffset;
 
-        this.gameObject.GetComponent<Rigidbody2D>().velocity = targetDirection * speed;
+        gameObject.GetComponent<Rigidbody2D>().velocity = targetDirection * speed;
     }
 
-    public void OnActivatePressed()
-    {
-        markedForRemoval = true;
-        Instantiate(explosionPrefab, this.gameObject.transform.position, this.gameObject.transform.rotation);
-    }
+    public void OnActivatePressed() { }
 
-    public void OnActivateReleased()
-    {
-        //no effect
-    }
+    public void OnActivateReleased() { }
 }

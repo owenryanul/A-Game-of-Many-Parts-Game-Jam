@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: -6166594517838363974}
   m_Layer: 11
   m_Name: Beat Arrow Pickup
-  m_TagString: Untagged
+  m_TagString: sample_blastable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -128,14 +128,14 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8109986728828260920}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -183,7 +183,7 @@ MonoBehaviour:
     name: Beat Arrow
     ammoBehaviourPrefab: {fileID: 5085828468920740779, guid: 3f6a9941876e9c84bab4a799ecfd4b6f, type: 3}
     icon: {fileID: 21300000, guid: e590d5d3ef286014685878040f80aa24, type: 3}
-    quantity: 99
+    quantity: 1
 --- !u!1 &8109986729041653128
 GameObject:
   m_ObjectHideFlags: 0

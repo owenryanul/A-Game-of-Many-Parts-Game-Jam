@@ -147,7 +147,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b679e79dc0ceacb42b6f09e7dd2e0527, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  ArrowBeatExplosionObserver: {fileID: 0}
+  BeatType: 2
+  speed: 20
   facingOffset: -90
   explosionPrefab: {fileID: 1311787366476376668, guid: f9e614c3b3aeb4d4281714bf447f0fe0, type: 3}
 --- !u!82 &-8673008808963499470
@@ -162,7 +164,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 8913d8e8c0d2209428df4ce85d743511, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
