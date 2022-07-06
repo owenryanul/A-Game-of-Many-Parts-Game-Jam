@@ -29,7 +29,10 @@ public class Flip_BeatScaler : MonoBehaviour
         {
             foreach (Transform target in TargetsToScale)
             {
-                target.localScale = Vector3.Lerp(BeatScale, NeutralScale, _elapsedTime / TimeToResetScale);
+                if (target != null)
+                {
+                    target.localScale = Vector3.Lerp(BeatScale, NeutralScale, _elapsedTime / TimeToResetScale);
+                }
             }
 
         }

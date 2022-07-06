@@ -33,6 +33,7 @@ public class Flip_BeatSynchronizer : MonoBehaviour
     {
         double initTime = AudioSettings.dspTime;
         AudioSource.PlayScheduled(initTime + StartDelay);
+
         if (OnAudioStart != null)
         {
             OnAudioStart(initTime + StartDelay);
