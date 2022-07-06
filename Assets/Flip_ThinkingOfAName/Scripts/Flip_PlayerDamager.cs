@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class Flip_PlayerDamager : MonoBehaviour
@@ -17,6 +16,14 @@ public class Flip_PlayerDamager : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("base_player") && !PlayerDamageManager.PlayerLogic.getIsDodging())
+        {
+            PlayerDamageManager.Damage(DamageValue);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("base_player") && !PlayerDamageManager.PlayerLogic.getIsDodging())
         {
             PlayerDamageManager.Damage(DamageValue);
         }

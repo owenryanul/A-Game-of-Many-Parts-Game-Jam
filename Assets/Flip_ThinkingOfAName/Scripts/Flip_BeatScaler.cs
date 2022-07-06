@@ -5,7 +5,7 @@ public class Flip_BeatScaler : MonoBehaviour
 {
     public Flip_BeatObserver BeatObserver;
     public BeatType BeatType;
-    public Transform TargetToScale;
+    public Transform[] TargetsToScale;
     public Vector3 NeutralScale;
     public Vector3 BeatScale;
     public float TimeToResetScale;
@@ -18,12 +18,20 @@ public class Flip_BeatScaler : MonoBehaviour
 
         if ((BeatObserver.beatMask & BeatType) == BeatType)
         {
-            TargetToScale.localScale = BeatScale;
+            foreach (Transform target in TargetsToScale)
+            {
+                target.localScale = BeatScale;
+            }
+
             _elapsedTime = 0;
         }
         else
         {
-            TargetToScale.localScale = Vector3.Lerp(BeatScale, NeutralScale, _elapsedTime / TimeToResetScale);
+            foreach (Transform target in TargetsToScale)
+            {
+                target.localScale = Vector3.Lerp(BeatScale, NeutralScale, _elapsedTime / TimeToResetScale);
+            }
+
         }
     }
 }

@@ -8,6 +8,7 @@ public class Flip_MidiSpawner : MonoBehaviour
 {
     public Flip_MidiParser MidiParser;
     public NoteName NoteRestriction;
+    public float PreSpawnTime;
 
     public UnityEvent SpawnEvent;
 
@@ -33,13 +34,12 @@ public class Flip_MidiSpawner : MonoBehaviour
             return;
         }
 
-        if (!(MidiParser.GetAudioSourceTime() >= _timeStamps[_spawnIndex]))
+        if (!(MidiParser.GetAudioSourceTime() >= _timeStamps[_spawnIndex] - PreSpawnTime))
         {
             return;
         }
 
         SpawnEvent.Invoke();
-
         _spawnIndex++;
     }
 }
