@@ -107,6 +107,12 @@ public class Flip_Boss : MonoBehaviour, Flip_ISpawnable
         StartCoroutine(PlayExplosions());
     }
 
+    public void SetHealth(float value)
+    {
+        Health = value;
+        HealthText.text = Health.ToString();
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "base_player" && !Player.PlayerLogic.getIsDodging())

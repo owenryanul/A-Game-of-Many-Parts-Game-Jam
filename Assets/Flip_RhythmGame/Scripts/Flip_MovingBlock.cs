@@ -4,6 +4,7 @@ using UnityEngine;
 public class Flip_MovingBlock : MonoBehaviour, Flip_ISpawnable
 {
     public Renderer BlockRenderer;
+    public Rigidbody2D BlockRigidbody;
     public Vector2 StartPosition;
     public Vector2 EndPosition;
     public float TimeToMove;
@@ -13,10 +14,12 @@ public class Flip_MovingBlock : MonoBehaviour, Flip_ISpawnable
     public void Start()
     {
         BlockRenderer.enabled = false;
+        BlockRigidbody.simulated = false;
     }
 
     public void Spawn()
     {
+        BlockRigidbody.simulated = true;
         StartCoroutine(MoveBlock());
     }
 

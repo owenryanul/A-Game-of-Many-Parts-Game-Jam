@@ -20,7 +20,10 @@ public class Flip_BeatScaler : MonoBehaviour
         {
             foreach (Transform target in TargetsToScale)
             {
-                target.localScale = BeatScale;
+                if (target != null)
+                {
+                    target.localScale = BeatScale;
+                }
             }
 
             _elapsedTime = 0;
