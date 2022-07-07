@@ -20092,8 +20092,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbf48d9662750d541a43e64d7c3cd2c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 1987281053}
   FallingSpike: {fileID: 2952663573317407271, guid: 88f53ec4cbfeb784c90664eee9662c34, type: 3}
+  SpawnPositionMin: {x: -8.6, y: 5.25}
+  SpawnPositionMax: {x: 8.6, y: 4.9}
 --- !u!4 &976974656
 Transform:
   m_ObjectHideFlags: 0
@@ -40792,11 +40793,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 573b89fdf89503c4db7c8e9272a686f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &1987281053 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1987733891827549087, guid: 72229f21bfa1025449b0b2cb300e383c, type: 3}
-  m_PrefabInstance: {fileID: 102266184}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1988070021
 GameObject:
   m_ObjectHideFlags: 0
