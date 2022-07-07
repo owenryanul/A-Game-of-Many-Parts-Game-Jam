@@ -10,7 +10,7 @@ public class Flip_FallingSpikeSpawner : MonoBehaviour, Flip_ISpawnable
     {
         Flip_FallingSpike spike = Instantiate(FallingSpike, new Vector2(Player.position.x, 4.9f), Quaternion.Euler(0, 0, 180)).GetComponent<Flip_FallingSpike>();
         spike.StartPosition = new Vector2(Player.position.x, 4.9f);
-        spike.EndPosition = new Vector2(Player.position.x, 4.9f);
+        spike.EndPosition = new Vector2(Player.position.x, 5.3f);
         spike.Spawn();
     }
 }
