@@ -7794,7 +7794,7 @@ MonoBehaviour:
   ShootRotationSpeed: 75
   BulletForce: {x: 0, y: 25}
   Explosion: {fileID: 1311787366476376668, guid: e73cd86a2d94da04495f6f4ff7d1dd38, type: 3}
-  ExplosionMinPosition: {x: 0.45, y: 0.45}
+  ExplosionMinPosition: {x: -0.45, y: -0.45}
   ExplosionMaxPosition: {x: 0.45, y: 0.45}
 --- !u!58 &335231706
 CircleCollider2D:
