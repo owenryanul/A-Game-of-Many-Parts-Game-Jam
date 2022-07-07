@@ -37,5 +37,6 @@ public class Flip_LevelEnd : MonoBehaviour
     private void SpawnExit()
     {
         LevelExit.AddForce(Force, ForceMode2D.Force);
+        Application.runInBackground = false;
     }
 }
