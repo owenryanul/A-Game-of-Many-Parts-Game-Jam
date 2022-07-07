@@ -66,6 +66,7 @@ public class Flip_PlayerDamageManager : MonoBehaviour
         }
 
         Music.pitch = 0;
+        Music.Stop();
     }
 
     private IEnumerator FadeAndReset()
