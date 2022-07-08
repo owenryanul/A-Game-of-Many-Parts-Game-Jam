@@ -42201,7 +42201,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6448945751372953039, guid: fde29a3af1e65ef4ba3a2d703e130d35, type: 3}
       propertyPath: m_text
-      value: The Rhythm Game
+      value: The Rhythm Part
       objectReference: {fileID: 0}
     - target: {fileID: 6448945751372953039, guid: fde29a3af1e65ef4ba3a2d703e130d35, type: 3}
       propertyPath: m_fontSize
@@ -42213,7 +42213,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6448945751372953039, guid: fde29a3af1e65ef4ba3a2d703e130d35, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4294967295
+      value: 16777215
       objectReference: {fileID: 0}
     - target: {fileID: 6448945751533603346, guid: fde29a3af1e65ef4ba3a2d703e130d35, type: 3}
       propertyPath: m_AnchoredPosition.x
