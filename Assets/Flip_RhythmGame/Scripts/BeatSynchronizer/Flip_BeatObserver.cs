@@ -1,0 +1,80 @@
+﻿// License
+// The MIT License (MIT)
+//
+// Copyright (c) 2014 Christian Floisand
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+// documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+// rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+// NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+using UnityEngine;
+using System.Collections;
+using Flip_SynchronizerData;
+
+/// <summary>
+/// This script needs to be added to any object that will observe a beat counter or pattern counter, and will receive notification
+/// when a beat happens in the source audio through setting a bit mask whose bits correspond to specific beat types. For objects observing
+/// the pattern counter, the beat type is always OnBeat.
+/// The observing object should contain a script that polls for the current value of beatMask. When this value is non-zero, a beat has just fired.
+/// The beatWindow field specifies (in milliseconds) how long the beat stays active for, effectively behaving as a sensitivity/tolerance
+/// setting.
+/// </summary>
+/// <remarks>
+/// By having individual beat observers attached to objects, finer control over sensitivity settings is granted to the client, which
+/// may contribute to lower CPU loads.
+/// </remarks>
+public class Flip_BeatObserver : MonoBehaviour {
+
+	[Range(0, 500)]
+	public float beatWindow = 10f;	// in milliseconds
+
+	[HideInInspector]
+	public BeatType beatMask;
+
+
+	void Start ()
+	{
+		beatMask = BeatType.None;
+	}
+
+	/// <summary>
+	/// This method is called by each BeatCounter this object is observing.
+	/// </summary>
+	/// <param name="beatType">The beat type that invoked this method.</param>
+	public void BeatNotify (BeatType beatType)
+	{
+		beatMask |= beatType;
+		StartCoroutine(WaitOnBeat(beatType));
+	}
+
+	/// <summary>
+	/// This overloaded method is called by each PatternCounter this object is observing. Since pattern counters contain a sequence of
+	/// different beat types, keeping track of the beat type isn't necessary. To test for a beat from the pattern counter, the beat mask
+	/// should be checked for the BeatType.OnBeat flag.
+	/// </summary>
+	public void BeatNotify ()
+	{
+		beatMask |= BeatType.OnBeat;
+		StartCoroutine(WaitOnBeat(BeatType.OnBeat));
+	}
+
+	/// <summary>
+	/// Clears the bit corresponding to the beat type after a specified duration of time.
+	/// </summary>
+	/// <param name="beatType">The beat type to clear.</param>
+	IEnumerator WaitOnBeat (BeatType beatType)
+	{
+		yield return new WaitForSeconds(beatWindow / 1000f);
+		beatMask ^= beatType;
+	}
+
+}
