@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Class used for storing an ammo type in the player's quiver. 
+//Stores the ammo's name, ui icon, quanity and the prefab that contains the script implementing the behaviours associated with this ammo type.
+//Said script implements the AmmoBehaviour interface.
 [System.Serializable]
 public class Ammo
 {

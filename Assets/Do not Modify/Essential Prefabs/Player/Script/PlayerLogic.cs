@@ -6,6 +6,8 @@ using UnityEngine.InputSystem.Interactions;
 using TMPro;
 using System;
 
+//For the PlayerLogic Readme see Player Readme.txt in Assets/Do not Modify/Essential Prefabs/Player/Readme/Player Readme.txt
+
 public class PlayerLogic : MonoBehaviour
 {
     [Header("Camera")]
@@ -15,35 +17,35 @@ public class PlayerLogic : MonoBehaviour
     [Header("Movement")]
     public float topSpeed = 1.0f; //in units/second
     public float acceleration = 1.0f; //in units/second/second
-    public float deceleration = -1.0f; //units lost per units/second/second
+    public float deceleration = -1.0f; //in units/second/second
 
     private float currentSpeed;
     private Vector2 movementDirection;
     private Vector2 lastMovementDirection;
 
-    private Vector2 externalVelocity;
-    private bool overridePlayerMovementVelocity;
+    private Vector2 externalVelocity; //External Velocity that is applied to the player.
+    private bool overridePlayerMovementVelocity; //Whether or not external velocity overrides the player's movement or is added instead.
 
     [Header("Aiming")]
     public float maxReticleDistanceFromPlayer;
     private Vector3 aimDirection;
-    private bool usingMouse;
+    private bool usingMouse; //is the player using the mouse to aim
 
     [Header("Ammo")]
-    public List<Ammo> carriedAmmo;
-    public Ammo defaultAmmo;
-    private int currentAmmoIndex;
-    private bool changingAmmo;
+    public List<Ammo> carriedAmmo; //The current selection of ammo types carried by the player
+    public Ammo defaultAmmo; //The default ammo type used if carriedAmmo is empty
+    private int currentAmmoIndex; 
+    private bool changingAmmo; //true if the player is currently swapping ammo types
 
     [Header("Fire")]
-    private GameObject currentAmmoBehaviourPrefab;
+    private GameObject currentAmmoBehaviourPrefab; //The prefab containing the ammobehaviour script containing all the listeners for the currently selected ammo type.
     private bool firePressedOnThisAmmo; //Flag that ensures that OnRelease won't trigger if the user changed ammo types in between pressing and releasing the fire button
 
     [Header("Activate")]
-    public List<OnActivateListener> allOnActivateListeners;
+    public List<OnActivateListener> allOnActivateListeners; //All subscribed listeners when the player uses the activate control.
 
     [Header("Interact")]
-    private Interactable currentInteractable;
+    private Interactable currentInteractable; //The current target for when the player hits the interact control.
 
     [Header("Dodge Roll")]
     public float dodgeRollVelocity;
@@ -56,7 +58,7 @@ public class PlayerLogic : MonoBehaviour
     private bool dying;
 
     [Header("Statuses")]
-    private List<Status> allStatuses;
+    private List<Status> allStatuses; //A list of all Status's applied to the player. See the status class below for more info.
 
     [Header("Paused")]
     public bool paused = false;
@@ -85,7 +87,7 @@ public class PlayerLogic : MonoBehaviour
         firePressedOnThisAmmo = false;
         GameObject.FindGameObjectWithTag("base_hpIndicator").GetComponentInChildren<TextMeshProUGUI>().text = "" + this.currentHp;
         dying = false;
-        changeAmmo();
+        changeAmmo(); //Run the ammo change logic to setup the player's intial ammo-type.
     }
 
     // Update is called once per frame
@@ -110,24 +112,32 @@ public class PlayerLogic : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        //if the player collides with an object tagged as an interactable, set that object as the currentInteractable.
         if (collision.tag == "base_interactable")
         {
             this.setCurrentInteractable(collision.gameObject.GetComponent<Interactable>());
         }
+
+        //Any other logic for player collisions should be handled in the logic for the other object in the collision.
+        //E.g. For enemeis dealing damage on touch, put the damage logic in their OnTriggerEnter2D
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        //if the player stops colliding with the currentInteractable, set the current interactable to null.
         if (collision.tag == "base_interactable" && collision.gameObject.GetComponent<Interactable>() == this.getCurrentInteractable())
         {
            this.setCurrentInteractable(null);
         }
+
+        //Any other logic for player collisions should be handled in the logic for the other object in the collision.
+        //E.g. For enemeis dealing damage on touch, put the damage logic in their OnTriggerEnter2D
     }
 
     //===========================[Movement]======================================
     private void movementLogic()
     {
-        //movementDirection will be set in OnMovementKeysChanged()
+        //movementDirection will be set in OnMovementKeysHit()
         if (isDodging)
         {
             dodgeMovementLogic();
@@ -138,10 +148,12 @@ public class PlayerLogic : MonoBehaviour
 
             if (movementDirection != Vector2.zero)
             {
+                //Move the player in the current direction times their current speed.
                 this.gameObject.GetComponent<Rigidbody2D>().velocity = movementDirection.normalized * currentSpeed;
             }
             else
             {
+                //Move the player in the last direction they were moving times their current speed.
                 this.gameObject.GetComponent<Rigidbody2D>().velocity = lastMovementDirection.normalized * currentSpeed;
             }
         }
@@ -183,6 +195,9 @@ public class PlayerLogic : MonoBehaviour
         }
     }
 
+    /* Applies the externalVelocity vector to the player character's velocity.
+     * Set overridePlayerMovementVelocity to true to replaces the player's current velocity with the external velocity.
+     * Set overridePlayerMovementVelocity to false to add external velocity to the player's current velocity. */
     private void applyExternalVelocity()
     {
         if(overridePlayerMovementVelocity)
@@ -195,6 +210,7 @@ public class PlayerLogic : MonoBehaviour
         }
     }
 
+    //Modifies the player's movement direction based on the movement controls' input.
     public void OnMovementKeysHit(InputAction.CallbackContext context)
     {
         this.movementDirection = context.ReadValue<Vector2>().normalized;
@@ -203,6 +219,11 @@ public class PlayerLogic : MonoBehaviour
             this.lastMovementDirection = this.movementDirection;
         }
     }
+
+    /* Modifies the facing of the player character's spites to make it look left or right. 
+     * isFlipped = true for facing left.
+     * isFlipped = false for facing right.
+     */
 
     private void setVisualFacing(bool isFlipped)
     {
@@ -227,6 +248,7 @@ public class PlayerLogic : MonoBehaviour
         }
     }
 
+    //Returns the current direction the player character is trying to move based on player inputs.
     public Vector2 getPlayerMovementDirection()
     {
         return this.movementDirection;
@@ -252,11 +274,14 @@ public class PlayerLogic : MonoBehaviour
         return this.externalVelocity;
     }
 
+    //Returns true if external velocity is set to replace the player's input based movement.
     public bool getIsExternalVelocityOverridingPlayerMovement()
     {
         return this.overridePlayerMovementVelocity;
     }
 
+    /* Sets whether or not External Velocity will replace player movement or be added to it.
+     * True for replace, false for added to. Defaults to false.*/
     public void setIsExternalVelocityOverridingPlayerMovement(bool doOverridePlayerMovementVelocity)
     {
         this.overridePlayerMovementVelocity = doOverridePlayerMovementVelocity;
@@ -266,8 +291,11 @@ public class PlayerLogic : MonoBehaviour
 
     //===========================[Aiming]======================================
 
+    //Logic for determining where to place the aiming Reticle.
     private void aimingLogic()
     {
+        //AimDirection is set in OnAimListener(), unless the player is using a mouse to aim, in which case it is set here.
+        //Whether or not the player is aiming with a mouse is set in OnAimListener().
         if (usingMouse)
         {
             updateAimFromMousePosition(Mouse.current.position.ReadValue());
@@ -324,7 +352,7 @@ public class PlayerLogic : MonoBehaviour
 
     //Called when the player moves so that the aim position.
     //Also called from movementLogic if isUsingFixedCamera is true.
-    //Updates the position the player is aiming at based on their position and posIn
+    //Updates the position the player is aiming at based on their position and posIn.
     private void updateAimFromMousePosition(Vector2 posIn)
     {      
         if (playerCamera != null)
@@ -355,11 +383,13 @@ public class PlayerLogic : MonoBehaviour
                 PressInteraction pressInteraction = (PressInteraction)context.interaction;
                 if (pressInteraction.behavior == PressBehavior.PressOnly)
                 {
+                    //Call on fire pressed for the current ammo behaviour
                     currentAmmoBehaviourPrefab.GetComponent<AmmoBehaviour>().OnFirePressd(this);
                     this.firePressedOnThisAmmo = true;
                 }
                 else if (pressInteraction.behavior == PressBehavior.ReleaseOnly && this.firePressedOnThisAmmo)
                 {
+                    //Call on fire released for the current ammo behaviour
                     currentAmmoBehaviourPrefab.GetComponent<AmmoBehaviour>().OnFireReleased(this);
                     this.firePressedOnThisAmmo = false;
                 }
@@ -371,6 +401,7 @@ public class PlayerLogic : MonoBehaviour
 
     //===========================[Ammo]===============================================
 
+    //Select's the next ammo type the player is carrying.
     public void OnNextAmmoPressed(InputAction.CallbackContext context)
     {
         if (!dying && !paused)
@@ -390,6 +421,7 @@ public class PlayerLogic : MonoBehaviour
         }   
     }
 
+    //Select's the previous ammo type the player is carrying.
     public void OnPreviousAmmoPressed(InputAction.CallbackContext context)
     {
         if (!dying && !paused)
@@ -409,6 +441,9 @@ public class PlayerLogic : MonoBehaviour
         }
     }
 
+    //Performs all the necessary tasks to switch to the current ammo type.
+    //Calls Unequip (and cancel, if necessary) listeners on the pre-existing ammo behaviour prefab, then destroys that prefab 
+    //and spawns in the ammo behaviour prefab for the current ammo type, then calls the onequip listener for it.
     private void changeAmmo()
     {
         if (currentAmmoBehaviourPrefab != null)
@@ -484,6 +519,7 @@ public class PlayerLogic : MonoBehaviour
         }
     }
 
+    //Returns the ammo type carried by the player that makes the passed Name.
     public Ammo getAmmoFromName(string name)
     {
         foreach(Ammo aAmmo in carriedAmmo)
@@ -496,6 +532,7 @@ public class PlayerLogic : MonoBehaviour
         return null;
     }
 
+    //Adds the passed Ammo to the player's carried ammo.
     public void addAmmo(Ammo ammoToAdd)
     {
         //if the ammo type is already carried, increase the quanity
@@ -520,6 +557,7 @@ public class PlayerLogic : MonoBehaviour
         }
     }
 
+    //Find's the matching Ammo that is carried by the player and add "amount" to it's quantity. If the new quantity is 0 or less, remove the ammo from the list.
     //Returns true if ammoModified successfully, else returns false.
     public bool modifyAmmoAmount(Ammo ammoToModify, int amount)
     {
@@ -559,7 +597,7 @@ public class PlayerLogic : MonoBehaviour
         return true;
     }
 
-    //Marks the ammo changing process as complete and normal ammo interaction logic proceed.
+    //Marks the ammo changing process as complete and that it is safe for normal ammo interaction logic to proceed.
     //Called from AmmoIndicatorLogic.setAmmoIndicator()
     public void isDoneChangingAmmo()
     {
@@ -569,6 +607,8 @@ public class PlayerLogic : MonoBehaviour
     //===========================[End of Ammo]========================================
 
     //===========================[Activate]===============================================
+
+    //Calls the OnActivatePressed/OnActivateReleased listeners for all currently subscribed OnActivateListeners.
     public void OnActivatePressed(InputAction.CallbackContext context)
     {
         if (!dying && !paused)
@@ -594,17 +634,19 @@ public class PlayerLogic : MonoBehaviour
         }
     }
 
+    //Subscribe's the passed OnActivateListener to listen for when the player presses or releases the Activate key.
     public void addOnActivateListener(OnActivateListener listenerIn)
     {
         this.allOnActivateListeners.Add(listenerIn);
     }
 
+    //Unsubscribe's the passed OnActivateListener from listening for when the player presses or releases the Activate key.
     public void removeOnActivateListener(OnActivateListener listenerIn)
     {
         this.allOnActivateListeners.Remove(listenerIn);
     }
 
-    //TODO: Test this.
+    //Returns true if the passed OnActivateListener is subscribed.
     public bool isAnOnActivateListener(OnActivateListener listenerIn)
     {
         return allOnActivateListeners.Contains(listenerIn);
@@ -613,6 +655,7 @@ public class PlayerLogic : MonoBehaviour
 
     //===========================[Interact]========================================
 
+    //When the player hit sthe Interact key, calls OnInteracted() for the interactable that the player is currently colliding with.
     public void OnInteractPressed(InputAction.CallbackContext context)
     {
         if (!dying && !paused)
@@ -624,11 +667,17 @@ public class PlayerLogic : MonoBehaviour
         }
     }
 
+    //Returns the Interactable the player is currently colliding with.
     public Interactable getCurrentInteractable()
     {
         return this.currentInteractable;
     }
 
+    //Sets the current interactable to the passed interactable. Also calls the OnBecomeCurrentInteractable() on the passed interactable and onNoLongerCurrentInteractable()
+    // on the previous interactable.
+    // This method accepts null for setting the current interactable to none.
+    //Note for manually calling this: This method is automatically called in this.OnTriggerEnter2D and this.OnTriggerExit2D, bear this in mind when manually setting the
+    //current interactable.
     public void setCurrentInteractable(Interactable interactableIn)
     {
         if(interactableIn != null)
@@ -648,6 +697,7 @@ public class PlayerLogic : MonoBehaviour
 
     //===========================[Dodge]========================================
 
+    //Execute the dodge roll in the current/last movement direction when the player hits the dodge roll key.
     public void OnDodgePressed(InputAction.CallbackContext context)
     {
         if (!dying && !paused)
@@ -662,6 +712,9 @@ public class PlayerLogic : MonoBehaviour
         }
     }
 
+    //Marks the player as no longer dodging.
+    //Also forces a re-check of the colliders in case the player is inside of a hitbox when the dodge roll ends. This is to cover situations like the player rolling
+    //into an enemy, then finishing the roll inside of the enemy and not taking damage because OnTriggerEnter only triggered when they were rolling.
     public void OnDodgeAnimationDone()
     {
         this.setIsDodging(false);
@@ -681,7 +734,7 @@ public class PlayerLogic : MonoBehaviour
     {
         this.isDodging = inDodging;
         
-        //if the player starts dodging and had pressed fire but hadn't released it yet, then call OnCancel().
+        //if the player starts dodging and had pressed fire but hadn't released it yet, then call OnFireCancel() for the current ammo behaviour.
         //This is because dodging intrupts any instance of a player holding the fire button on an ammo type.
         if(isDodging && this.firePressedOnThisAmmo)
         {
@@ -690,6 +743,7 @@ public class PlayerLogic : MonoBehaviour
         }
     }
 
+    //Set's the player's velocity to the velocity of the dodge roll.
     private void dodgeMovementLogic()
     {
         this.gameObject.GetComponent<Rigidbody2D>().velocity = dodgeRollDirection * dodgeRollVelocity;
@@ -699,6 +753,7 @@ public class PlayerLogic : MonoBehaviour
 
     //===========================[Hp]========================================
 
+    //Set the player's current hp, set trigger hurt animation to true if you want to play the hurt animation when doing this.
     public void setHp(int HPin, bool triggerHurtAnimation = false)
     {
         this.currentHp = HPin;
@@ -713,6 +768,8 @@ public class PlayerLogic : MonoBehaviour
         }
     }
 
+    //Add the passed HP to the player's current hp, set trigger hurt animation to true if you want to play the hurt animation when doing this.
+    //Pass a negative value to reduce player hp.
     public void addHp(int HPtoAdd, bool triggerHurtAnimation = false)
     {
         this.currentHp += HPtoAdd;
@@ -727,22 +784,26 @@ public class PlayerLogic : MonoBehaviour
             this.gameObject.GetComponent<AudioSource>().PlayOneShot(painSound);
         }
     }
-
+    
+    //Returns the player's current hp.
     public int getHP()
     {
         return this.currentHp;
     }
 
+    //Subscribe an OnDeathListener that triggers when the player dies.
     public void addOnDeathListener(OnDeathListener listenerIn)
     {
         this.allOnDeathListeners.Add(listenerIn);
     }
 
+    //Unsubscribe an OnDeathListener from triggering when the player dies.
     public void removeOnDeathListener(OnDeathListener listenerToRemove)
     {
         this.allOnDeathListeners.Remove(listenerToRemove);
     }
 
+    //Kills the player character.
     private void die()
     {
         if (!this.dying)
@@ -751,9 +812,11 @@ public class PlayerLogic : MonoBehaviour
             this.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             this.gameObject.GetComponent<Animator>().SetBool("Die", true);
             this.gameObject.GetComponent<AudioSource>().PlayOneShot(deathSound);
+            //OnDeathListeners are triggered at the end of the Death Animation.
         }
     }
 
+    //Respawn the player where they are with 1 hp.
     public void respawn()
     {
         this.dying = false;
@@ -761,6 +824,8 @@ public class PlayerLogic : MonoBehaviour
         this.gameObject.GetComponent<Animator>().SetBool("Die", false);
     }
 
+    //Calls OnPlayerDies for all subscribed OnDeathListeners.
+    //Called from an animation event at the end of the player's death animation.
     public void OnDeathAnimationFinished()
     {
         foreach(OnDeathListener aListener in allOnDeathListeners)
@@ -773,6 +838,10 @@ public class PlayerLogic : MonoBehaviour
 
     //===========================[Status]========================================
 
+
+    //Status, a class made up of 2 strings, used to attach additional data to the player character if needed.
+    //Statuses can be used by custom scripts as needed.
+    //e.g. attach a wet condition with a value of 10.
     [System.Serializable]
     public class Status
     {
@@ -786,6 +855,7 @@ public class PlayerLogic : MonoBehaviour
         }
     }
 
+    //Adds a new status to the player's list of Statuses.
     public void addStatus(string newId, string newData)
     {
         foreach (Status aStatus in allStatuses)
@@ -800,6 +870,7 @@ public class PlayerLogic : MonoBehaviour
         allStatuses.Add(new Status(newId, newData));
     }
 
+    //Gets the data field of the Status in the player's list of statuses matching the passed ID.
     //Returns Null if the player does not have a status with the matching ID.
     public string getStatusData(string id)
     {
@@ -813,6 +884,8 @@ public class PlayerLogic : MonoBehaviour
         return null;
     }
 
+    //Sets the data field of the Status in the player's list of statuses matching the passed ID.
+    //Returns true if successful, returns false if it could not find a status matching the ID.
     public bool modifyStatus(string id, string newData)
     {
         foreach (Status aStatus in allStatuses)
@@ -826,6 +899,7 @@ public class PlayerLogic : MonoBehaviour
         return false;
     }
 
+    //Removes the Status in the player's list of statuses matching the passed ID.
     public void removeStatus(string idToRemove)
     {
         Status statusToRemove = null;
