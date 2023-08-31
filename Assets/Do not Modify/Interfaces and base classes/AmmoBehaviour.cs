@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Interface for handling the various listeners related to a Ammo type's Behaviour prefab.
 public interface AmmoBehaviour
 {
     //Called when the player presses fire with this ammo equiped
